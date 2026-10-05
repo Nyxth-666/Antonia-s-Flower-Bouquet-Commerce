@@ -1,0 +1,25 @@
+{
+  "name": "antonia-s-flower-bouquet-commerce",
+  "version": "1.0.0",
+  "description": "A full-stack flower bouquet commerce website for Antonia's, built with Django, Tailwind CSS, HTML, and JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nyxth-666/Antonia-s-Flower-Bouquet-Commerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Nyxth-666/Antonia-s-Flower-Bouquet-Commerce/issues"
+  },
+  "homepage": "https://github.com/Nyxth-666/Antonia-s-Flower-Bouquet-Commerce#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
