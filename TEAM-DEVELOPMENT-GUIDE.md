@@ -182,6 +182,13 @@ DB_HOST=
 DB_PORT=
 ```
 
+Run the command
+
+```text
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+put it in SECRET_KEY= in `.env` file
+
 The `.env` file is personal/local and must NOT be pushed to GitHub.
 
 Never commit:
