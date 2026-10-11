@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpRequest
 
-# Create your views here.
+
+def accounts_page(request):
+    return render(request, "accounts/accounts.html")
