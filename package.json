@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Nyxth-666/Antonia-s-Flower-Bouquet-Commerce#readme",
   "dependencies": {
-    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/cli": "^4.3.0",
     "tailwindcss": "^4.3.3"
   }
 }
