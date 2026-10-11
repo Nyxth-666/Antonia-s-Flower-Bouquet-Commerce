@@ -9,7 +9,16 @@
 
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
-<body>
-    {% block content %}{% endblock %}
+
+<body class="bg-cream font-sans leading-normal text-ink antialiased">
+
+    {% include "components/layout/navbar.html" %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
 </body>
+
 </html>
