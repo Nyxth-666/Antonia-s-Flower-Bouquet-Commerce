@@ -4,7 +4,8 @@
   "description": "A full-stack flower bouquet commerce website for Antonia's, built with Django, Tailwind CSS, HTML, and JavaScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/output.css --watch",
+    "build:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/output.css"
   },
   "repository": {
     "type": "git",
