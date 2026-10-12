@@ -33,19 +33,24 @@
     /* Typography */
     --font-heading: "Ancizar Serif", serif;
     --font-sans: "Inria Sans", sans-serif;
+
+    /* Font Size */
+    --font-global: 18px;
     }
 
 @layer base {
     html {
         font-family: var(--font-sans);
         background-color: var(--color-background);
-        color: var(--color-foreground);
+        color: var(--color-muted);
+        font-size: var(--font-global);
     }
 
     body {
         font-family: var(--font-sans);
         background-color: var(--color-background);
-        color: var(--color-foreground);
+        color: var(--color-muted);
+        font-size: var(--font-global);
     }
 
     h1,
@@ -55,6 +60,7 @@
     h5,
     h6 {
         font-family: var(--font-heading);
+        color: var(--color-foreground);
     }
 
     button {
