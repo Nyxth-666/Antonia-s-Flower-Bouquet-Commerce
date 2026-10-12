@@ -5,20 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}Antonia's Flower Shop{% endblock %}</title>
+    <title>{% block title %}Antonia's | Flowers for Every Occasion{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
-
-<body class="bg-cream font-sans leading-normal text-ink antialiased">
-
+<body>
     {% include "components/layout/navbar.html" %}
 
     <main>
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
+    {% include "components/layout/footer.html" %}
 </body>
 
 </html>
