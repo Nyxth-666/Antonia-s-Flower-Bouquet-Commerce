@@ -1,0 +1,21 @@
+<div class="bg-secondary text-soft-white flex items-center">
+    <nav
+        aria-label="Main navigation"
+        class="mx-auto flex min-h-9 max-w-[1240px] items-center justify-content gap-7 px-4"
+    >
+        {% for item in navbar_links %}
+            <a
+                href="{% url item.url %}"
+                class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent"
+            >
+                {{ item.name }}
+
+                {% if item.dropdown %}
+                    <div class="flex items-center">
+                        {% include "components/ui/icons/drop-down_icon.html" %}
+                    </div>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </nav>
+</div>
