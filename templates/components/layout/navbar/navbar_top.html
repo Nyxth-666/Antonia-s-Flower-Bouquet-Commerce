@@ -1,0 +1,51 @@
+{% load static %}
+
+<div class="mx-auto flex w-full max-w-[1240px] items-center justify-between px-5 py-4 lg:px-0">
+    <a 
+        href="{% url 'core:home' %}"
+        class="flex shrink-0 items-center gap-2"
+        aria-label="Antonia's homepage">
+
+        <img 
+            src="{% static 'images/logo.png' %}" 
+            alt="Antonia's"
+            class="h-14 w-14 rounded-full object-contain"
+        >
+
+        <span class="text-2xl text-accent italic font-serif font-bold">
+            Antonia's
+        </span>
+    </a>
+
+    <form 
+        action=""
+        method="get"
+        class="flex min-w-0 max-w-[733px] flex-1 gap-3 items-center rounded-button border border-border bg-card px-5 py-2 focus-within:border-accent"
+    >
+        <div class="text-muted transition-colors duration-200 focus-within:text-primary">
+            {% include "components/ui/icons/search_icon.html" %}
+        </div>
+
+        <input 
+            type="search"
+            name="{{ navbar_search.parameter }}"
+            placeholder="{{ navbar_search.placeholder }}"
+            value="{{ request.GET.q|default:'' }}"
+            aria-label="Search flowers"
+            class="w-full bg-transparent text-base outline-none placeholder:text-muted"
+        >
+    </form>
+
+    <div class="flex shrink-0 items-center gap-4">
+        {% for item in navbar_icons %}
+            <a
+                href="{% url item.url %}"
+                aria-label="{{ item.name }}"
+                title="{{ item.name }}"
+                class="inline-flex items-center justify-center text-muted transition-colors duration-200 hover:text-primary"
+            >
+                {% include item.icon_template %}
+        </a>
+        {% endfor %}
+    </div>
+</div>
