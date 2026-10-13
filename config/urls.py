@@ -13,5 +13,6 @@ urlpatterns = [
     path("customize/", include("apps.customization.urls")),
     path("accounts/", include("apps.accounts.urls")),
     path("orders/", include("apps.orders.urls")),
+    path("favorites/", include("apps.favorites.urls")),
     path("contact/", include("apps.contact.urls")),
-] 
+]
