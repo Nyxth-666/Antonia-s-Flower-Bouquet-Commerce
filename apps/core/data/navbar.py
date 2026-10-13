@@ -22,10 +22,10 @@ NAVBAR_LINKS = [
         "name": "Customize",
         "url": "customization:customization",
     },
-    # {
-    #     "name": "About",
-    #     "url": "about:about",
-    # },
+    {
+        "name": "About",
+        "url": "about:about",
+    },
     {
         "name": "Contact",
         "url": "contact:contact",
