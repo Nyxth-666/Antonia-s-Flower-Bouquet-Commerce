@@ -1,0 +1,8 @@
+{% load static %}
+<li class="relative flex items-center justify-start gap-3 px-6 py-6 md:min-h-[7.5rem] md:justify-center md:px-4 md:py-0 lg:px-6 md:after:absolute md:after:right-0 md:after:top-1/2 md:after:h-12 md:after:w-px md:after:-translate-y-1/2 md:after:bg-brand-700 md:last:after:hidden">
+    <img src="{% static icon %}" alt="" width="24" height="24" loading="lazy" decoding="async" class="size-6 shrink-0">
+    <div class="min-w-0 text-left md:max-w-[10.125rem]">
+        <p class="text-base font-bold text-heading text-foreground">{{ title }}</p>
+        <p class="mt-1.5 text-xs text-muted">{{ text }}</p>
+    </div>
+</li>

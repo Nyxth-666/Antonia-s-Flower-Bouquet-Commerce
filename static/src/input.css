@@ -33,9 +33,10 @@
     /* Typography */
     --font-heading: "Ancizar Serif", serif;
     --font-sans: "Inria Sans", sans-serif;
-
     /* Font Size */
     --font-global: 18px;
+
+    --color-brand-700: #7A4035;
     }
 
 @layer base {
