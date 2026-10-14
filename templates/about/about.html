@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-[1240px] mx-auto mt-28">
+
+  <!-- About Us -->
+  <section>
+    <h1 class="text-4xl font-bold mb-5">About Us</h1>
+
+    <p class="mb-5">
+      <strong class="font-bold">At Antonia's, we believe flowers are more than something beautiful—they are a way of expressing the feelings that words sometimes cannot.</strong>
+      From a single thoughtful bloom to an extravagant bouquet made for a once-in-a-lifetime moment, every arrangement is created with care, intention, and a touch of elegance.
+    </p>
+
+    <p>
+      <strong class="font-bold">Our purpose is simple: to help you turn feelings into flowers.</strong>
+      Whether you're celebrating love, honoring a milestone, offering comfort, or simply reminding someone that you care, Antonia's is here to help you find the perfect bloom for every story, every occasion, and every meaningful moment.
+    </p>
+  </section>
+
+  <hr class="border-border mt-7 mb-7">
+
+  <section>
+    <h2 class="text-2xl font-bold text-center mb-7">Why Choose Antonio's?</h2>
+
+    <div class="grid gap-10">
+
+      <article class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+            <h3 class="text-xl font-bold mb-4">Our Story</h3>
+            <p class="mb-4">
+            <strong class="font-bold">Born from a love for flowers and the moments they represent, Antonia's was created to make giving flowers feel personal, thoughtful, and unforgettable.</strong>
+            We believe that no two occasions are exactly alike—and neither should every bouquet be.
+            </p>
+            <p>
+            From choosing the right flower and color to adding chocolates, gifts, ribbons, and personal messages, we give you the freedom to create something that feels truly yours.
+            </p>
+        </div>
+
+            <img
+            src="{% static 'images/logo.png' %}"
+            alt="Antonia's logo"
+            class="mx-auto w-full max-w-[380px] rounded-card border border-border"
+            style="-webkit-box-reflect: below 4px linear-gradient(transparent 60%, rgba(0,0,0,0.25));"
+            >
+        </article>
+
+      <article class="grid md:grid-cols-2 gap-10 items-center">
+        <img
+            src="{% static 'images/bouquet.png' %}"
+            alt="Antonia's bouquet"
+            class="mx-auto w-full max-w-[380px] rounded-card border border-border"
+            style="-webkit-box-reflect: below 4px linear-gradient(transparent 60%, rgba(0,0,0,0.25));"
+        >
+
+        <div>
+            <h3 class="text-xl font-bold mb-4">Our Promise</h3>
+            <p class="mb-4">
+            <strong class="font-medium">Thoughtfully chosen. Beautifully arranged. Meaningfully given.</strong>
+            </p>
+            <p>
+            At Antonia's, every bouquet is more than an arrangement of flowers.
+            <strong class="font-medium">It is a message, a memory, and a moment waiting to be cherished.</strong>
+            </p>
+        </div>
+        </article>
+
+    </div>
+  </section>
+
+</div>
+{% endblock %}

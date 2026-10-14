@@ -1,3 +1,4 @@
+
 OCCASIONS = [
     {
         "name": "Birthday",
@@ -39,6 +40,90 @@ OCCASIONS = [
         "name": "Congratulations",
         "icon": "🎉",
         "description": "Bold arrangements",
+        "url": "#",
+    },
+    {
+        "name": "Mother's Day",
+        "icon": "👩",
+        "description": "Motherly love",
+        "url": "#",
+    },
+    {
+        "name": "Father's Day",
+        "icon": "👨",
+        "description": "Fatherly love",
+        "url": "#",
+    },
+    {
+        "name": "Christmas",
+        "icon": "🎄",
+        "description": "Enjoy the snow",
+        "url": "#",
+    },
+    {
+        "name": "New Year",
+        "icon": "🎆",
+        "description": "New story to tell",
+        "url": "#",
+    },
+    {
+        "name": "Friendship",
+        "icon": "👫",
+        "description": "Another word for love",
+        "url": "#",
+    },
+    {
+        "name": "Thank You",
+        "icon": "💝",
+        "description": "Appreciation",
+        "url": "#",
+    },
+    {
+        "name": "Funeral",
+        "icon": "🕯️",
+        "description": "To your loved ones",
+        "url": "#",
+    },
+    {
+        "name": "Apology",
+        "icon": "🙏",
+        "description": "Reflection & sorry",
+        "url": "#",
+    },
+    {
+        "name": "Romantic Date",
+        "icon": "💑",
+        "description": "A day to remember",
+        "url": "#",
+    },
+    {
+        "name": "Debut",
+        "icon": "⭐",
+        "description": "Your special day",
+        "url": "#",
+    },
+    {
+        "name": "Engagement",
+        "icon": "💞",
+        "description": "New life with someone",
+        "url": "#",
+    },
+    {
+        "name": "Housewarming",
+        "icon": "🏠",
+        "description": "Comfortable home",
+        "url": "#",
+    },
+    {
+        "name": "Corporate Events",
+        "icon": "🏢",
+        "description": "Gifts to co-worker",
+        "url": "#",
+    },
+    {
+        "name": "Just Because",
+        "icon": "🧸",
+        "description": "No reason",
         "url": "#",
     },
 ]

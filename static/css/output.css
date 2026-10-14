@@ -28,16 +28,21 @@
     --text-6xl: 3.75rem;
     --text-6xl--line-height: 1;
     --font-weight-medium: 500;
+    --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --leading-tight: 1.25;
+    --radius-lg: 0.5rem;
     --radius-2xl: 1rem;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --color-primary: #5A211B;
+    --color-secondary: #7A4035;
     --color-accent: #A66A59;
     --color-background: #F1EEE3;
     --color-card: #F7F4EB;
+    --color-soft-white: #FFFDF7;
     --color-border: #C9BFB0;
     --color-foreground: #2F211D;
     --color-muted: #75645C;
@@ -248,6 +253,9 @@
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
   }
+  .mb-5 {
+    margin-bottom: calc(var(--spacing) * 5);
+  }
   .mb-6 {
     margin-bottom: calc(var(--spacing) * 6);
   }
@@ -272,6 +280,9 @@
   .inline-block {
     display: inline-block;
   }
+  .inline-flex {
+    display: inline-flex;
+  }
   .size-6 {
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
@@ -280,8 +291,14 @@
     width: calc(var(--spacing) * 28);
     height: calc(var(--spacing) * 28);
   }
+  .h-14 {
+    height: calc(var(--spacing) * 14);
+  }
   .h-full {
     height: 100%;
+  }
+  .min-h-9 {
+    min-height: calc(var(--spacing) * 9);
   }
   .min-h-\[177px\] {
     min-height: 177px;
@@ -289,14 +306,23 @@
   .min-h-\[300px\] {
     min-height: 300px;
   }
+  .w-14 {
+    width: calc(var(--spacing) * 14);
+  }
   .w-full {
     width: 100%;
   }
   .max-w-\[74\.75rem\] {
     max-width: 74.75rem;
   }
+  .max-w-\[380px\] {
+    max-width: 380px;
+  }
   .max-w-\[511px\] {
     max-width: 511px;
+  }
+  .max-w-\[733px\] {
+    max-width: 733px;
   }
   .max-w-\[1240px\] {
     max-width: 1240px;
@@ -306,6 +332,9 @@
   }
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
+  }
+  .flex-1 {
+    flex: 1;
   }
   .shrink-0 {
     flex-shrink: 0;
@@ -340,11 +369,20 @@
   .justify-start {
     justify-content: flex-start;
   }
+  .gap-1\.5 {
+    gap: calc(var(--spacing) * 1.5);
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+  .gap-7 {
+    gap: calc(var(--spacing) * 7);
   }
   .gap-10 {
     gap: calc(var(--spacing) * 10);
@@ -361,6 +399,9 @@
   .rounded-\[10px\] {
     border-radius: 10px;
   }
+  .rounded-button {
+    border-radius: var(--radius-button);
+  }
   .rounded-card {
     border-radius: var(--radius-card);
   }
@@ -370,6 +411,14 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .border-x {
+    border-inline-style: var(--tw-border-style);
+    border-inline-width: 1px;
+  }
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
   }
   .border-accent {
     border-color: var(--color-accent);
@@ -386,8 +435,17 @@
   .bg-accent {
     background-color: var(--color-accent);
   }
+  .bg-background {
+    background-color: var(--color-background);
+  }
   .bg-card {
     background-color: var(--color-card);
+  }
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+  .bg-transparent {
+    background-color: transparent;
   }
   .bg-gradient-to-b {
     --tw-gradient-position: to bottom in oklab;
@@ -411,6 +469,9 @@
   }
   .to-75\% {
     --tw-gradient-to-position: 75%;
+  }
+  .object-contain {
+    object-fit: contain;
   }
   .object-cover {
     object-fit: cover;
@@ -438,6 +499,9 @@
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
   }
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
@@ -518,6 +582,9 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
   }
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
   .text-accent {
     color: var(--color-accent);
   }
@@ -529,6 +596,9 @@
   }
   .text-muted {
     color: var(--color-muted);
+  }
+  .text-soft-white {
+    color: var(--color-soft-white);
   }
   .text-white {
     color: var(--color-white);
@@ -552,6 +622,29 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .duration-200 {
+    --tw-duration: 200ms;
+    transition-duration: 200ms;
+  }
+  .outline-none {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+  .placeholder\:text-muted {
+    &::placeholder {
+      color: var(--color-muted);
+    }
+  }
+  .focus-within\:border-accent {
+    &:focus-within {
+      border-color: var(--color-accent);
+    }
+  }
+  .focus-within\:text-primary {
+    &:focus-within {
+      color: var(--color-primary);
+    }
   }
   .hover\:-translate-y-0\.5 {
     &:hover {
@@ -580,6 +673,20 @@
     &:hover {
       @media (hover: hover) {
         background-color: #A66A59;
+      }
+    }
+  }
+  .hover\:text-accent {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-accent);
+      }
+    }
+  }
+  .hover\:text-primary {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-primary);
       }
     }
   }
@@ -780,6 +887,11 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
+  .lg\:px-0 {
+    @media (width >= 64rem) {
+      padding-inline: calc(var(--spacing) * 0);
+    }
+  }
   .lg\:px-6 {
     @media (width >= 64rem) {
       padding-inline: calc(var(--spacing) * 6);
@@ -932,6 +1044,10 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-translate-x {
   syntax: "*";
   inherits: false;
@@ -986,6 +1102,7 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-duration: initial;
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;

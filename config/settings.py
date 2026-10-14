@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "apps.occasions",
     "apps.customization",
     "apps.orders",
+    "apps.about",
     "apps.contact",
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'config.urls'
 
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -58,10 +60,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.navbar_data',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
