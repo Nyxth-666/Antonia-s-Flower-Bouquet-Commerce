@@ -1,31 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antonia's | Flowers for Every Occasion</title>
-</head>
-
-<body>
-    {% block content %}
-    <!-- HERO SECTION -->
+{% block content %}
     <section class="mt-28">
-        <div class="mx-auto w-full max-w-[1240px]">
-
+        <div class="mx-auto w-full max-w-[1240px] px-4 sm:px-6">
             <div class="grid items-center gap-10 md:grid-cols-2">
-
-                <!-- Hero Text -->
                 <div>
-                    <p class="italic">
+                    <p class="italic text-foreground/80">
                         A flower shop, and a way to say it exactly right
                     </p>
 
-                    <h1 class="mb-6 mt-4 font-serif text-5xl font-bold leading-tight md:text-6xl">
+                    <h1 class="mb-6 mt-4 text-5xl font-bold leading-tight md:text-6xl">
                         Flowers, arranged around
-                        <em class="block text-terra text-accent">
+                        <em class="block text-accent not-italic">
                             the moment
                         </em>
                     </h1>
@@ -35,19 +22,16 @@
                     </p>
 
                     <div class="mt-7 flex flex-wrap gap-3">
-                        <a href="#occasions"
-                            class="px-4 py-3 bg-accent rounded-full border border-accent text-background text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        <a href="#occasions" class="rounded-full border border-accent bg-accent px-4 py-3 text-lg text-background transition hover:-translate-y-0.5 hover:opacity-80">
                             Shop Flowers →
                         </a>
 
-                        <a href="#occasions"
-                            class="px-4 py-3 rounded-full border border-border text-muted text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        <a href="#occasions" class="rounded-full border border-border px-4 py-3 text-lg text-muted transition hover:-translate-y-0.5 hover:opacity-80">
                             Explore Occasions
                         </a>
                     </div>
                 </div>
 
-                <!-- Hero Image -->
                 <div class="flex min-h-[300px] items-center justify-center overflow-hidden rounded-2xl bg-sand md:min-h-[420px]">
                     <img
                         src="{% static 'images/hero.jpg' %}"
@@ -58,42 +42,30 @@
 
                     <div class="hidden min-h-[300px] w-full flex-col items-center justify-center gap-3 text-center text-ink-soft md:min-h-[420px]">
                         <span class="text-6xl">💐</span>
-                        <p class="font-serif text-xl italic">
-                            Flowers for every moment
-                        </p>
-                        <p class="text-sm">
-                            Add your hero image to static/images/hero.jpg
-                        </p>
+                        <p class="text-xl italic">Flowers for every moment</p>
+                        <p class="text-sm">Add your hero image to static/images/hero.jpg</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-
-    <!-- WHAT'S THE OCCASION SECTION -->
     <section id="occasions" class="mt-24">
-        <div class="mx-auto w-full max-w-[1240px]">
-
-            <h2 class="font-serif text-5xl font-bold md:text-4xl mb-3.5">
+        <div class="mx-auto w-full max-w-[1240px] px-4 sm:px-6">
+            <h2 class="mb-3.5 text-5xl font-bold md:text-4xl">
                 What’s the occasion?
             </h2>
 
             <div class="mb-7 flex items-start justify-between">
-
                 <p>
                     Start from the moment, and we’ll narrow the flowers, colours, and add-ons to fit it.
                 </p>
 
-                <a href="#occasion-list"
-                    class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
+                <a href="#occasion-list" class="text-sm font-bold underline-offset-2 transition hover:underline hover:opacity-80">
                     See all occasions →
                 </a>
-
             </div>
 
-            <!-- Occasion Cards -->
             <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                 {% for occasion in occasions|slice:":6" %}
                     <li>
@@ -105,6 +77,101 @@
             </ul>
         </div>
     </section>
-    {% endblock %}
-</body>
-</html>
+
+    <section id="best-sellers" class="mt-24 pb-20">
+        <div class="mx-auto w-full max-w-[1240px] px-4 sm:px-6">
+            <div class="mb-7 flex items-end justify-between gap-5">
+                <div>
+                    <h2 class="text-4xl font-bold md:text-5xl">
+                        Best Sellers
+                    </h2>
+
+                    <p class="mt-2 max-w-[520px] text-sm text-muted">
+                        Each flower comes with its meaning, so the bouquet says what you mean.
+                    </p>
+                </div>
+
+                <a href="#best-sellers" class="hidden text-sm font-semibold underline-offset-2 hover:underline sm:block">
+                    Browse the full catalogue →
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {% for flower in best_sellers %}
+                    <article class="overflow-hidden rounded-[22px] border border-[#D8CCB7] bg-[#E8E2D4] shadow-[0_4px_12px_rgba(76,51,44,0.03)]">
+                        <div class="relative h-[240px] bg-[#F8F5ED]">
+                            <img
+                                src="{% static 'images/best-sellers/' %}{{ flower.image }}"
+                                alt="{{ flower.name }}"
+                                class="h-full w-full object-cover"
+                            >
+
+                            <button type="button" class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F1E7] text-lg text-[#765C50] shadow-sm transition hover:scale-110" aria-label="Save flower">
+                                ♡
+                            </button>
+                        </div>
+
+                        <div class="px-4 pb-4 pt-3">
+                            <div class="flex items-center justify-between gap-3">
+                                <h3 class="font-serif text-[1.05rem] font-semibold text-[#392525]">
+                                    {{ flower.name }}
+                                </h3>
+                                <span class="text-xs font-semibold text-[#392525]">
+                                    {{ flower.price }}
+                                </span>
+                            </div>
+
+                            <p class="mt-1 text-[11px] leading-4 text-[#806F67]">
+                                {{ flower.description }}
+                            </p>
+
+                            <div class="mt-3 flex gap-1.5">
+                                {% for color in flower.colors %}
+                                    <span class="h-2.5 w-2.5 rounded-full" style="background-color: {{ color }}"></span>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mt-3 flex gap-2">
+                                <button type="button" class="rounded-md border border-[#D5CCBB] bg-[#F8F5ED] px-3 py-1.5 text-[10px] font-medium text-[#3C2B2A] transition hover:bg-white">
+                                    View meaning
+                                </button>
+                                <button type="button" class="rounded-md bg-[#C8C0B2] px-3 py-1.5 text-[10px] font-medium text-[#2E2322] transition hover:bg-[#B9B0A0]">
+                                    Add to bouquet
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+            <div class="mt-12 overflow-hidden rounded-[22px] border border-[#D8CCB7] bg-[#E8E2D4]">
+                <div class="grid min-h-[205px] md:grid-cols-2">
+                    <div class="min-h-[205px] bg-[#F8F5ED]">
+                        <img src="{% static 'images/best-sellers/red-rose.svg' %}" alt="Red Rose" class="h-full w-full object-cover" >
+                    </div>
+
+                    <div class="flex flex-col justify-center p-7 md:p-8">
+                        <p class="text-xs italic text-[#A46F60]">
+                            Flower meaning guide
+                        </p>
+
+                        <h3 class="mt-2 font-serif text-3xl font-bold text-[#392525]">
+                            Red Rose — Love and Passion
+                        </h3>
+
+                        <p class="mt-3 max-w-[520px] text-xs leading-5 text-[#62544E]">
+                            The classic choice for Valentine’s Day, anniversaries, proposals, and romantic dates. Give a red rose to express love, passion, desire, and devotion.
+                        </p>
+
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="rounded-md border border-[#D5CCBB] px-3 py-1 text-[10px]">Valentine's Day</span>
+                            <span class="rounded-md border border-[#D5CCBB] px-3 py-1 text-[10px]">Anniversary</span>
+                            <span class="rounded-md border border-[#D5CCBB] px-3 py-1 text-[10px]">Proposal</span>
+                            <span class="rounded-md border border-[#D5CCBB] px-3 py-1 text-[10px]">Romantic Date</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

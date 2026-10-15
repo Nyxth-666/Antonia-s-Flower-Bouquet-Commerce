@@ -7,6 +7,9 @@
     --color-primary-dark: #3D1714;
     --color-secondary: #7A4035;
     --color-accent: #A66A59;
+    --color-terra: #A66A59;
+    --color-sand: #F4EFE6;
+    --color-ink-soft: #6D5C58;
 
     /* Background Colors */
     --color-background: #F1EEE3;
@@ -36,7 +39,7 @@
 
     /* Font Size */
     --font-global: 18px;
-    }
+}
 
 @layer base {
     html {
