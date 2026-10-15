@@ -31,7 +31,6 @@
     --radius-button: 10px;
 
     /* Typography */
-    --font-heading: "Ancizar Serif", serif;
     --font-sans: "Inria Sans", sans-serif;
 
     /* Font Size */
@@ -59,7 +58,7 @@
     h4,
     h5,
     h6 {
-        font-family: var(--font-heading);
+        font-family: var(--font-serif);
         color: var(--color-foreground);
     }
 
