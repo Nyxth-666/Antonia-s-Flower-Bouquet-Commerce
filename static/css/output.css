@@ -940,3 +940,63 @@
     }
   }
 }
+/* Page */
+.page { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+.breadcrumb { margin: 48px 0 40px; text-align: center; font-size: 14px; }
+.breadcrumb span { margin: 0 8px; }
+.page-title { font-size: 48px; font-weight: 700; line-height: 1; color: var(--color-primary); }
+.page-subtitle { max-width: 420px; margin: 12px 0 48px; }
+
+/* Builder */
+.builder { display: grid; grid-template-columns: 669px 531px; width: 1200px; margin: 0 auto 64px; }
+.options, .summary { min-height: 1411px; padding: 72px 56px 40px; border: 1px solid var(--color-border); }
+.options { background: #E8E3D5; border-radius: 20px 0 0 20px; }
+.summary { padding-inline: 59px; background: var(--color-card); border-left: 0; border-radius: 0 20px 20px 0; display: flex; flex-direction: column; justify-content: space-between; }
+
+/* Sections */
+.option { margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid rgba(47,33,29,.7); }
+.option:last-child { margin: 0; padding: 0; border: 0; }
+.option h2 { margin-bottom: 16px; padding-left: 7px; font-size: 19px; font-weight: 600; }
+.option__hint { margin: -10px 0 14px; padding-left: 7px; font-size: 15px; }
+
+/* Shared box look */
+.size-btn, .flower, .qty button, .wrap-list button, .addon-btn, .message { border: 1px solid var(--color-border); color: var(--color-muted); }
+.size-btn { height: 44px; padding: 12px 30px 13px; border-radius: 30px; font-size: 16px; line-height: 17px; white-space: nowrap; }
+.size-list, .color-list, .qty { display: flex; gap: 10px; }
+
+/* Flowers */
+.flower { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding: 12px 22px 12px 28px; border-radius: 12px; }
+.flower__dot { width: 16px; height: 16px; border-radius: 50%; background: #c48aa0; }
+.flower__info { flex: 1; line-height: 1.25; }
+.flower__info strong { display: block; color: var(--color-foreground); }
+.flower__info small { font-size: 14px; }
+.qty { align-items: center; color: var(--color-foreground); }
+.qty button { width: 20px; height: 20px; border-radius: 50%; font-size: 13px; line-height: 1; }
+
+/* Colors and wrapping */
+.color-list button { width: 30px; height: 30px; border: 2px solid transparent; border-radius: 50%; }
+.color-list .is-selected { border-color: var(--color-foreground); }
+.color-list button:nth-child(1) { background: #b5506b; } .color-list button:nth-child(2) { background: #f2d8e0; }
+.color-list button:nth-child(3) { background: #e8a44a; } .color-list button:nth-child(4) { background: #dde9d8; }
+.color-list button:nth-child(5) { background: #f6f3ec; }
+.wrap-list, .addon-list { display: grid; gap: 10px; }
+.wrap-list { grid-template-columns: repeat(3, 1fr); }
+.wrap-list button { padding: 7px 14px 10px; border-radius: 12px; font-size: 15px; }
+.swatch { display: block; height: 22px; margin-bottom: 6px; border-radius: 8px; }
+.wrap-list button:nth-child(1) .swatch { background: #c9a97f; } .wrap-list button:nth-child(2) .swatch { background: #f6f3ec; }
+.wrap-list button:nth-child(3) .swatch { background: #dde9d8; } .wrap-list button:nth-child(4) .swatch { background: #8f3d55; }
+
+/* Add-ons and message */
+.addon-list { grid-template-columns: 1fr 1fr; }
+.addon-btn { display: flex; justify-content: space-between; padding: 13px 16px; border-radius: 10px; font-size: 15px; }
+.message { display: block; width: 100%; height: 110px; padding: 12px; resize: none; outline: none; border-radius: 10px; background: var(--color-background); font-size: 14px; }
+.message__count { margin-top: 4px; text-align: right; font-size: 14px; }
+
+/* Summary */
+.summary h3 { font-size: 19px; font-weight: 600; }
+.summary__name { width: 100%; margin-bottom: 16px; padding: 4px 0; outline: none; border-bottom: 1px dotted var(--color-secondary); font: 24px var(--font-heading); color: var(--color-secondary); }
+.summary__name::placeholder { color: var(--color-secondary); }
+.price-row, .price-total { display: flex; justify-content: space-between; }
+.price-row { margin-bottom: 9px; }
+.price-total { align-items: baseline; margin-top: 14px; padding-top: 20px; border-top: 1px solid rgba(47,33,29,.7); font: 700 20px var(--font-heading); color: var(--color-foreground); }
+.summary__cart { width: 100%; height: 52px; margin-top: 22px; border-radius: 999px; background: var(--color-accent); color: #fff; }
