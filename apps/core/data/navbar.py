@@ -1,4 +1,3 @@
-
 NAVBAR_LINKS = [
     {
         "name": "Home",
