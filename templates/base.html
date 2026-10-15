@@ -7,6 +7,46 @@
 
     <title>{% block title %}Antonia's | Flowers for Every Occasion{% endblock %}</title>
 
+    <meta name="description" content="Antonia's flower shop for meaningful flowers and curated bouquets." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#F1EEE3',
+                        'background-secondary': '#E8E3D5',
+                        card: '#F7F4EB',
+                        'soft-white': '#FFFDF7',
+                        primary: '#5A211B',
+                        'primary-dark': '#3D1714',
+                        secondary: '#7A4035',
+                        accent: '#A66A59',
+                        border: '#C9BFB0',
+                        foreground: '#2F211D',
+                        muted: '#75645C',
+                        success: '#68735D',
+                        warning: '#B08A4A',
+                        error: '#8B3830',
+                        terra: '#A66A59',
+                        sand: '#F4EFE6',
+                        'ink-soft': '#6D5C58'
+                    },
+                    fontFamily: {
+                        sans: ['Inria Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif']
+                    },
+                    borderRadius: {
+                        card: '20px',
+                        button: '10px'
+                    }
+                }
+            }
+        };
+    </script>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>

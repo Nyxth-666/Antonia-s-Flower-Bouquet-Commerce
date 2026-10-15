@@ -1,31 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antonia's | Flowers for Every Occasion</title>
-</head>
-
-<body>
-    {% block content %}
-    <!-- HERO SECTION -->
+{% block content %}
     <section class="mt-28">
-        <div class="mx-auto w-full max-w-[1240px]">
-
+        <div class="mx-auto w-full max-w-[1240px] px-4 sm:px-6">
             <div class="grid items-center gap-10 md:grid-cols-2">
-
-                <!-- Hero Text -->
                 <div>
-                    <p class="italic">
+                    <p class="italic text-foreground/80">
                         A flower shop, and a way to say it exactly right
                     </p>
 
-                    <h1 class="mb-6 mt-4 font-serif text-5xl font-bold leading-tight md:text-6xl">
+                    <h1 class="mb-6 mt-4 text-5xl font-bold leading-tight md:text-6xl">
                         Flowers, arranged around
-                        <em class="block text-terra text-accent">
+                        <em class="block text-accent not-italic">
                             the moment
                         </em>
                     </h1>
@@ -35,19 +22,16 @@
                     </p>
 
                     <div class="mt-7 flex flex-wrap gap-3">
-                        <a href="#occasions"
-                            class="px-4 py-3 bg-accent rounded-full border border-accent text-background text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        <a href="#occasions" class="rounded-full border border-accent bg-accent px-4 py-3 text-lg text-background transition hover:-translate-y-0.5 hover:opacity-80">
                             Shop Flowers →
                         </a>
 
-                        <a href="#occasions"
-                            class="px-4 py-3 rounded-full border border-border text-muted text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        <a href="#occasions" class="rounded-full border border-border px-4 py-3 text-lg text-muted transition hover:-translate-y-0.5 hover:opacity-80">
                             Explore Occasions
                         </a>
                     </div>
                 </div>
 
-                <!-- Hero Image -->
                 <div class="flex min-h-[300px] items-center justify-center overflow-hidden rounded-2xl bg-sand md:min-h-[420px]">
                     <img
                         src="{% static 'images/hero.jpg' %}"
@@ -58,42 +42,30 @@
 
                     <div class="hidden min-h-[300px] w-full flex-col items-center justify-center gap-3 text-center text-ink-soft md:min-h-[420px]">
                         <span class="text-6xl">💐</span>
-                        <p class="font-serif text-xl italic">
-                            Flowers for every moment
-                        </p>
-                        <p class="text-sm">
-                            Add your hero image to static/images/hero.jpg
-                        </p>
+                        <p class="text-xl italic">Flowers for every moment</p>
+                        <p class="text-sm">Add your hero image to static/images/hero.jpg</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-
-    <!-- WHAT'S THE OCCASION SECTION -->
     <section id="occasions" class="mt-24">
-        <div class="mx-auto w-full max-w-[1240px]">
-
-            <h2 class="font-serif text-5xl font-bold md:text-4xl mb-3.5">
+        <div class="mx-auto w-full max-w-[1240px] px-4 sm:px-6">
+            <h2 class="mb-3.5 text-5xl font-bold md:text-4xl">
                 What’s the occasion?
             </h2>
 
             <div class="mb-7 flex items-start justify-between">
-
                 <p>
                     Start from the moment, and we’ll narrow the flowers, colours, and add-ons to fit it.
                 </p>
 
-                <a href="#occasion-list"
-                    class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
+                <a href="#occasion-list" class="text-sm font-bold underline-offset-2 transition hover:underline hover:opacity-80">
                     See all occasions →
                 </a>
-
             </div>
 
-            <!-- Occasion Cards -->
             <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                 {% for occasion in occasions|slice:":6" %}
                     <li>
