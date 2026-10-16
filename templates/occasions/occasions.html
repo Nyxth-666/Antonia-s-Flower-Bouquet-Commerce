@@ -1,34 +1,37 @@
 {% extends "base.html" %}
 {% load static %}
-<body>
-    {% block content %}
-    <section class="mt-28">
-        <div class="mx-auto w-full max-w-[1240px]">
-            <div class="grid items-center gap-4 md:grid-cols-3">
-                <h1 class="mb-6 mt-4 font-serif text-5xl font-bold leading-tight md:text-5xl">
-                    “For Every Moment Worth <br/ > 
-                    Remembering”
-                </h1>
+
+{% block title %}Occasions | Antonia's{% endblock %}
+
+{% block content %}
+<section id="occasions" class="flex flex-col mx-auto w-full max-w-[1240px] gap-24">
+    <div>
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-12">
+                <h2 class="font-bold text-6xl max-w-[730px]">
+                    “For Every Moment Worth Remembering”
+                </h2>
+                <p>
+                    From quiet gestures of love to grand celebrations, let flowers speak where words sometimes fall short. Discover thoughtfully arranged blooms for birthdays, anniversaries, graduations, weddings, celebrations, and every meaningful moment in between.
+                </p>
             </div>
-            <p class="grid md:grid-cols-3 text-sm">From quiet gestures of love to grand celebrations, let flowers speak where words sometimes fall short. Discover thoughtfully arranged blooms for birthdays, anniversaries, graduations, weddings, celebrations, and every meaningful moment in between.</p>
-            <p class="mt-7 text-sm">Choose an occasion, find its perfect bloom, and make the moment unforgettable.</p>
+
+            <p>
+                Choose an occasion, find its perfect bloom, and make the moment unforgettable.
+            </p>
         </div>
-    </section>
-    <section id="occasions" class="mt-24">
-        <div class="mx-auto w-full max-w-[1240px]">
-            <h1 class="font-bold text-center text-4xl">Pick an Occasion</h1>
-            <!-- Occasion Cards -->
-             <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                {% for occasion in occasions %}
-                    <li>
-                        {% include "components/ui/cards/occasion-card.html" %}
-                    </li>
-                {% empty %} 
-                    <li>No occasions are available yet.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
-    {% endblock %}
-</body>
-</html>
+    </div>
+    <div class="flex flex-col gap-18">
+        <h1 class="font-bold text-center text-4xl">Pick an Occasion</h1>
+        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            {% for occasion in occasions %}
+                <li>
+                    {% include "components/ui/cards/occasion-card.html" %}
+                </li>
+            {% empty %} 
+                <li>No occasions are available yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}
