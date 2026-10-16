@@ -1,0 +1,53 @@
+{% load static %}
+
+<div class="flex flex-col w-full max-w-[1240px] gap-11">
+    <div class="flex w-full gap-15">
+        <div class="flex flex-col max-w-[350px] gap-5">
+            <div class="flex items-center gap-2">
+                <img 
+                    src="{% static 'images/logo.png' %}" 
+                    alt="Antonia's"
+                    class="h-14 w-14 rounded-full object-contain"
+                >
+
+                <h3 class="text-2xl text-accent italic font-bold">
+                    Antonia's
+                </h3>
+            </div>
+
+            <p>A flower shop that explains itself — what each bloom means, and how to say it well.</p>
+        </div>
+
+        <div class="w-full mx-auto grid grid-cols-1 gap-8 sm:grid-cols-3">
+
+            {% for section in footer_links %}
+                <div>
+                    <h2 class="mb-5 font-bold text-accent">
+                        {{ section.title }}
+                    </h2>
+
+                    <ul class="space-y-3">
+                        {% for item in section.links %}
+                            <li>
+                                <a
+                                    href="{% url item.url %}"
+                                    class="text-sm text-muted font-bold transition-colors duration-200 hover:text-primary"
+                                >
+                                    {{ item.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="border-t border-border pt-5 pb-7">
+        <div class="flex justify-between">
+            <span>© 2026 Antonia’s. All flowers, no filler.</span>
+            <span>Quezon Province · Lucena City</span>
+        </div>
+    </div>
+</div>

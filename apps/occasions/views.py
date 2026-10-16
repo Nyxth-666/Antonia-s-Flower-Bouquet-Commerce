@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from apps.occasions.data.occasions import OCCASIONS
 
 def occasions_page(request):
-    return render(request, "occasions/occasions.html")
+    context = {
+        "occasions": OCCASIONS,
+    }
+    
+    return render(request, "occasions/occasions.html", context)
