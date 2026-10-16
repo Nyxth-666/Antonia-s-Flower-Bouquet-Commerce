@@ -1,241 +1,211 @@
 
-const $ = (selector) => document.querySelector(selector);
-const $$ = (selector) => [...document.querySelectorAll(selector)];
+document.addEventListener("DOMContentLoaded", () => {
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => [...document.querySelectorAll(selector)];
 
-const peso = (amount) =>
-  new Intl.NumberFormat("en-PH", {
+  const peso = amount => new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 0
   }).format(amount);
 
-const num = (value) =>
-  Number(String(value ?? "").replace(/[^\d.-]/g, "")) || 0;
+  const num = value => Number(String(value ?? "").replace(/[^\d.-]/g, "")) || 0;
 
-const BASE = {
-  Small: 500,
-  Medium: 650,
-  Large: 800,
-  "Extra Large": 1000,
-};
-
-// Example prices. Change these to your actual prices.
-const FLOWERS = [
-  ["Lisianthus/Paper Roses", 55],
-  ["Tulips", 55],
-  ["Lillies", 55],
-  ["Carnation", 55],
-  ["Sunflower", 65],
-  ["Gerberas", 50],
-  ["Roses", 60],
-  ["Mixed flowers", 75],
-];
-
-const COLORS = [
-  ["Rose", "rose"],
-  ["Blush", "blush"],
-  ["Gold", "gold"],
-  ["Sage", "sage"],
-  ["Ivory", "ivory"],
-];
-
-const WRAPS = [
-  ["Kraft paper", 0, "kraft"],
-  ["White paper", 0, "white"],
-  ["Satin wrap", 60, "sage"],
-  ["Luxury box", 150, "wine"],
-];
-
-const FOCUS =
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-
-const QB = `quantity-button ${FOCUS}`;
-
-function render(selector, items, template) {
-  const container = $(selector);
-
-  if (container) {
-    container.innerHTML = items.map(template).join("");
-  } else {
-    console.error(`Customization element not found: ${selector}`);
-  }
-}
-
-// Render all eight flower cards.
-render("#flowers", FLOWERS, ([name, price]) => `
-  <div data-flower="${name}" data-price="${price}" class="flower-card">
-
-    <span class="flower-dot" aria-hidden="true"></span>
-
-    <p class="flower-details">
-      <span class="flower-name">${name}</span>
-      <span class="flower-price">₱${price} / stem</span>
-    </p>
-
-    <div class="quantity-controls">
-      <button type="button"
-              data-step="-1"
-              aria-label="Remove one ${name}"
-              class="${QB}">−</button>
-
-      <output class="quantity-value" aria-live="polite">0</output>
-
-      <button type="button"
-              data-step="1"
-              aria-label="Add one ${name}"
-              class="${QB}">+</button>
-    </div>
-
-  </div>
-`);
-
-// Render wrapping colors.
-render("#colors", COLORS, ([name, color]) => `
-  <button type="button"
-          data-color="${name}"
-          aria-label="${name} wrapping color"
-          title="${name}"
-          aria-pressed="false"
-          class="color-swatch color-${color} ${FOCUS}">
-  </button>
-`);
-
-// Render wrapping options.
-render("#wraps", WRAPS, ([name, price, color]) => `
-  <button type="button"
-          data-wrap="${name}"
-          data-price="${price}"
-          aria-pressed="false"
-          class="wrap-option ${FOCUS}">
-
-    <span class="wrap-preview wrap-${color}"></span>
-    <span>${name}</span>
-    <span class="wrap-price">${peso(price)}</span>
-
-  </button>
-`);
-
-function selectOption(selector, active) {
-  $$(selector).forEach((element) => {
-    const selected = element === active;
-
-    element.setAttribute("aria-pressed", String(selected));
-
-    if (selector === "[data-color]") {
-      element.classList.toggle("selected-color", selected);
-    } else {
-      element.classList.toggle("selected-option", selected);
-    }
-  });
-}
-
-function update() {
-  const size =
-    $('[data-size][aria-pressed="true"]')?.dataset.size || "Large";
-
-  const selectedWrap = $('[data-wrap][aria-pressed="true"]');
-  const flowerRows = $$("[data-flower]");
-  const selectedAddons = $$('[data-addon][aria-pressed="true"]');
-
-  const base = BASE[size];
-
-  const flowersTotal = flowerRows.reduce((sum, row) => {
-    const price = Number(row.dataset.price);
-    const quantity = Number(row.querySelector("output").textContent);
-
-    return sum + price * quantity;
-  }, 0);
-
-  const wrappingTotal = num(selectedWrap?.dataset.price);
-
-  const addonsTotal = selectedAddons.reduce((sum, addon) => {
-    return sum + num(addon.dataset.price);
-  }, 0);
-
-  const totals = {
-    base,
-    fl: flowersTotal,
-    wr: wrappingTotal,
-    ad: addonsTotal,
-    total: base + flowersTotal + wrappingTotal + addonsTotal,
+  const BASE = {
+    Small: 500,
+    Medium: 650,
+    Large: 800,
+    "Extra Large": 1000
   };
 
-  Object.entries(totals).forEach(([key, value]) => {
-    const output = $(`[data-out="${key}"]`);
+  const FLOWERS = [
+    ["Lisianthus/Paper Roses", 65],
+    ["Tulips", 55],
+    ["Lillies", 45],
+    ["Carnation", 30],
+    ["Sunflowers", 55],
+    ["Gerberas", 55],
+    ["Roses", 55],
+    ["Mixed Flowers", 55]
+  ];
 
-    if (output) {
-      output.textContent = peso(value);
-    }
-  });
+  const COLORS = [
+    ["Rose", "rose"],
+    ["Blush", "blush"],
+    ["Gold", "gold"],
+    ["Sage", "sage"],
+    ["Ivory", "ivory"]
+  ];
 
-  const sizeOutput = $('[data-out="size"]');
+  const WRAPS = [
+    ["Kraft paper", 0, "kraft"],
+    ["White paper", 0, "white"],
+    ["Satin wrap", 60, "sage"],
+    ["Luxury box", 150, "wine"]
+  ];
 
-  if (sizeOutput) {
-    sizeOutput.textContent = `Base (${size})`;
+  const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  const quantityButton = `flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border text-[13px] text-muted transition hover:border-accent hover:text-accent ${focus}`;
+
+  function render(selector, items, template) {
+    $(selector).innerHTML = items.map(template).join("");
   }
 
-  // Save the customization in the hidden form field.
-  $("#config").value = JSON.stringify({
-    size,
-    flowers: Object.fromEntries(
-      flowerRows
-        .map((row) => [
-          row.dataset.flower,
-          Number(row.querySelector("output").textContent),
-        ])
-        .filter(([, quantity]) => quantity > 0)
-    ),
-    color:
-      $('[data-color][aria-pressed="true"]')?.dataset.color || null,
-    wrap: selectedWrap?.dataset.wrap || null,
-    addons: selectedAddons.map((addon) => addon.dataset.addon),
-    prices: totals,
-  });
-}
+  function renderFlowers() {
+    render("#flowers", FLOWERS, ([name, price]) => `
+      <div data-flower="${name}" data-price="${price}"
+        class="flex min-w-0 items-center gap-2.5 rounded-xl border border-border px-3 py-3 sm:gap-3.5 sm:pl-7 sm:pr-[22px]">
+        <span class="size-4 shrink-0 rounded-full bg-[#c48aa0]"></span>
 
-// Handle clicks on customization options.
-$("#bouquet").addEventListener("click", (event) => {
-  const button = event.target.closest("button");
+        <p class="min-w-0 flex-1 text-[13px] font-semibold text-foreground sm:text-[15px]">
+          ${name}
+          <span class="block text-[12px] font-normal text-muted">₱${price} / stem</span>
+        </p>
 
-  if (!button) return;
+        <div class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+          <button type="button" data-step="-1"
+            aria-label="Remove ${name}" class="${quantityButton}">−</button>
+          <output class="w-4 text-center text-[13px]">0</output>
+          <button type="button" data-step="1"
+            aria-label="Add ${name}" class="${quantityButton}">+</button>
+        </div>
+      </div>
+    `);
+  }
 
-  if (button.dataset.step !== undefined) {
-    const row = button.closest("[data-flower]");
-    const output = row.querySelector("output");
+  function renderColors() {
+    render("#colors", COLORS, ([name, color]) => `
+      <button type="button" data-color="${name}"
+        aria-label="${name} wrapping" title="${name}"
+        aria-pressed="false"
+        class="color-swatch color-${color} ${focus}">
+      </button>
+    `);
+  }
 
-    const current = Number(output.textContent);
-    const step = Number(button.dataset.step);
+  function renderWraps() {
+    render("#wraps", WRAPS, ([name, price, color]) => `
+      <button type="button" data-wrap="${name}" data-price="${price}"
+        aria-pressed="false"
+        class="wrap-button cursor-pointer rounded-xl border border-border px-2 py-1.5 text-center text-[12px] text-muted transition hover:border-accent hover:text-accent sm:px-3.5 sm:text-[15px] ${focus}">
+        <span class="wrap-preview wrap-${color}"></span>
+        ${name}
+      </button>
+    `);
+  }
 
-    output.textContent = Math.max(
-      0,
-      Math.min(99, current + step)
+  function selectOption(selector, selected) {
+    $$(selector).forEach(button => {
+      const active = button === selected;
+      button.setAttribute("aria-pressed", String(active));
+
+      if (selector === "[data-color]") {
+        button.classList.toggle("selected-color", active);
+      } else {
+        button.classList.toggle("bg-secondary", active);
+        button.classList.toggle("border-secondary", active);
+        button.classList.toggle("text-soft-white", active);
+        button.classList.toggle("border-border", !active);
+        button.classList.toggle("text-muted", !active);
+      }
+    });
+  }
+
+  function selected(selector) {
+    return $(`${selector}[aria-pressed="true"]`);
+  }
+
+  function update() {
+    const size = selected("[data-size]")?.dataset.size || "Large";
+    const wrap = selected("[data-wrap]");
+    const flowers = $$("[data-flower]");
+    const addons = $$('[data-addon][aria-pressed="true"]');
+
+    const base = BASE[size];
+
+    const flowerTotal = flowers.reduce((total, flower) => {
+      const quantity = Number(flower.querySelector("output").textContent) || 0;
+      return total + Number(flower.dataset.price) * quantity;
+    }, 0);
+
+    const wrapTotal = num(wrap?.dataset.price);
+    const addonTotal = addons.reduce(
+      (total, addon) => total + num(addon.dataset.price),
+      0
     );
-  } else if (button.dataset.size) {
-    selectOption("[data-size]", button);
-  } else if (button.dataset.color) {
-    selectOption("[data-color]", button);
-  } else if (button.dataset.wrap) {
-    selectOption("[data-wrap]", button);
-  } else if (button.dataset.addon) {
-    const selected =
-      button.getAttribute("aria-pressed") === "true";
 
-    button.setAttribute("aria-pressed", String(!selected));
-    button.classList.toggle("selected-option", !selected);
-  } else {
-    return;
+    const totals = {
+      base,
+      fl: flowerTotal,
+      wr: wrapTotal,
+      ad: addonTotal,
+      total: base + flowerTotal + wrapTotal + addonTotal
+    };
+
+    Object.entries(totals).forEach(([key, value]) => {
+      $(`[data-out="${key}"]`).textContent = peso(value);
+    });
+
+    $('[data-out="size"]').textContent = `Base (${size})`;
+
+    $("#config").value = JSON.stringify({
+      size,
+      flowers: Object.fromEntries(
+        flowers
+          .map(flower => [
+            flower.dataset.flower,
+            Number(flower.querySelector("output").textContent) || 0
+          ])
+          .filter(([, quantity]) => quantity > 0)
+      ),
+      color: selected("[data-color]")?.dataset.color || null,
+      wrap: wrap?.dataset.wrap || null,
+      addons: addons.map(addon => addon.dataset.addon)
+    });
   }
+
+  $("#bouquet").addEventListener("click", event => {
+    const button = event.target.closest("button");
+    if (!button) return;
+
+    if (button.dataset.step) {
+      const flower = button.closest("[data-flower]");
+      const output = flower.querySelector("output");
+      const quantity = Number(output.textContent) + Number(button.dataset.step);
+
+      output.textContent = Math.max(0, Math.min(99, quantity));
+    } else if (button.matches("[data-size]")) {
+      selectOption("[data-size]", button);
+    } else if (button.matches("[data-color]")) {
+      selectOption("[data-color]", button);
+    } else if (button.matches("[data-wrap]")) {
+      selectOption("[data-wrap]", button);
+    } else if (button.matches("[data-addon]")) {
+      const active = button.getAttribute("aria-pressed") === "true";
+      button.setAttribute("aria-pressed", String(!active));
+
+      button.classList.toggle("bg-secondary", !active);
+      button.classList.toggle("border-secondary", !active);
+      button.classList.toggle("text-soft-white", !active);
+      button.classList.toggle("border-border", active);
+      button.classList.toggle("text-muted", active);
+    } else {
+      return;
+    }
+
+    update();
+  });
+
+  $("#msg").addEventListener("input", event => {
+    $("#cnt").textContent = event.target.value.length;
+  });
+
+  renderFlowers();
+  renderColors();
+  renderWraps();
+
+  selectOption("[data-size]", $('[data-size="Large"]'));
+  selectOption("[data-color]", $('[data-color="Rose"]'));
 
   update();
 });
-
-// Message character counter.
-$("#msg").addEventListener("input", (event) => {
-  $("#cnt").textContent = event.target.value.length;
-});
-
-// Initial selections and prices.
-selectOption("[data-size]", $('[data-size="Large"]'));
-selectOption("[data-color]", $('[data-color="Rose"]'));
-
-update();
