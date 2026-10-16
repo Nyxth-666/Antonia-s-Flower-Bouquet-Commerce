@@ -66,3 +66,67 @@
         border-radius: var(--radius-button);
     }
     }
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+/* Wrapping colors */
+.color-rose {
+  background-color: #b5506b;
+}
+
+.color-blush {
+  background-color: #f2d8e0;
+}
+
+.color-gold {
+  background-color: #e8a44a;
+}
+
+.color-sage {
+  background-color: #dde9d8;
+}
+
+.color-ivory {
+  background-color: #f6f3ec;
+}
+
+/* Selected wrapping color */
+.color-swatch.selected-color {
+  border-color: #333;
+}
+
+/* Wrapping preview */
+.wrap-preview {
+  display: block;
+  height: 22px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+}
+
+/* Wrapping preview colors */
+.wrap-kraft {
+  background-color: #c9a97f;
+}
+
+.wrap-white {
+  background-color: #f6f3ec;
+}
+
+.wrap-sage {
+  background-color: #dde9d8;
+}
+
+.wrap-wine {
+  background-color: #8f3d55;
+}
