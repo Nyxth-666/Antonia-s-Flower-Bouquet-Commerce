@@ -105,6 +105,31 @@
             </ul>
         </div>
     </section>
+
+    {# FLOWER MEANING CARD #}
+    <section class="mt-24">
+        <div class="mx-auto w-full max-w-[1290px] px-4 sm:px-6">
+            {% include "components/ui/cards/homepage-meaningguide-card.html" %}
+        </div>
+    </section>
+
+    {# BUILD YOUR OWN BOUQUET #}
+    <section aria-labelledby="build-bouquet-heading" class="mt-24 mx-auto w-full max-w-[1440px] -mb-28">
+            <div class="w-full bg-linear-to-b from-[#C6A092] via-[#E8DDD5] via-40% to-[#FAF9F5] to-75% flex flex-col items-center text-center px-4 py-16 md:pt-24">
+                {# ICON #}
+                <img src="{% static "icons/icon-build-own-bouquet.svg" %}" class="size-28">
+
+                {# BODY TEXT #}       
+                <h2 class="text-4xl md:text-5xl font-heading font-bold mb-4 mt-6" id="build-bouquet-heading">Build your own bouquet</h2>
+                <p class="text-sm md:text-base max-w-m px-2">Pick the flowers, the wrapping, the extras — the price updates as you go.</p>
+
+                {# BUTTON #}
+                {% include "components/ui/buttons/homepage-customizationbuild-page-button.html" %}
+
+                {# SHOP ADVANTAGE #}
+                {% include "components/ui/cards/shop-advantage-card.html"%}
+            </div>
+    </section>
     {% endblock %}
 </body>
 </html>
