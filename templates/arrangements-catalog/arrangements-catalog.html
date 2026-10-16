@@ -1,11 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>this is arrangements-catalog</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    {# PAGE-TITLE #}
+    <section class="mt-28 px-16">
+        <h1 class="mb-6 mt-4 font-serif text-5xl font-bold leading-tight md:text-6xl">"Beautifully arranged, <br> thoughtfully given"</h1>
+        <div class="pr-12">
+            <p> From delicate hand-tied bouquets to luxurious floral arrangements, discover a style for every expression. Choose an arrangement that matches the occasion, the feeling, and the person you wish to surprise—or create something entirely your own.</p>
+            <p><br>Choose an arrangement, make it yours, and let every bloom become part of the story.</p>
+        </div>
+    </section>
+
+    {# ARRANGEMENT-TYPE-CARD #}
+    <section class="mt-8 px-4 py-8">
+        <h2 class="font-bold text-center text-4xl py-8 mb-4">Pick a type of arrangement</h2>
+        <ul class="mx-auto grid max-w-299 grid-cols-1 gap-7.75 sm:grid-cols-2 lg:grid-cols-4">
+            {% for type in arrangement_types %}
+                {% include "components/ui/cards/arrangement-type-card.html" with name=type.name image=type.image description=type.description url=type.url only %}
+            {% empty %}
+                <li class="col-span-full py-12 text-center text-sm text-muted">No arrangement types available.</li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}
