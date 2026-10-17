@@ -865,6 +865,9 @@
   .py-1 {
     padding-block: var(--spacing);
   }
+  .py-1\.5 {
+    padding-block: calc(var(--spacing) * 1.5);
+  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
@@ -885,6 +888,9 @@
   }
   .py-16 {
     padding-block: calc(var(--spacing) * 16);
+  }
+  .py-17 {
+    padding-block: calc(var(--spacing) * 17);
   }
   .py-\[7px\] {
     padding-block: 7px;
@@ -1164,6 +1170,21 @@
   }
   .focus-visible\:outline-\[\#7A4035\]:focus-visible {
     outline-color: #7A4035;
+  }
+  .aria-selected\:border-\[\#7A4035\][aria-selected="true"] {
+    border-color: #7A4035;
+  }
+  .aria-selected\:border-secondary[aria-selected="true"] {
+    border-color: var(--color-secondary);
+  }
+  .aria-selected\:bg-\[\#7A4035\][aria-selected="true"] {
+    background-color: #7A4035;
+  }
+  .aria-selected\:bg-secondary[aria-selected="true"] {
+    background-color: var(--color-secondary);
+  }
+  .aria-selected\:text-white[aria-selected="true"] {
+    color: var(--color-white);
   }
   @media (width >= 40rem) {
     .sm\:grid-cols-2 {
