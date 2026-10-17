@@ -1,0 +1,31 @@
+<div class="grid grid-cols-1 overflow-hidden rounded-card border border-border md:grid-cols-2">
+  <div>
+      <img
+          src=""
+          alt="{{ flower.flower }}"
+          class="h-full min-h-[390px] w-full object-cover"
+      >
+  </div>
+
+  <article class="flex flex-col justify-center bg-background-secondary p-8">
+      <p class="mb-4 text-sm italic text-accent">
+          Flower meaning guide
+      </p>
+
+      <h2 class="mb-4 text-3xl font-bold">
+          {{ flower.name }}
+      </h2>
+
+      <p class="leading-relaxed text-muted">
+          {{ flower.description }}
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-2">
+          {% for occasion in flower.occasions %}
+              <span class="rounded-button border border-border px-4 py-2 text-sm text-muted">
+                  {{ occasion }}
+              </span>
+          {% endfor %}
+      </div>
+  </article>
+</div>
