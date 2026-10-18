@@ -1,0 +1,37 @@
+<form id="contact-form" method="post" action=""
+        class="grid content-start gap-7 rounded-card bg-background-secondary px-5 py-8 shadow-[inset_0_0_0_1px_#d9b8ae,inset_0_0_18px_rgba(124,64,56,0.28)] lg:px-[62px] lg:py-[68px]">
+    {% csrf_token %}
+
+    <div class="grid gap-7 sm:grid-cols-2 sm:gap-[21px]">
+        <input type="text" name="first_name" placeholder="First name" aria-label="First name" autocomplete="given-name" required
+                class="h-[60px] w-full rounded-[10px] border border-border bg-card px-6 text-[21px] placeholder:text-muted transition focus:border-primary outline-noneoutline-none">
+        <input type="text" name="last_name" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required
+                class="h-[60px] w-full rounded-[10px] border border-border bg-card px-6 text-[21px] placeholder:text-muted transition focus:border-primary outline-none">
+    </div>
+
+    <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required
+            class="h-[60px] w-full rounded-[10px] border border-border bg-card px-6 text-[21px] placeholder:text-muted transition focus:border-primary outline-none">
+
+    <input type="tel" name="phone" placeholder="Phone Number (optional)" aria-label="Phone number (optional)" autocomplete="tel"
+            class="h-[60px] w-full rounded-[10px] border border-border bg-card px-6 text-[21px] placeholder:text-muted transition focus:border-primary outline-none">
+
+    <textarea name="message" placeholder="Your Message" aria-label="Your message" required
+                class="h-[230px] w-full resize-none rounded-[10px] border border-border bg-card px-6 pt-5 text-[21px] placeholder:text-muted transition focus:border-primary outline-none"></textarea>
+
+    <p class="-mt-[10px] -mb-[2px] text-[10px] leading-[15px]">
+        This website is protected by reCAPTCHA, and the Google
+        <a href="#" class="text-accent hover:underline">Privacy Policy</a> and
+        <a href="#" class="text-accent hover:underline">Terms of Service</a> apply.
+    </p>
+
+    <label class="flex items-center gap-[15px] text-[15px]">
+        <input type="checkbox" name="accept_terms" required
+                class="relative h-[22px] w-[22px] shrink-0 appearance-none rounded-[4px] border border-border bg-card checked:border-secondary checked:bg-secondary checked:after:absolute checked:after:inset-0 checked:after:text-center checked:after:text-[14px] checked:after:leading-[20px] checked:after:text-white checked:after:content-['✓'] transition focus:border-primary outline-none">
+        <span>I accept the <a href="#" class="text-accent hover:underline">terms of agreement</a>.</span>
+    </label>
+
+    <button type="submit"
+            class="h-[61px] rounded-[10px] bg-secondary text-[25px] font-medium text-[#f6efe8] transition-colors hover:bg-primary disabled:opacity-70">
+        Submit
+    </button>
+</form>
