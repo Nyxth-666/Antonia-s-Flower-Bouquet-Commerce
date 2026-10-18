@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Types | Antonia's{% endblock %}
+
+{% block content %}
+<section id="types" class="flex flex-col mx-auto w-full max-w-[1240px] gap-24">
+    <div class="flex flex-col gap-12">
+        <h1 class="font-bold text-6xl max-w-[730px]">
+            “Every Bloom Tells a Story”
+        </h1>
+        <div class="flex flex-col gap-6">
+            <p>
+                Explore a collection of blooms, each carrying its own beauty, character, and meaning. From timeless roses and graceful lilies to cheerful sunflowers and delicate baby's breath, discover the flowers that best express what you wish to say.
+            </p>
+            <p>
+                Find a bloom that speaks to your heart, your occasion, and the person you're giving it to.
+            </p>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-[72px]">
+        <h2 class="font-bold text-center text-4xl">Pick a Type of Flowers</h2>
+        <br>
+        <br>
+        <ul class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+            {% for flowertype in flowertypes %}
+                <li>
+                    {% include "components/ui/cards/flowertype-card.html" with flowertype=flowertype %}
+                </li>
+            {% empty %}
+                <li class="col-span-full text-center">No flower types are available yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}
