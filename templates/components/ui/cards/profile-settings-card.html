@@ -1,4 +1,4 @@
-{# Comment out user authentication later #}
+{% comment %} Comment out user authentication later, placeholder urls: logout {% endcomment %}
 {% load static %}
 <article class="font-sans mx-auto mt-4 flex w-full max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
     {# PREFERENCES #}
@@ -14,17 +14,17 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-3">
-            <h2 class="text-[20px] font-bold text-foreground ">Change password</h2>
+        <form method="post flex flex-col gap-3">
+            <h2 class="text-[20px] font-bold text-foreground mb-6">Change password</h2>
             {% include "components/ui/forms/profile_form.html" with label="Current password" name="current-passsword" type="password" class="bg-white" only%}
-            <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-2 mt-2">
                 {% include "components/ui/forms/profile_form.html" with label="New password" name="new-password" type="password" class="bg-white" only%}
                 {% include "components/ui/forms/profile_form.html" with label="Confirm new password" name="confirm-new-password" type="password" class="bg-white" only%}
             </div>
-        </div>
 
-        {# BUTTON - CHANGE PASSWORD #}
-        <button type="submit" class="bg-secondary text-white w-full h-12">Update password</button>
+            {# BUTTON - CHANGE PASSWORD #}
+            <button type="submit" class="bg-secondary text-white w-full h-12 mt-6">Update password</button>
+        </form>
 
         {# SIGN OUT #}
         {% comment %} <form method="post" action="{% url 'logout' %}">
