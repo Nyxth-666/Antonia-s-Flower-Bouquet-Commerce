@@ -1,5 +1,59 @@
-<section class="px-16 py-4">
-    <div class="mx-auto mt-4 bg-card w-298 h-84.75 border border-border rounded-card">
-        <h2 class="text-5xl text-center text-accent">MY ORDERS</h2>
+{% comment %}
+    variables used:
+        order_id, order_date, status, item, price, item_count, step, delivered
+    context: sample_order, steps
+{% endcomment %}
+{% load static %}
+
+<section class="px-4 py-4 md:px-16">
+    <div class="mx-auto mt-4 flex w-full max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
+        <h2 class="text-4xl font-medium text-foreground">My Orders and History</h2>
+
+        {% comment %} ORDER LIST {% endcomment %}
+        <div class="divide-y divide-border font-sans">
+            {% for x in sample_order %}
+                <article class="flex flex-col gap-3 py-6 first:pt-0 last:pb-0">
+                    {% comment %} ORDER HEADER {% endcomment %}
+                    <div class="grid grid-cols-3 items-center">
+                        <p class="text-base font-bold text-foreground">{{ x.order_id }}</p>
+                        <p class="text-center text-sm">{{ x.order_date }}</p>
+                        <span class="flex h-6.75 min-w-20 w-fit items-center justify-center justify-self-end whitespace-nowrap rounded-full px-3 text-xs text-white
+                            {% if x.status == 'Delivered' %}bg-success{% else %}bg-error{% endif %}">
+                            {{ x.status }}
+                        </span>
+                    </div>
+
+                    {% comment %} ORDER DETAILS {% endcomment %}
+                    <div class="flex flex-col">
+                        <p class="text-base font-medium text-foreground">{{ x.item }} • {{ x.price }}</p>
+                        <p class="text-sm text-[#6B5B4F]">{{ x.item_count }}</p>
+                    </div>
+
+                    {% comment %} 
+                    ORDER STEPPER: 
+                        green for delivered
+                        red for current and finished step
+                        orange for pending step 
+                    {% endcomment %}
+                    <ol class="flex flex-wrap gap-x-2 gap-y-1">
+                        {% for label in steps %}
+                            <li class="flex w-54.75 items-center gap-1.5 text-xs font-medium leading-3.75 text-foreground">
+                                <span class="size-2.5 shrink-0 rounded-full
+                                    {% if x.status == "Delivered" %}bg-success
+                                    {% elif forloop.counter0 <= x.step %}bg-error
+                                    {% else %}bg-[#F08A24]{% endif %}"></span>
+                                {{ label }}
+                            </li>
+                        {% endfor %}
+                    </ol>
+
+                    {% comment %} VIEW ORDER DETAILS {% endcomment %}
+                    <a href="#" class="flex flex-row gap-2 text-[14px] font-semibold text-foreground">
+                        View purchase details
+                        <img src="{% static 'icons/order-detail-arrow.svg' %}" alt="">
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
     </div>
 </section>

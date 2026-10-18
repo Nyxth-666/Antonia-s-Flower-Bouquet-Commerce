@@ -54,6 +54,8 @@
     --color-border: #C9BFB0;
     --color-foreground: #2F211D;
     --color-muted: #75645C;
+    --color-success: #68735D;
+    --color-error: #8B3830;
     --radius-card: 20px;
     --radius-button: 10px;
     --font-global: 18px;
@@ -346,6 +348,10 @@
   .inline-flex {
     display: inline-flex;
   }
+  .size-2\.5 {
+    width: calc(var(--spacing) * 2.5);
+    height: calc(var(--spacing) * 2.5);
+  }
   .size-6 {
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
@@ -381,6 +387,9 @@
   .size-full {
     width: 100%;
     height: 100%;
+  }
+  .h-6\.75 {
+    height: calc(var(--spacing) * 6.75);
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
@@ -436,14 +445,23 @@
   .w-39\.5 {
     width: calc(var(--spacing) * 39.5);
   }
+  .w-54\.75 {
+    width: calc(var(--spacing) * 54.75);
+  }
   .w-298 {
     width: calc(var(--spacing) * 298);
   }
   .w-\[1200px\] {
     width: 1200px;
   }
+  .w-fit {
+    width: fit-content;
+  }
   .w-full {
     width: 100%;
+  }
+  .max-w-298 {
+    max-width: calc(var(--spacing) * 298);
   }
   .max-w-299 {
     max-width: calc(var(--spacing) * 299);
@@ -472,6 +490,9 @@
   .min-w-0 {
     min-width: 0px;
   }
+  .min-w-20 {
+    min-width: calc(var(--spacing) * 20);
+  }
   .flex-1 {
     flex: 1;
   }
@@ -495,6 +516,9 @@
   }
   .flex-col {
     flex-direction: column;
+  }
+  .flex-row {
+    flex-direction: row;
   }
   .flex-wrap {
     flex-wrap: wrap;
@@ -581,6 +605,25 @@
     --tw-space-y-reverse: 0;
     margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  .gap-x-2 {
+    column-gap: calc(var(--spacing) * 2);
+  }
+  .gap-y-1 {
+    row-gap: var(--spacing);
+  }
+  :where(.divide-y > :not(:last-child)) {
+    --tw-divide-y-reverse: 0;
+    border-bottom-style: var(--tw-border-style);
+    border-top-style: var(--tw-border-style);
+    border-top-width: calc(1px * var(--tw-divide-y-reverse));
+    border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  }
+  :where(.divide-border > :not(:last-child)) {
+    border-color: var(--color-border);
+  }
+  .justify-self-end {
+    justify-self: flex-end;
   }
   .truncate {
     overflow: hidden;
@@ -683,6 +726,9 @@
   .bg-\[\#E8E3D5\] {
     background-color: #E8E3D5;
   }
+  .bg-\[\#F08A24\] {
+    background-color: #F08A24;
+  }
   .bg-\[\#FAF9F5\] {
     background-color: #FAF9F5;
   }
@@ -719,8 +765,14 @@
   .bg-card {
     background-color: var(--color-card);
   }
+  .bg-error {
+    background-color: var(--color-error);
+  }
   .bg-secondary {
     background-color: var(--color-secondary);
+  }
+  .bg-success {
+    background-color: var(--color-success);
   }
   .bg-transparent {
     background-color: transparent;
@@ -768,6 +820,9 @@
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
   }
   .px-3\.5 {
     padding-inline: calc(var(--spacing) * 3.5);
@@ -871,6 +926,9 @@
   .text-right {
     text-align: right;
   }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
   .font-serif {
     font-family: var(--font-serif);
   }
@@ -926,6 +984,10 @@
   .text-\[19px\] {
     font-size: 19px;
   }
+  .leading-3\.75 {
+    --tw-leading: calc(var(--spacing) * 3.75);
+    line-height: calc(var(--spacing) * 3.75);
+  }
   .leading-\[17px\] {
     --tw-leading: 17px;
     line-height: 17px;
@@ -960,6 +1022,9 @@
   }
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+  .text-\[\#6B5B4F\] {
+    color: #6B5B4F;
   }
   .text-accent {
     color: var(--color-accent);
@@ -1034,6 +1099,12 @@
   }
   .placeholder\:text-secondary::placeholder {
     color: var(--color-secondary);
+  }
+  .first\:pt-0:first-child {
+    padding-top: 0px;
+  }
+  .last\:pb-0:last-child {
+    padding-bottom: 0px;
   }
   .focus-within\:border-accent:focus-within {
     border-color: var(--color-accent);
@@ -1122,6 +1193,9 @@
     .md\:px-4 {
       padding-inline: calc(var(--spacing) * 4);
     }
+    .md\:px-16 {
+      padding-inline: calc(var(--spacing) * 16);
+    }
     .md\:py-0 {
       padding-block: 0px;
     }
@@ -1206,6 +1280,11 @@
   }
 }
 @property --tw-space-y-reverse {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-divide-y-reverse {
   syntax: "*";
   inherits: false;
   initial-value: 0;
@@ -1363,6 +1442,7 @@
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-space-y-reverse: 0;
+      --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
       --tw-gradient-position: initial;
       --tw-gradient-from: #0000;
