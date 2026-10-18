@@ -23,13 +23,13 @@
             </div>
 
             {# BUTTON - CHANGE PASSWORD #}
-            <button type="submit" class="bg-secondary text-white w-full h-12 mt-6">Update password</button>
+            <button type="submit" class="hover:opacity-80 hover:-translate-y-0.5 transition bg-secondary text-white w-full h-12 mt-6 focus-visible:outline focus-visible:outline-offset-2">Update password</button>
         </form>
 
         {# SIGN OUT #}
         {% comment %} <form method="post" action="{% url 'logout' %}">
             {% csrf_token %} {% endcomment %}
-            <button type="submit" class="bg-white text-secondary border border-secondary w-full h-12">Sign out</button>
+            <button type="submit" class="bg-white text-secondary border border-secondary hover:opacity-80 hover:-translate-y-0.5 transition w-full h-12 focus-visible:outline focus-visible:outline-offset-2">Sign out</button>
         {% comment %} </form>  {% endcomment %}
 
         {% comment %} {% else %}
