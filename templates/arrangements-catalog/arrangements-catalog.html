@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<div class="w-full max-w-[1240px] mt-28 mb-28">
     {# PAGE-TITLE #}
-    <section class="mt-28 px-16">
+    <section>
         <h1 class="mb-6 mt-4 font-serif text-5xl font-bold leading-tight md:text-6xl">"Beautifully arranged, <br> thoughtfully given"</h1>
         <div class="pr-12">
             <p> From delicate hand-tied bouquets to luxurious floral arrangements, discover a style for every expression. Choose an arrangement that matches the occasion, the feeling, and the person you wish to surprise—or create something entirely your own.</p>
@@ -11,7 +13,7 @@
     </section>
 
     {# ARRANGEMENT-TYPE-CARD #}
-    <section class="mt-8 px-4 py-8">
+    <section class="mt-8">
         <h2 class="font-bold text-center text-4xl py-8 mb-4">Pick a type of arrangement</h2>
         <ul class="mx-auto grid max-w-299 grid-cols-1 gap-7.75 sm:grid-cols-2 lg:grid-cols-4">
             {% for type in arrangement_types %}
@@ -21,4 +23,5 @@
             {% endfor %}
         </ul>
     </section>
+</div>
 {% endblock %}

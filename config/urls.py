@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.about import views
+app_name = "types_of_flowers"
 urlpatterns = [
     path("admin/", admin.site.urls),
 
@@ -16,4 +18,5 @@ urlpatterns = [
     path("favorites/", include("apps.favorites.urls")),
     path("about/", include("apps.about.urls")),
     path("contact/", include("apps.contact.urls")),
+    path("types-of-flowers/", include("apps.types_of_flowers.urls")),
 ]
