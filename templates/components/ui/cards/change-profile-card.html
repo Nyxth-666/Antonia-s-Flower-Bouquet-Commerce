@@ -7,12 +7,12 @@
             {% csrf_token %}
 
             {# FULL NAME #}
-            {% include "components/ui/forms/profile_form.html" with label="Full name" name="full_name" placeholder=user.get_full_name|default:"No registered user yet" only %}
+            {% include "components/ui/forms/profile_form.html" with label="Full name" name="full_name" placeholder=user.get_full_name only %}
 
             {# EMAIL + PHONE #}
             <div class="grid gap-6 md:grid-cols-2">
-                {% include "components/ui/forms/profile_form.html" with label="Email address" name="email" type="email" placeholder=user.email|default:"No registered user yet" only %}
-                {% include "components/ui/forms/profile_form.html" with label="Phone number" name="phone" type="tel" placeholder=user.phone|default:"No registered user yet" only %}
+                {% include "components/ui/forms/profile_form.html" with label="Email address" name="email" type="email" placeholder=user.email only %}
+                {% include "components/ui/forms/profile_form.html" with label="Phone number" name="phone" type="tel" placeholder=user.phone only %}
             </div>
 
             {# SAVE BUTTON #}

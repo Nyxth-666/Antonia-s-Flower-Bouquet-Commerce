@@ -9,7 +9,7 @@ PROFILE_TABS = [
 SAMPLE_ORDER = [
     {"order_id": "PS-48213", "order_date": "Sep 12, 2026", "status": "Delivered",
      "item": "Medium Custom Bouquet", "price": "₱1180", "item_count": "1 item"},
-    {"order_id": "PS-48214", "order_date": "Sep 12, 2026", "status": "Out for Delivery",
+    {"order_id": "PS-48214", "order_date": "Sep 12, 2026", "status": "Out for delivery",
      "item": "Medium Custom Bouquet", "price": "₱1180", "item_count": "1 item"},
     {"order_id": "PS-48215", "order_date": "Sep 12, 2026", "status": "Confirmed",
      "item": "Medium Custom Bouquet", "price": "₱1180", "item_count": "1 item"},

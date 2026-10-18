@@ -230,32 +230,14 @@
   .inset-x-0 {
     inset-inline: 0px;
   }
-  .top-12 {
-    top: calc(var(--spacing) * 12);
-  }
   .top-20 {
     top: calc(var(--spacing) * 20);
-  }
-  .top-24 {
-    top: calc(var(--spacing) * 24);
-  }
-  .right-0 {
-    right: 0px;
   }
   .bottom-0 {
     bottom: 0px;
   }
-  .left-16 {
-    left: calc(var(--spacing) * 16);
-  }
-  .left-18 {
-    left: calc(var(--spacing) * 18);
-  }
   .left-19 {
     left: calc(var(--spacing) * 19);
-  }
-  .left-20 {
-    left: calc(var(--spacing) * 20);
   }
   .z-10 {
     z-index: 10;
@@ -710,16 +692,6 @@
   .gap-y-1 {
     row-gap: var(--spacing);
   }
-  :where(.divide-y > :not(:last-child)) {
-    --tw-divide-y-reverse: 0;
-    border-bottom-style: var(--tw-border-style);
-    border-top-style: var(--tw-border-style);
-    border-top-width: calc(1px * var(--tw-divide-y-reverse));
-    border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-  }
-  :where(.divide-border > :not(:last-child)) {
-    border-color: var(--color-border);
-  }
   .justify-self-end {
     justify-self: flex-end;
   }
@@ -871,9 +843,6 @@
   .bg-error {
     background-color: var(--color-error);
   }
-  .bg-foreground {
-    background-color: var(--color-foreground);
-  }
   .bg-primary-dark {
     background-color: var(--color-primary-dark);
   }
@@ -984,9 +953,6 @@
   .py-12 {
     padding-block: calc(var(--spacing) * 12);
   }
-  .py-16 {
-    padding-block: calc(var(--spacing) * 16);
-  }
   .py-\[13px\] {
     padding-block: 13px;
   }
@@ -1010,9 +976,6 @@
   }
   .pb-2\.5 {
     padding-bottom: calc(var(--spacing) * 2.5);
-  }
-  .pb-4 {
-    padding-bottom: calc(var(--spacing) * 4);
   }
   .pb-7 {
     padding-bottom: calc(var(--spacing) * 7);
@@ -1278,12 +1241,6 @@
   .placeholder\:text-secondary::placeholder {
     color: var(--color-secondary);
   }
-  .first\:pt-0:first-child {
-    padding-top: 0px;
-  }
-  .last\:pb-0:last-child {
-    padding-bottom: 0px;
-  }
   .checked\:border-secondary:checked {
     border-color: var(--color-secondary);
   }
@@ -1547,11 +1504,6 @@
   inherits: false;
   initial-value: 0;
 }
-@property --tw-divide-y-reverse {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0;
-}
 @property --tw-border-style {
   syntax: "*";
   inherits: false;
@@ -1709,7 +1661,6 @@
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-space-y-reverse: 0;
-      --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
       --tw-gradient-position: initial;
       --tw-gradient-from: #0000;
