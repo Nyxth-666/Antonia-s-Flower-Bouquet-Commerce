@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpRequest
 
 PROFILE_TABS = [
-    {"page": "profile",  "label": "Profile",   "template": "accounts/profile.html"},
-    {"page": "orders",   "label": "My Orders", "template": "accounts/my-orders.html"},
-    {"page": "settings", "label": "Settings",  "template": "accounts/settings.html"},
+    {"page": "profile",  "label": "Profile",   "template": "components/ui/cards/change-profile-card.html"},
+    {"page": "orders",   "label": "My Orders", "template": "components/ui/cards/my-orders-card.html"},
+    {"page": "settings", "label": "Settings",  "template": "components/ui/cards/profile-settings-card.html"},
 ]
 
 def accounts_page(request):
