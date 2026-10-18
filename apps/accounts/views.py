@@ -13,6 +13,8 @@ SAMPLE_ORDER = [
      "item": "Medium Custom Bouquet", "price": "₱1180", "item_count": "1 item"},
     {"order_id": "PS-48215", "order_date": "Sep 12, 2026", "status": "Confirmed",
      "item": "Medium Custom Bouquet", "price": "₱1180", "item_count": "1 item"},
+    {"order_id": "PS-48215", "order_date": "Sep 12, 2026", "status": "Preparing",
+    "item": "Medium Custom Bouquet", "price": "₱1180", "item_count": "1 item"},
 ]
 STATUS_STEPS = {"Confirmed": 0, "Preparing": 1, "Out for delivery": 2, "Delivered": 3}
 ORDER_STEPS = list(STATUS_STEPS)

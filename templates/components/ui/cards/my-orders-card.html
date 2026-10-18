@@ -10,9 +10,9 @@
         <h2 class="text-4xl font-medium text-foreground">My Orders and History</h2>
 
         {% comment %} ORDER LIST {% endcomment %}
-        <div class="divide-y divide-border font-sans">
+        <div id="order-list" class="-my-6 flex flex-col font-sans [&>article:not(.hidden)~article:not(.hidden)]:border-t [&>article:not(.hidden)~article:not(.hidden)]:border-border">
             {% for x in sample_order %}
-                <article class="flex flex-col gap-3 py-6 first:pt-0 last:pb-0">
+                <article class="flex flex-col gap-3 py-6">
                     {% comment %} ORDER HEADER {% endcomment %}
                     <div class="grid grid-cols-3 items-center">
                         <p class="text-base font-bold text-foreground">{{ x.order_id }}</p>
@@ -55,5 +55,11 @@
                 </article>
             {% endfor %}
         </div>
+
+        {% comment %} PAGINATION {% endcomment %}
+        <nav id="orders-pager" aria-label="Orders pagination" class="flex items-center justify-center gap-2 text-sm"></nav>
     </div>
 </section>
+
+{% comment %} PAGINATION SCRIPT: 3 orders per page {% endcomment %}
+<script src="{% static 'js/my-orders-pagination.js' %}" defer></script>

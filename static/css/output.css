@@ -275,6 +275,9 @@
   .mx-auto {
     margin-inline: auto;
   }
+  .-my-6 {
+    margin-block: calc(var(--spacing) * -6);
+  }
   .-mt-\[10px\] {
     margin-top: calc(10px * -1);
   }
@@ -441,6 +444,9 @@
   .h-6\.75 {
     height: calc(var(--spacing) * 6.75);
   }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
+  }
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
@@ -566,6 +572,9 @@
   }
   .min-w-0 {
     min-width: 0px;
+  }
+  .min-w-9 {
+    min-width: calc(var(--spacing) * 9);
   }
   .min-w-20 {
     min-width: calc(var(--spacing) * 20);
@@ -861,6 +870,9 @@
   }
   .bg-error {
     background-color: var(--color-error);
+  }
+  .bg-foreground {
+    background-color: var(--color-foreground);
   }
   .bg-primary-dark {
     background-color: var(--color-primary-dark);
@@ -1371,6 +1383,9 @@
   .focus-visible\:outline-\[\#7A4035\]:focus-visible {
     outline-color: #7A4035;
   }
+  .disabled\:opacity-40:disabled {
+    opacity: 40%;
+  }
   .disabled\:opacity-70:disabled {
     opacity: 70%;
   }
@@ -1497,6 +1512,13 @@
     .xl\:grid-cols-6 {
       grid-template-columns: repeat(6, minmax(0, 1fr));
     }
+  }
+  .\[\&\>article\:not\(\.hidden\)\~article\:not\(\.hidden\)\]\:border-t > article:not(.hidden) ~ article:not(.hidden) {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
+  .\[\&\>article\:not\(\.hidden\)\~article\:not\(\.hidden\)\]\:border-border > article:not(.hidden) ~ article:not(.hidden) {
+    border-color: var(--color-border);
   }
 }
 @layer base {
