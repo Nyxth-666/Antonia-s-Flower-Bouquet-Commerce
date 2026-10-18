@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @source "../../templates";
-
+@source "../js";
 @theme {
     /* Brand Colors */
     --color-primary: #5A211B;
@@ -66,3 +66,4 @@
         border-radius: var(--radius-button);
     }
     }
+
