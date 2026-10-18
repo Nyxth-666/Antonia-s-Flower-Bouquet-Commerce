@@ -1,11 +1,13 @@
+{% load static %}
+
 <div class="grid grid-cols-1 overflow-hidden rounded-card border border-border md:grid-cols-2">
-  <div>
-      <img
-          src=""
-          alt="{{ flower.flower }}"
-          class="h-full min-h-[390px] w-full object-cover"
-      >
-  </div>
+    <div class="h-[420px] md:h-[500px] lg:h-[560px]">
+        <img
+            src="{% static flower.img %}"
+            alt="{{ flower.flower }}"
+            class="h-full w-full object-cover"
+        >
+    </div>
 
   <article class="flex flex-col justify-center bg-background-secondary p-8">
       <p class="mb-4 text-sm italic text-accent">
