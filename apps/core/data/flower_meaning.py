@@ -9,7 +9,7 @@ FLOWER_MEANINGS = [
             "devotion, warmth, and the courage to pursue what matters most."
         ),
         "occasions": ["Birthday", "Congratulations", "Romantic Date", "New Beginnings"],
-        "img": "image/flower_meaning/aries-honeysuckle.jpg",
+        "img": "images/flower_meaning/aries-honeysuckle.png",
     },
     {
         "zodiac": "Taurus",
@@ -21,7 +21,7 @@ FLOWER_MEANINGS = [
             "It is a thoughtful flower for expressing love, loyalty, and a sense of peace."
         ),
         "occasions": ["Anniversary", "Birthday", "Thank You", "Romantic Date"],
-        "img": "image/flower_meaning/taurus-poppy.jpg",
+        "img": "images/flower_meaning/taurus-poppy.png",
     },
     {
         "zodiac": "Gemini",
@@ -33,7 +33,7 @@ FLOWER_MEANINGS = [
             "making it a lovely reminder to stay curious and open to new experiences."
         ),
         "occasions": ["Birthday", "Friendship", "Graduation", "Get Well Soon"],
-        "img": "image/flower_meaning/gemini-lavender.jpg",
+        "img": "images/flower_meaning/gemini-lavender.png",
     },
     {
         "zodiac": "Cancer",
@@ -45,7 +45,7 @@ FLOWER_MEANINGS = [
             "deep devotion to the people they hold close."
         ),
         "occasions": ["Birthday", "Thank You", "Sympathy", "Mother's Day"],
-        "img": "image/flower_meaning/cancer-white-rose.jpg",
+        "img": "images/flower_meaning/cancer-white-rose.png",
     },
     {
         "zodiac": "Leo",
@@ -57,7 +57,7 @@ FLOWER_MEANINGS = [
             "positivity, and the kind of presence that makes others feel seen."
         ),
         "occasions": ["Birthday", "Congratulations", "Graduation", "Just Because"],
-        "img": "image/flower_meaning/leo-sunflower.jpg",
+        "img": "images/flower_meaning/leo-sunflower.png",
     },
     {
         "zodiac": "Virgo",
@@ -69,7 +69,7 @@ FLOWER_MEANINGS = [
             "appearance offers a simple message of happiness, care, and sincerity."
         ),
         "occasions": ["Birthday", "Thank You", "Get Well Soon", "Friendship"],
-        "img": "image/flower_meaning/virgo-buttercup.jpg",
+        "img": "images/flower_meaning/virgo-buttercup.png",
     },
     {
         "zodiac": "Libra",
@@ -81,7 +81,7 @@ FLOWER_MEANINGS = [
             "and appreciation, making it a timeless choice for celebrating a special bond."
         ),
         "occasions": ["Anniversary", "Valentine's Day", "Wedding", "Romantic Date"],
-        "img": "image/flower_meaning/libra-rose.jpg",
+        "img": "images/flower_meaning/libra-rose.png",
     },
     {
         "zodiac": "Scorpio",
@@ -93,7 +93,7 @@ FLOWER_MEANINGS = [
             "resilience, and a bond that grows stronger with time."
         ),
         "occasions": ["Birthday", "Anniversary", "Romantic Date", "Thank You"],
-        "img": "image/flower_meaning/scorpio-chrysanthemum.jpg",
+        "img": "images/flower_meaning/scorpio-chrysanthemum.png",
     },
     {
         "zodiac": "Sagittarius",
@@ -105,7 +105,7 @@ FLOWER_MEANINGS = [
             "and encouragement to keep exploring the world with an open mind."
         ),
         "occasions": ["Birthday", "Graduation", "Congratulations", "Travel Send-Off"],
-        "img": "image/flower_meaning/sagittarius-carnation.jpg",
+        "img": "images/flower_meaning/sagittarius-carnation.png",
     },
     {
         "zodiac": "Capricorn",
@@ -117,7 +117,7 @@ FLOWER_MEANINGS = [
             "remembrance, respect, and appreciation for someone who never gives up."
         ),
         "occasions": ["Birthday", "Promotion", "Congratulations", "Thank You"],
-        "img": "image/flower_meaning/capricorn-pansy.jpg",
+        "img": "images/flower_meaning/capricorn-pansy.png",
     },
     {
         "zodiac": "Aquarius",
@@ -129,7 +129,7 @@ FLOWER_MEANINGS = [
             "the beauty of being unapologetically yourself."
         ),
         "occasions": ["Birthday", "Graduation", "Housewarming", "Congratulations"],
-        "img": "image/flower_meaning/aquarius-orchid.jpg",
+        "img": "images/flower_meaning/aquarius-orchid.png",
     },
     {
         "zodiac": "Pisces",
@@ -141,6 +141,6 @@ FLOWER_MEANINGS = [
             "and gentle affection for someone who feels deeply."
         ),
         "occasions": ["Birthday", "Sympathy", "Get Well Soon", "Just Because"],
-        "img": "image/flower_meaning/pisces-water-lily.jpg",
+        "img": "images/flower_meaning/pisces-water-lily.png",
     },
 ]
