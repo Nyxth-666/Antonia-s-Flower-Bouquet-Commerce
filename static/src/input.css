@@ -35,7 +35,10 @@
 
     /* Font Size */
     --font-global: 18px;
-    }
+
+    /* Shadow Card */
+    --shadow-card: 0px 5px 15px 0px rgba(61, 23, 20, 0.25);
+}
 
 @layer base {
     html {
