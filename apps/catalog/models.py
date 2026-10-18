@@ -8,19 +8,21 @@ class Occasion(models.Model):
     def __str__(self):
         return self.name
     
-class Bouquet(models.Model):
-    COLOR_CHOICES = [
-        ("Blue", "Blue"),
-        ("Champagne", "Champagne"),
-        ("Green", "Green"),
-        ("Orange", "Orange"),
-        ("Pink", "Pink"),
-        ("Purple", "Purple"),
-        ("Red", "Red"),
-        ("White", "White"),
-        ("Yellow", "Yellow"),
-    ]
+class Color(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    hex_code = models.CharField(
+        max_length=7,
+        help_text="Enter a HEX color code, e.g. #FFC0CB",
+    )
 
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = "Colors"
+
+    def __str__(self):
+        return self.name
+    
+class Bouquet(models.Model):
     FLOWER_TYPE_CHOICES = [
         ("Carnation", "Carnation"),
         ("Gerberas", "Gerberas"),
@@ -62,9 +64,10 @@ class Bouquet(models.Model):
         choices=ARRANGEMENT_CHOICES,
     )
 
-    color = models.CharField(
-        max_length=30,
-        choices=COLOR_CHOICES,
+    color = models.ManyToManyField(
+        Color,
+        blank=True,
+        related_name="bouquets",
     )
 
     occasions = models.ManyToManyField(
