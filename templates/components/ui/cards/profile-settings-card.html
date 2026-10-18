@@ -1,5 +1,11 @@
-<section class="px-16 py-4">
-    <div class="mx-auto mt-4 bg-card w-298 h-84.75 border border-border rounded-card">
-        <h2 class="text-5xl text-center text-accent">SETTINGS</h2>
+{% load static %}
+<article class="font-sans mx-auto mt-4 flex w-full max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
+    {% comment %} NOTIFICATION {% endcomment %}
+    <div class="flex flex-col gap-3">
+        <h2 class="text-[20px] font-bold text-foreground ">Notifications</h2>
+        <div>
+            {% include 'components/ui/buttons/profile-preferences-button.html' with title="Order update by email" %}
+            {% include 'components/ui/buttons/profile-preferences-button.html' with title="Promotional and seasonal offers" %}
+        </div>
     </div>
-</section>
+</article>

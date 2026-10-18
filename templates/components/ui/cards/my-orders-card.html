@@ -13,13 +13,9 @@
                         <p class="text-base font-bold text-foreground">{{ x.order_id }}</p>
                         <p class="text-center text-sm">{{ x.order_date }}</p>
                         <span class="flex h-6.75 min-w-20 w-fit items-center justify-center justify-self-end whitespace-nowrap rounded-full px-3 text-xs text-white
-                            {% if x.status == 'Delivered' %}    
-                                bg-success
-                            {% elif x.status == 'Confirmed' or x.status == 'Preparing' or x.status == 'Out for delivery' %}
-                                bg-[#F08A24]
-                            {% else %}
-                                bg-error
-                            {% endif %}">
+                            {% if x.status == 'Delivered' %} bg-success
+                            {% elif x.status == 'Confirmed' or x.status == 'Preparing' or x.status == 'Out for delivery' %}  bg-[#F08A24]
+                            {% else %}  bg-error {% endif %}">
                             {{ x.status }}
                         </span>
                     </div>
@@ -48,12 +44,18 @@
                         View purchase details
                         <img src="{% static 'icons/order-detail-arrow.svg' %}" alt="">
                     </a>
+
+                    {% comment %} PAGINATION SCRIPT: 3 orders per page {% endcomment %}
+                    <script src="{% static 'js/my-orders-pagination.js' %}" defer></script>
                 </article>
+            {% empty %}
+                <div class="mt-24 mb-24 flex min-h-24 flex-col items-center justify-center text-center">
+                    <h2 class="font-bold text-2xl text-foreground">No history</h2>
+                    <p class="text-sm text-muted">Your orders will appear here</p>
+                </div>
             {% endfor %}
         </div>
         {% comment %} PAGINATION {% endcomment %}
         <nav id="orders-pager" aria-label="Orders pagination" class="flex items-center justify-center gap-2 text-sm"></nav>
     </div>
 </section>
-{% comment %} PAGINATION SCRIPT: 3 orders per page {% endcomment %}
-<script src="{% static 'js/my-orders-pagination.js' %}" defer></script>
