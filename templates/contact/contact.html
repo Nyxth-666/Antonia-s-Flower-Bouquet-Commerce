@@ -1,11 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Us – Antonia’s</title>
 </head>
 <body>
-    <p>this is contact</p>
+    {% block content %}
+    <nav aria-label="Breadcrumb" class="-mt-[120px] px-4 pt-[50px] pb-7 text-center text-base leading-6 text-[#6b5a52]">
+        Home<span class="mx-2">/</span><span class="text-[#2a1a14]">Contact us</span>
+    </nav>
+
+    <div class="relative pb-[126px]">
+        <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-[300px] bg-[linear-gradient(var(--color-primary-dark)_calc(100%-47px),var(--color-secondary)_calc(100%-22px))] lg:h-[433px]"></div>
+
+        <div class="relative mx-auto grid w-full max-w-[1210px] gap-8 px-6 lg:grid-cols-[1fr_52.2%] lg:gap-0">
+
+            <!-- Left: contact info -->
+            <section class="flex flex-col">
+                <h1 class="mb-[15px] font-serif text-4xl font-bold leading-[1.1] text-[#2a1a14] lg:text-[48px]">Contact Us</h1>
+                <p class="mb-8 max-w-[480px] text-[15px] leading-[18px] text-[#6b5a52] lg:mb-[60px]">
+                    Have Questions About Our Blooms or Need Help Making Your Special Moments More Meaningful?
+                </p>
+
+                <h2 class="mb-2 font-serif text-[18px] font-bold uppercase leading-6 tracking-[0.04em] text-primary">Phone number:</h2>
+                <p class="mb-7 text-[15px] leading-6 text-[#6b5a52]">+63 1234567890</p>
+
+                <h2 class="mb-2 font-serif text-[18px] font-bold uppercase leading-6 tracking-[0.04em] text-primary">Email:</h2>
+                <p class="mb-7 text-[15px] leading-6 text-[#6b5a52]">Antonias@gmail.com</p>
+
+                <h2 class="mb-3 font-serif text-[18px] font-bold uppercase leading-6 tracking-[0.04em] text-primary">Socials:</h2>
+                <div class="flex gap-[22px]">
+                    <a href="#" aria-label="Facebook" class="inline-flex opacity-80 transition-opacity hover:opacity-100">
+                        <img src="{% static 'icons/facebook-icon.svg' %}" alt="" width="22" height="22" class="h-[22px] w-[22px]">
+                    </a>
+                    <a href="#" aria-label="Instagram" class="inline-flex opacity-80 transition-opacity hover:opacity-100">
+                        <img src="{% static 'icons/instagram-icon.svg' %}" alt="" width="22" height="22" class="h-[22px] w-[22px]">
+                    </a>
+                    <a href="#" aria-label="TikTok" class="inline-flex opacity-80 transition-opacity hover:opacity-100">
+                        <img src="{% static 'icons/tiktok-icon.svg' %}" alt="" width="22" height="22" class="h-[22px] w-[22px]">
+                    </a>
+                    <a href="#" aria-label="GitHub" class="inline-flex opacity-80 transition-opacity hover:opacity-100">
+                        <img src="{% static 'icons/github-icon.svg' %}" alt="" width="22" height="22" class="h-[22px] w-[22px]">
+                    </a>
+                </div>
+
+                <p class="mt-2 max-w-[500px] text-[15px] leading-[18px] text-[#2a1a14] lg:mt-[206px] lg:text-[#f3e9e0]">
+                    Whether you have questions about our bouquets, need help with an order, or have a special floral request, we’re here to help. Get in touch with us, and let Antonia’s make your meaningful moments bloom.
+                </p>
+            </section>
+
+            <!-- Right: form -->
+            <form id="contact-form" method="post" action=""
+                  class="grid content-start gap-7 rounded-[24px] bg-background-secondary px-5 py-8 shadow-[inset_0_0_0_1px_#d9b8ae,inset_0_0_18px_rgba(124,64,56,0.28)] lg:px-[62px] lg:py-[68px]">
+                {% csrf_token %}
+
+                <div class="grid gap-7 sm:grid-cols-2 sm:gap-[21px]">
+                    <input type="text" name="first_name" placeholder="First name" aria-label="First name" autocomplete="given-name" required
+                           class="h-[60px] w-full rounded-[10px] border border-[#d9b8ae] bg-card px-6 text-[21px] text-[#2a1a14] placeholder:text-[#6b5a52] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary">
+                    <input type="text" name="last_name" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required
+                           class="h-[60px] w-full rounded-[10px] border border-[#d9b8ae] bg-card px-6 text-[21px] text-[#2a1a14] placeholder:text-[#6b5a52] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary">
+                </div>
+
+                <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required
+                       class="h-[60px] w-full rounded-[10px] border border-[#d9b8ae] bg-card px-6 text-[21px] text-[#2a1a14] placeholder:text-[#6b5a52] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary">
+
+                <input type="tel" name="phone" placeholder="Phone Number (optional)" aria-label="Phone number (optional)" autocomplete="tel"
+                       class="h-[60px] w-full rounded-[10px] border border-[#d9b8ae] bg-card px-6 text-[21px] text-[#2a1a14] placeholder:text-[#6b5a52] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary">
+
+                <textarea name="message" placeholder="Your Message" aria-label="Your message" required
+                          class="h-[230px] w-full resize-none rounded-[10px] border border-[#d9b8ae] bg-card px-6 pt-5 text-[21px] text-[#2a1a14] placeholder:text-[#6b5a52] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary"></textarea>
+
+                <p class="-mt-[10px] -mb-[2px] text-[10px] leading-[15px] text-[#6b5a52]">
+                    This website is protected by reCAPTCHA, and the Google
+                    <a href="#" class="text-accent hover:underline">Privacy Policy</a> and
+                    <a href="#" class="text-accent hover:underline">Terms of Service</a> apply.
+                </p>
+
+                <label class="flex items-center gap-[15px] text-[15px] text-[#2a1a14]">
+                    <input type="checkbox" name="accept_terms" required
+                           class="relative h-[22px] w-[22px] shrink-0 appearance-none rounded-[4px] border border-[#d9b8ae] bg-card checked:border-secondary checked:bg-secondary checked:after:absolute checked:after:inset-0 checked:after:text-center checked:after:text-[14px] checked:after:leading-[20px] checked:after:text-white checked:after:content-['✓'] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary">
+                    <span>I accept the <a href="#" class="text-accent hover:underline">terms of agreement</a>.</span>
+                </label>
+
+                <button type="submit"
+                        class="h-[61px] rounded-[10px] bg-secondary text-[25px] font-medium text-[#f6efe8] transition-colors hover:bg-primary disabled:opacity-70 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-secondary">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/contact.js' %}"></script>
+    {% endblock %}
 </body>
 </html>
