@@ -233,8 +233,11 @@
   .z-10 {
     z-index: 10;
   }
-  .z-20 {
-    z-index: 20;
+  .z-30 {
+    z-index: 30;
+  }
+  .z-100 {
+    z-index: 100;
   }
   .col-span-full {
     grid-column: 1 / -1;
