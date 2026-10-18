@@ -1,0 +1,27 @@
+{# Comment out user authentication later #}
+<section class="px-16 py-4">
+    {# CHANGE PROFILE CARD #}
+    {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        <form method="post" class="mx-auto mt-4 flex max-w-299 flex-col gap-8 rounded-card border border-border bg-card p-10">
+            {% csrf_token %}
+
+            {# FULL NAME #}
+            {% include "components/ui/forms/profile_form.html" with label="Full name" name="full_name" value=user.get_full_name only %}
+
+            {# EMAIL + PHONE #}
+            <div class="grid gap-6 md:grid-cols-2">
+                {% include "components/ui/forms/profile_form.html" with label="Email address" name="email" type="email" value=user.email only %}
+                {% include "components/ui/forms/profile_form.html" with label="Phone number" name="phone" type="tel" value=user.profile.phone only %}
+            </div>
+
+            {# SAVE BUTTON #}
+            <button type="submit" class="bg-secondary text-white w-39.5 h-12.75 hover:opacity-80 hover:-translate-y-0.5 transition focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-secondary cursor-pointer">Save changes</button>
+        </form>
+    {% comment %} {% else %}
+        {# When no logged in user#}
+        <div class=" py-24 gap-1 mt-4 flex flex-col items-center text-center rounded-card border border-border bg-card max-w-299 mx-auto">
+            <h2 class="font-bold text-2xl text-foreground">You're currently logged out</h2>
+            <p class="text-sm text-muted">Login to access this page</p>
+        </div>  
+    {% endif %} {% endcomment %}
+</section>
