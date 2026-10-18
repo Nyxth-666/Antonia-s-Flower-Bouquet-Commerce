@@ -1,11 +1,41 @@
+{# Comment out user authentication later #}
 {% load static %}
 <article class="font-sans mx-auto mt-4 flex w-full max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
-    {% comment %} NOTIFICATION {% endcomment %}
-    <div class="flex flex-col gap-3">
-        <h2 class="text-[20px] font-bold text-foreground ">Notifications</h2>
-        <div>
-            {% include 'components/ui/buttons/profile-preferences-button.html' with title="Order update by email" %}
-            {% include 'components/ui/buttons/profile-preferences-button.html' with title="Promotional and seasonal offers" %}
+    {# PREFERENCES #}
+    {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        {% comment %} {% csrf_token %} {% endcomment %}
+
+        {# PREFERENCES #}
+        <div class="flex flex-col gap-3">
+            <h2 class="text-[20px] font-bold text-foreground ">Notifications</h2>
+            <div>
+                {% include 'components/ui/buttons/profile-preferences-checkbox.html' with title="Order update by email"  id="email" %}
+                {% include 'components/ui/buttons/profile-preferences-checkbox.html' with title="Promotional and seasonal offers"  id="offers" %}
+            </div>
         </div>
-    </div>
+
+        <div class="flex flex-col gap-3">
+            <h2 class="text-[20px] font-bold text-foreground ">Change password</h2>
+            {% include "components/ui/forms/profile_form.html" with label="Current password" name="current-passsword" type="password" class="bg-white" only%}
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {% include "components/ui/forms/profile_form.html" with label="New password" name="new-password" type="password" class="bg-white" only%}
+                {% include "components/ui/forms/profile_form.html" with label="Confirm new password" name="confirm-new-password" type="password" class="bg-white" only%}
+            </div>
+        </div>
+
+        {# BUTTON - CHANGE PASSWORD #}
+        <button type="submit" class="bg-secondary text-white w-full h-12">Update password</button>
+
+        {# SIGN OUT #}
+        {% comment %} <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %} {% endcomment %}
+            <button type="submit" class="bg-white text-secondary border border-secondary w-full h-12">Sign out</button>
+        {% comment %} </form>  {% endcomment %}
+
+        {% comment %} {% else %}
+        <div class="mt-4 mb-4 flex flex-col items-center justify-center text-center">
+            <h2 class="font-bold text-2xl text-foreground">You're currently logged out</h2>
+            <p class="text-sm text-muted">Login to access this page</p>
+        </div>  {% endcomment %}
+    {% comment %} {% endif %} {% endcomment %}
 </article>
