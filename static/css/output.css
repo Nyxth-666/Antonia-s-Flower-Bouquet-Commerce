@@ -530,6 +530,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-29 {
+    max-width: calc(var(--spacing) * 29);
+  }
   .max-w-298 {
     max-width: calc(var(--spacing) * 298);
   }
@@ -637,6 +640,9 @@
   }
   .justify-start {
     justify-content: flex-start;
+  }
+  .gap-1 {
+    gap: var(--spacing);
   }
   .gap-1\.5 {
     gap: calc(var(--spacing) * 1.5);
@@ -975,6 +981,9 @@
   }
   .py-16 {
     padding-block: calc(var(--spacing) * 16);
+  }
+  .py-24 {
+    padding-block: calc(var(--spacing) * 24);
   }
   .py-\[13px\] {
     padding-block: 13px;
@@ -1355,6 +1364,9 @@
   .focus\:border-primary:focus {
     border-color: var(--color-primary);
   }
+  .focus-visible\:border-secondary:focus-visible {
+    border-color: var(--color-secondary);
+  }
   .focus-visible\:outline:focus-visible {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
@@ -1365,6 +1377,9 @@
   }
   .focus-visible\:outline-offset-2:focus-visible {
     outline-offset: 2px;
+  }
+  .focus-visible\:outline-secondary:focus-visible {
+    outline-color: var(--color-secondary);
   }
   .disabled\:opacity-40:disabled {
     opacity: 40%;

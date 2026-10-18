@@ -1,18 +1,18 @@
-{% comment %} variables used: order_id, order_date, status, item, price, item_count, step, delivered. context: sample_order, steps {% endcomment %}
+{% comment %} variables used: order_id, order_date, status, item, price, item_count, step. context: sample_order, steps {% endcomment %}
 {% load static %}
 
 <section class="px-4 py-4 md:px-16 sm:px-16">
-    <div class="mx-auto mt-4 flex w-full max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
+    <div class="mx-auto mt-4 flex max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
         <h2 class="text-4xl font-medium text-foreground">My Orders and History</h2>
-        {% comment %} ORDER LIST {% endcomment %}
-        <div id="order-list" class="-my-6 flex flex-col font-sans [&>article:not(.hidden)~article:not(.hidden)]:border-t [&>article:not(.hidden)~article:not(.hidden)]:border-border">
+        {# ORDER LIST #}
+        <div id="order-list" class="-my-6 flex flex-col [&>article:not(.hidden)~article:not(.hidden)]:border-t [&>article:not(.hidden)~article:not(.hidden)]:border-border">
             {% for x in sample_order %}
                 <article class="flex flex-col gap-3 py-6">
-                    {% comment %} ORDER HEADER {% endcomment %}
+                    {# ORDER HEADER #}
                     <div class="grid grid-cols-3 items-center">
                         <p class="text-base font-bold text-foreground">{{ x.order_id }}</p>
                         <p class="text-center text-sm">{{ x.order_date }}</p>
-                        <span class="flex h-6.75 min-w-20 w-fit items-center justify-center justify-self-end whitespace-nowrap rounded-full px-3 text-xs text-white
+                        <span class="flex h-6.75 min-w-20 items-center justify-center justify-self-end whitespace-nowrap rounded-full px-3 text-xs text-white
                             {% if x.status == 'Delivered' %} bg-success
                             {% elif x.status == 'Confirmed' or x.status == 'Preparing' or x.status == 'Out for delivery' %}  bg-[#F08A24]
                             {% else %}  bg-error {% endif %}">
@@ -20,18 +20,18 @@
                         </span>
                     </div>
 
-                    {% comment %} ORDER DETAILS {% endcomment %}
+                    {# ORDER DETAILS #}
                     <div class="flex flex-col">
                         <p class="text-base font-medium text-foreground">{{ x.item }} • {{ x.price }}</p>
                         <p class="text-sm text-[#6B5B4F]">{{ x.item_count }}</p>
                     </div>
 
-                    {% comment %} ORDER STEPS: green for delivered, red for current and finished step, orange for pending step {% endcomment %}
+                    {# ORDER STEPS: green for delivered, red for current and finished step, orange for pending step #}
                     <ol class="flex flex-wrap gap-x-2 gap-y-1">
                         {% for label in steps %}
-                            <li class="flex w-54.75 items-center gap-1.5 text-xs font-medium leading-3.75 text-foreground">
+                            <li class="aria-current=step flex w-54.75 items-center gap-1.5 text-xs font-medium leading-3.75 text-foreground">
                                 <span class="size-2.5 shrink-0 rounded-full
-                                    {% if x.status == "Delivered" %}bg-success
+                                    {% if x.status == 'Delivered' %}bg-success
                                     {% elif forloop.counter0 <= x.step %}bg-error
                                     {% else %}bg-[#F08A24]{% endif %}"></span>
                                 {{ label }}
@@ -39,23 +39,23 @@
                         {% endfor %}
                     </ol>
 
-                    {% comment %} VIEW ORDER DETAILS {% endcomment %}
-                    <a href="#" class="flex flex-row gap-2 text-[14px] font-semibold text-foreground">
+                    {# VIEW ORDER DETAILS #}
+                    <a href="#" class="flex w-fit items-center gap-2 text-sm font-semibold text-foreground">                       
                         View purchase details
                         <img src="{% static 'icons/order-detail-arrow.svg' %}" alt="">
                     </a>
 
-                    {% comment %} PAGINATION SCRIPT: 3 orders per page {% endcomment %}
-                    <script src="{% static 'js/my-orders-pagination.js' %}" defer></script>
                 </article>
             {% empty %}
-                <div class="mt-24 mb-24 flex min-h-24 flex-col items-center justify-center text-center">
-                    <h2 class="font-bold text-2xl text-foreground">No history</h2>
+                <div class="mt-24 mb-24 flex flex-col items-center text-center">
+                    <h3 class="font-bold text-2xl text-foreground">No history</h3>
                     <p class="text-sm text-muted">Your orders will appear here</p>
                 </div>
             {% endfor %}
         </div>
-        {% comment %} PAGINATION {% endcomment %}
+        
+        {# PAGINATION #}
+        <script src="{% static 'js/my-orders-pagination.js' %}" defer></script>
         <nav id="orders-pager" aria-label="Orders pagination" class="flex items-center justify-center gap-2 text-sm"></nav>
     </div>
 </section>
