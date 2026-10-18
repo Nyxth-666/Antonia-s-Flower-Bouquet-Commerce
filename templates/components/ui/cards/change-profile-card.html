@@ -1,9 +1,10 @@
+{# Comment out user authentication later #}
 {% load static %}
 
 <section class="px-16 py-4">
     {# CHANGE PROFILE CARD #}
     <form method="post" class="mx-auto mt-4 flex w-full max-w-299 flex-col gap-8 rounded-card border border-border bg-card p-10">
-        {% if user %}
+        {% comment %} {% if user.is_authenticated %} {% endcomment %}
             {% csrf_token %}
 
             {# FULL NAME #}
@@ -17,6 +18,12 @@
 
             {# SAVE BUTTON #}
             <button type="submit" class="bg-secondary text-white w-39.5 h-12.75">Save changes</button>
-        {% endif %}
+
+            {% comment %} {% else %}
+            <div class="mt-4 mb-4 flex flex-col items-center justify-center text-center">
+                <h2 class="font-bold text-2xl text-foreground">You're currently logged out</h2>
+                <p class="text-sm text-muted">Login to access this page</p>
+            </div>  
+        {% endif %} {% endcomment %}
     </form>
 </section>
