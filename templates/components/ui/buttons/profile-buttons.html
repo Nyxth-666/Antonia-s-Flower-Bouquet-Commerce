@@ -12,7 +12,7 @@
 
 {# PAGES #}
 {% for tab in profile_tabs %}
-  <section id="{{ tab.page }}" data-panel {% if not forloop.first %}hidden{% endif %}>
+  <section class="mb-12" id="{{ tab.page }}" data-panel {% if not forloop.first %}hidden{% endif %}>
     {% include tab.template %}
   </section>
 {% endfor %}
