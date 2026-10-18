@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpRequest
-
+from apps.contact.data.contact_info import CONTACT_INFO
 
 def contact_page(request):
-    return render(request, "contact/contact.html")
+    return render(request, "contact/contact.html", {
+        "contact_info": CONTACT_INFO,
+    })
