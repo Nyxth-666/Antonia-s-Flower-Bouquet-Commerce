@@ -1,6 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpRequest
+from . models import Bouquet
 
 
 def catalog_page(request):
-    return render(request, "catalog/catalog.html")
+    bouquets = Bouquet.objects.all()
+
+    return render(
+        request,
+        "catalog/catalog.html",
+        {"bouquets": bouquets},
+    )

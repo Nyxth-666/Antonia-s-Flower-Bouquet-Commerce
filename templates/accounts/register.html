@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Register | Antonia's{% endblock %}
+
+{% block content %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Lora:wght@600;700&display=swap" rel="stylesheet">
+
+<div class="min-h-screen bg-[#F1EEE2] flex flex-col items-center py-16 px-4 font-['Fira_Sans']">
+
+<p class="text-[#6E5F57] mb-16">Home / <span class="text-[#2B1D17]">Register</span></p>
+
+<div class="w-full max-w-5xl flex flex-col md:flex-row rounded-3xl shadow-[0_10px_35px_rgba(165,89,75,0.35)] overflow-hidden">
+
+<!-- kaliwa na box -->
+<div class="md:w-1/2 bg-[#5A201B] rounded-3xl text-[#F1EEE2] p-10 flex flex-col">
+
+<a href="/" class=" text-sm">← Home Page</a>
+
+<div class="flex-1 flex flex-col items-center justify-center text-center py-20">
+<h2 class="text-5xl font-['Lora'] text-[#F1EEE3] font-bold mt-10 mb-5">GET STARTED</h2>
+
+<p class="text-lg font-thin mb-4">Already have an account?</p>
+<a href="#" class="bg-[#F6F3E9] text-[#5A201B] px-12 py-1 rounded-xl mb-10">Login</a>
+
+<hr class="w-full border-[#F1EEE2]/60 my-10">
+
+<p class="text-xl mb-4">or begin with:</p>
+
+<div class="flex gap-4">
+  <a href="#" 
+     class="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-gray-300">
+    <img src="{% static 'images/google.png' %}" 
+         alt="Google"
+         class="w-6 h-6 object-contain">
+  </a>
+
+  <a href="#" 
+     class="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-gray-300">
+    <img src="{% static 'images/facebook.png' %}" 
+         alt="Facebook"
+         class="w-6 h-6 object-contain">
+  </a>
+</div>
+</div>
+</div>
+
+<!-- kanan na box -->
+<div class="md:w-1/2 bg-[#E8E3D5] p-10 md:px-16 flex flex-col justify-center">
+
+<h1 class="text-5xl font-['Lora'] font-bold text-[#2B1D17] text-center mb-10">Create Account</h1>
+
+<form method="post" class="space-y-4">
+{% csrf_token %}
+
+<input type="text" name="username" placeholder="Username"
+class="w-full h-14 px-4 text-lg rounded-xl border border-[#CFC6B8] bg-[#F6F3E9]
+placeholder-[#6E5F57] outline-none focus:border-[#7B3F38]">
+
+<input type="email" name="email" placeholder="Email"
+class="w-full h-14 px-4 text-lg rounded-xl border border-[#CFC6B8] bg-[#F6F3E9]
+placeholder-[#6E5F57] outline-none focus:border-[#7B3F38]">
+
+<input type="password" name="password1" placeholder="Password"
+class="w-full h-14 px-4 text-lg rounded-xl border border-[#CFC6B8] bg-[#F6F3E9]
+placeholder-[#6E5F57] outline-none focus:border-[#7B3F38]">
+
+<input type="password" name="password2" placeholder="Confirm Password"
+class="w-full h-14 px-4 text-lg rounded-xl border border-[#CFC6B8] bg-[#F6F3E9]
+placeholder-[#6E5F57] outline-none focus:border-[#7B3F38]">
+
+<label class="flex items-center gap-3 text-[#6E5F57]">
+<input type="checkbox" name="terms" required class="w-5 h-5">
+I accept the <a href="#" class="text-[#A5594B] hover:underline">terms of agreement.</a>
+</label>
+
+<button type="submit"
+class="w-full h-14 rounded-xl bg-[#7B3F38] text-[#F6F3E9] text-2xl hover:bg-[#693229]">
+Submit
+</button>
+</form>
+</div>
+
+</div>
+</div>
+{% endblock %}

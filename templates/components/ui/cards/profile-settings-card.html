@@ -1,0 +1,37 @@
+{% comment %} Comment out user authentication later {% endcomment %}
+{% load static %}
+<article class="font-sans px-16 py-4 md:px-16 sm:px-16">
+    {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        <form method="post" class="flex flex-col gap-8 rounded-card border border-border bg-card p-10 mt-4 w-full max-w-298 ">
+        {% csrf_token %}
+
+            {# PREFERENCES #}
+            <div class="flex flex-col gap-3">
+                <h2 class="text-[20px] font-bold text-foreground ">Notifications</h2>
+                <div>
+                    {% include 'components/ui/buttons/profile-preferences-checkbox.html' with title="Order update by email"  id="email" %}
+                    {% include 'components/ui/buttons/profile-preferences-checkbox.html' with title="Promotional and seasonal offers"  id="offers" %}
+                </div>
+            </div>
+
+            <form method="post flex flex-col gap-3">
+                <h2 class="text-[20px] font-bold text-foreground mb-6">Change password</h2>
+                {% include "components/ui/forms/profile_form.html" with label="Current password" name="current-passsword" type="password" class="bg-white" only%}
+                <div class="grid grid-cols-1 gap-3 md:grid-cols-2 mt-2">
+                    {% include "components/ui/forms/profile_form.html" with label="New password" name="new-password" type="password" class="bg-white" only%}
+                    {% include "components/ui/forms/profile_form.html" with label="Confirm new password" name="confirm-new-password" type="password" class="bg-white" only%}
+                </div>
+
+                {# BUTTON - CHANGE PASSWORD #}
+                <button type="submit" class="hover:opacity-80 hover:-translate-y-0.5 transition bg-secondary text-white w-full h-12 mt-6 focus-visible:outline focus-visible:outline-offset-2 cursor-pointer">Update password</button>
+
+            {# SIGN OUT - needs view#}
+                <button type="submit" class="bg-white text-secondary border border-secondary hover:opacity-80 hover:-translate-y-0.5 transition w-full h-12 focus-visible:outline focus-visible:outline-offset-2 cursor-pointer">Sign out</button>
+        </form>
+    {% comment %} {% else %}
+        <div class="mt-4 flex flex-col items-center justify-center text-center rounded-card border border-border bg-card w-full max-w-298">
+            <h2 class="font-bold text-2xl text-foreground mt-24">You're currently logged out</h2>
+            <p class="text-sm text-muted mb-24">Login to access this page</p>
+        </div>  
+    {% endif %} {% endcomment %}
+</article>

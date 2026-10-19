@@ -1,0 +1,61 @@
+{% comment %} variables used: order_id, order_date, status, item, price, item_count, step. context: sample_order, steps {% endcomment %}
+{% load static %}
+
+<section class="px-4 py-4 md:px-16 sm:px-16">
+    <div class="mx-auto mt-4 flex max-w-298 flex-col gap-8 rounded-card border border-border bg-card p-10">
+        <h2 class="text-4xl font-medium text-foreground">My Orders and History</h2>
+        {# ORDER LIST #}
+        <div id="order-list" class="-my-6 flex flex-col [&>article:not(.hidden)~article:not(.hidden)]:border-t [&>article:not(.hidden)~article:not(.hidden)]:border-border">
+            {% for x in sample_order %}
+                <article class="flex flex-col gap-3 py-6">
+                    {# ORDER HEADER #}
+                    <div class="grid grid-cols-3 items-center">
+                        <p class="text-base font-bold text-foreground">{{ x.order_id }}</p>
+                        <p class="text-center text-sm">{{ x.order_date }}</p>
+                        <span class="flex h-6.75 min-w-20 items-center justify-center justify-self-end whitespace-nowrap rounded-full px-3 text-xs text-white
+                            {% if x.status == 'Delivered' %} bg-success
+                            {% elif x.status == 'Confirmed' or x.status == 'Preparing' or x.status == 'Out for delivery' %}  bg-[#F08A24]
+                            {% else %}  bg-error {% endif %}">
+                            {{ x.status }}
+                        </span>
+                    </div>
+
+                    {# ORDER DETAILS #}
+                    <div class="flex flex-col">
+                        <p class="text-base font-medium text-foreground">{{ x.item }} • {{ x.price }}</p>
+                        <p class="text-sm text-[#6B5B4F]">{{ x.item_count }}</p>
+                    </div>
+
+                    {# ORDER STEPS: green for delivered, red for current and finished step, orange for pending step #}
+                    <ol class="flex flex-wrap gap-x-2 gap-y-1">
+                        {% for label in steps %}
+                            <li class="aria-current=step flex w-54.75 items-center gap-1.5 text-xs font-medium leading-3.75 text-foreground">
+                                <span class="size-2.5 shrink-0 rounded-full
+                                    {% if x.status == 'Delivered' %}bg-success
+                                    {% elif forloop.counter0 <= x.step %}bg-error
+                                    {% else %}bg-[#F08A24]{% endif %}"></span>
+                                {{ label }}
+                            </li>
+                        {% endfor %}
+                    </ol>
+
+                    {# VIEW ORDER DETAILS #}
+                    <a href="#" class="flex w-fit items-center gap-2 text-sm font-semibold text-foreground">                       
+                        View purchase details
+                        <img src="{% static 'icons/order-detail-arrow.svg' %}" alt="">
+                    </a>
+
+                </article>
+            {% empty %}
+                <div class="mt-24 mb-24 flex flex-col items-center text-center">
+                    <h3 class="font-bold text-2xl text-foreground">No history</h3>
+                    <p class="text-sm text-muted">Your orders will appear here</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+        {# PAGINATION #}
+        <script src="{% static 'js/my-orders-pagination.js' %}" defer></script>
+        <nav id="orders-pager" aria-label="Orders pagination" class="flex items-center justify-center gap-2 text-sm"></nav>
+    </div>
+</section>
