@@ -3,6 +3,29 @@
 
 {% block content %}
 
+<section class="mb-28 mt-28">
+    <div class="mx-auto w-full max-w-[1240px]">
 
+        <h1 class="text-5xl font-bold">Shop Flowers</h1>
+
+        <div class="mt-12 flex flex-col gap-5">
+
+            <div class="flex self-end gap-1">
+                <p>{{ bouquets|length }}</p>
+                <p>products</p>
+            </div>
+
+            <div class="flex items-start gap-12">
+
+                {% include "components/ui/filters/catalog-filter-card.html" %}
+
+                <div class="w-full">
+                    <p>This is the product section.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
