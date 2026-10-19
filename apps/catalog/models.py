@@ -7,6 +7,14 @@ class Occasion(models.Model):
 
     def __str__(self):
         return self.name
+
+class FlowerType(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
     
 class Color(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -23,17 +31,6 @@ class Color(models.Model):
         return self.name
     
 class Bouquet(models.Model):
-    FLOWER_TYPE_CHOICES = [
-        ("Carnation", "Carnation"),
-        ("Gerberas", "Gerberas"),
-        ("Lilies", "Lilies"),
-        ("Lisianthus/Paper Roses", "Lisianthus/Paper Roses"),
-        ("Tulips", "Tulips"),
-        ("Roses", "Roses"),
-        ("Sunflowers", "Sunflowers"),
-        ("Mixed Flowers", "Mixed Flowers"),
-    ]
-
     ARRANGEMENT_CHOICES = [
         ("Chocolate Bouquets", "Chocolate Bouquets"),
         ("Flower Bouquets", "Flower Bouquets"),
@@ -54,9 +51,10 @@ class Bouquet(models.Model):
 
     size = models.CharField(max_length=100)
 
-    flower_type = models.CharField(
-        max_length=50,
-        choices=FLOWER_TYPE_CHOICES,
+    flower_type = models.ManyToManyField(
+        FlowerType,
+        blank=True,
+        related_name="bouquets",
     )
 
     arrangement_type = models.CharField(

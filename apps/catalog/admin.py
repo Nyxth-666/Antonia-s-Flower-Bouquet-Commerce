@@ -1,13 +1,18 @@
 from django.contrib import admin
-from .models import Bouquet, Occasion, Color
+from .models import Bouquet, Occasion, Color, FlowerType
 from django.utils.html import format_html
-
 
 @admin.register(Occasion)
 class OccasionAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
+    ordering = ("name",)
 
+@admin.register(FlowerType)
+class FlowerTypeAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
+    ordering = ("name",)
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
@@ -24,7 +29,6 @@ class ColorAdmin(admin.ModelAdmin):
             'background-color:{};"></span>',
             obj.hex_code,
         )
-
 
 @admin.register(Bouquet)
 class BouquetAdmin(admin.ModelAdmin):
@@ -58,6 +62,10 @@ class BouquetAdmin(admin.ModelAdmin):
         "available",
     )
 
-    filter_horizontal = ("color", "occasions")
+    filter_horizontal = (
+        "flower_type", 
+        "color", 
+        "occasions"
+    )
 
     ordering = ("name",)
