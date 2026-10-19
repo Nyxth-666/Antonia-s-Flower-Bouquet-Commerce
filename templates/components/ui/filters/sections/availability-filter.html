@@ -1,0 +1,23 @@
+<div class="space-y-3">
+    <label class="flex cursor-pointer items-center gap-3 text-sm transition hover:text-primary">
+        <input
+            type="radio"
+            name="availability"
+            value="available"
+            class="size-4 accent-primary"
+            {% if selected_availability == "available" %}checked{% endif %}
+        >
+        <span>In stock</span>
+    </label>
+
+    <label class="flex cursor-pointer items-center gap-3 text-sm transition hover:text-primary">
+        <input
+            type="radio"
+            name="availability"
+            value="unavailable"
+            class="size-4 accent-primary"
+            {% if selected_availability == "unavailable" %}checked{% endif %}
+        >
+        <span>Out of stock</span>
+    </label>
+</div>
