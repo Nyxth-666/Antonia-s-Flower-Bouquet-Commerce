@@ -37,3 +37,9 @@ htmlcov/
 
 # Logs
 *.log
+
+db.sqlite3
+db_backup*.sqlite3
+
+# Database backups and exports
+backup_data.json
