@@ -15,12 +15,23 @@
                 <p>products</p>
             </div>
 
-            <div class="flex items-start gap-12">
+            <div class="flex items-start justify-between">
 
                 {% include "components/ui/filters/catalog-filter-card.html" %}
 
-                <div class="w-full">
-                    <p>This is the product section.</p>
+                <div class="grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                    {% for bouquet in bouquets %}
+                        {% include "components/ui/cards/catalog-products-card.html" with bouquet=bouquet %}
+                    {% empty %}
+                        <div class="col-span-full py-16 text-center">
+                            <h2 class="text-xl font-semibold text-foreground">
+                                No bouquets found
+                            </h2>
+                            <p class="mt-2 text-sm">
+                                Try changing or clearing your filters.
+                            </p>
+                        </div>
+                    {% endfor %}
                 </div>
 
             </div>
