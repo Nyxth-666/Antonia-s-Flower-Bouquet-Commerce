@@ -46,3 +46,7 @@ jobs:
           DEBUG: "True"
         run: |
           python manage.py test
+      - name: Run Django checks
+        run: python manage.py check
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
