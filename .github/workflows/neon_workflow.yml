@@ -24,9 +24,6 @@ jobs:
 
   create_neon_branch:
     name: Create Neon Branch
-    outputs:
-      db_url: ${{ steps.create_neon_branch_encode.outputs.db_url }}
-      db_url_with_pooler: ${{ steps.create_neon_branch_encode.outputs.db_url_with_pooler }}
     needs: setup
     if: |
       github.event_name == 'pull_request' && (
@@ -46,6 +43,10 @@ jobs:
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
           expires_at: ${{ env.EXPIRES_AT }}
+      - name: Run Django migrations
+        run: python manage.py migrate
+        env:
+          DATABASE_URL: ${{ steps.create_neon_branch.outputs.db_url }}
 
 # The step above creates a new Neon branch.
 # You may want to do something with the new branch, such as run migrations, run tests
