@@ -30,19 +30,16 @@ jobs:
         env:
           SECRET_KEY: ci-test-secret-key
           DEBUG: "True"
-        run: |
-          python manage.py check
+        run: python manage.py check
 
       - name: Run migrations
         env:
           SECRET_KEY: ci-test-secret-key
           DEBUG: "True"
-        run: |
-          python manage.py migrate --noinput
+        run: python manage.py migrate --noinput
 
       - name: Run tests
         env:
           SECRET_KEY: ci-test-secret-key
           DEBUG: "True"
-        run: |
-          python manage.py test
+        run: python manage.py test

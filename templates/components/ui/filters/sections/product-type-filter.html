@@ -1,0 +1,18 @@
+<div class="space-y-3">
+    {% for value, label in arrangement_types %}
+        <label class="flex cursor-pointer items-center gap-3 text-sm transition hover:text-primary">
+            <input
+                type="checkbox"
+                name="product_type"
+                value="{{ value }}"
+                class="size-4 accent-primary"
+                {% if value in selected_product_types %}checked{% endif %}
+            >
+            <span>{{ label }}</span>
+        </label>
+    {% empty %}
+        <p class="text-sm">
+            No product types available.
+        </p>
+    {% endfor %}
+</div>

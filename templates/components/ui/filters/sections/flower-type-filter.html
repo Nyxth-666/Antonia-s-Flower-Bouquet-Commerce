@@ -1,0 +1,18 @@
+<div class="space-y-3">
+    {% for flower_type in flower_types %}
+        <label class="flex cursor-pointer items-center gap-3 text-sm transition hover:text-primary">
+            <input
+                type="checkbox"
+                name="flower_type"
+                value="{{ flower_type.id }}"
+                class="size-4 accent-primary"
+                {% if flower_type.id|stringformat:"s" in selected_flower_types %}checked{% endif %}
+            >
+            <span>{{ flower_type.name }}</span>
+        </label>
+    {% empty %}
+        <p class="text-sm">
+            No flower types available.
+        </p>
+    {% endfor %}
+</div>

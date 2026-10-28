@@ -1,0 +1,87 @@
+<div class="w-full max-w-[270px] shrink-0 rounded-card border border-border bg-card p-5">
+
+    <form method="GET" action="{% url 'catalog:catalog' %}">
+
+        <div class="mb-2 flex items-center justify-between">
+            <h2 class="text-xl font-bold">
+                Filters
+            </h2>
+
+            <a
+                href="{% url 'catalog:catalog' %}"
+                class="text-sm text-secondary underline-offset-4 transition hover:underline"
+            >
+                Clear all
+            </a>
+        </div>
+
+        <p class="mb-4 text-sm">
+            Find your perfect bouquet.
+        </p>
+
+        <div class="border-b border-border py-5">
+            <h3 class="mb-4 font-medium">
+                Price
+            </h3>
+
+            <div class="grid grid-cols-3 gap-2">
+                <label class="cursor-pointer">
+                    <input
+                        type="radio"
+                        name="price"
+                        value="budget"
+                        class="peer sr-only"
+                        {% if selected_price == "budget" %}checked{% endif %}
+                    >
+                    <span class="flex justify-center rounded-button border border-border px-2 py-2 text-sm text-foreground transition hover:border-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-soft-white">
+                        ₱
+                    </span>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input
+                        type="radio"
+                        name="price"
+                        value="mid"
+                        class="peer sr-only"
+                        {% if selected_price == "mid" %}checked{% endif %}
+                    >
+                    <span class="flex justify-center rounded-button border border-border px-2 py-2 text-sm text-foreground transition hover:border-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-soft-white">
+                        ₱₱
+                    </span>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input
+                        type="radio"
+                        name="price"
+                        value="premium"
+                        class="peer sr-only"
+                        {% if selected_price == "premium" %}checked{% endif %}
+                    >
+                    <span class="flex justify-center rounded-button border border-border px-2 py-2 text-sm text-foreground transition hover:border-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-soft-white">
+                        ₱₱₱
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        {% include "components/ui/filters/catalog-filter-dropdown.html" with title="Occasion" section="occasion" %}
+
+        {% include "components/ui/filters/catalog-filter-dropdown.html" with title="Color" section="color" %}
+
+        {% include "components/ui/filters/catalog-filter-dropdown.html" with title="Flower Type" section="flower_type" %}
+
+        {% include "components/ui/filters/catalog-filter-dropdown.html" with title="Product Type" section="product_type" %}
+
+        {% include "components/ui/filters/catalog-filter-dropdown.html" with title="Availability" section="availability" %}
+
+        <button
+            type="submit"
+            class="mt-5 w-full rounded-button bg-primary px-4 py-3 font-medium text-soft-white transition duration-200 hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+            Apply Filters
+        </button>
+
+    </form>
+</div>

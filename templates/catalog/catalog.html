@@ -1,11 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>this is catalog</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="mb-28 mt-28">
+    <div class="mx-auto w-full max-w-[1240px]">
+
+        <h1 class="text-5xl font-bold">Shop Flowers</h1>
+
+        <div class="mt-12 flex flex-col gap-5">
+
+            <div class="flex self-end gap-1">
+                <p>{{ bouquets|length }}</p>
+                <p>products</p>
+            </div>
+
+            <div class="flex items-start justify-between">
+
+                {% include "components/ui/filters/catalog-filter-card.html" %}
+
+                <div class="grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                    {% for bouquet in bouquets %}
+                        {% include "components/ui/cards/catalog-products-card.html" with bouquet=bouquet %}
+                    {% empty %}
+                        <div class="col-span-full py-16 text-center">
+                            <h2 class="text-xl font-semibold text-foreground">
+                                No bouquets found
+                            </h2>
+                            <p class="mt-2 text-sm">
+                                Try changing or clearing your filters.
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

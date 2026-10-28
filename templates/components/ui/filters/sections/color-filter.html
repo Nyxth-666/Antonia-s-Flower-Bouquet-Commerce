@@ -1,0 +1,24 @@
+<div class="space-y-3">
+    {% for color in colors %}
+        <label class="flex cursor-pointer items-center gap-3 text-sm transition hover:text-primary">
+            <input
+                type="checkbox"
+                name="color"
+                value="{{ color.id }}"
+                class="size-4 accent-primary"
+                {% if color.id|stringformat:"s" in selected_colors %}checked{% endif %}
+            >
+
+            <span
+                class="size-4 shrink-0 rounded-full border border-border"
+                style="background-color: {{ color.hex_code }};"
+            ></span>
+
+            <span>{{ color.name }}</span>
+        </label>
+    {% empty %}
+        <p class="text-sm">
+            No colors available.
+        </p>
+    {% endfor %}
+</div>

@@ -1,0 +1,33 @@
+<details class="group border-b border-border py-5">
+    <summary
+        class="flex cursor-pointer list-none items-center justify-between gap-3 font-medium text-foreground transition-colors duration-200 hover:text-secondary"
+    >
+        <span>{{ title }}</span>
+
+        <span
+            class="transition-transform duration-300 ease-in-out group-open:rotate-180"
+            aria-hidden="true"
+        >
+            {% include "components/ui/icons/drop-down_icon.html" %}
+        </span>
+    </summary>
+
+    <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out group-open:grid-rows-[1fr]">
+        <div class="overflow-hidden">
+            <div class="pt-4">
+                {% if section == "occasion" %}
+                    {% include "components/ui/filters/sections/occasions-filter.html" %}
+                {% elif section == "color" %}
+                    {% include "components/ui/filters/sections/color-filter.html" %}
+                {% elif section == "flower_type" %}
+                    {% include "components/ui/filters/sections/flower-type-filter.html" %}
+                {% elif section == "product_type" %}
+                    {% include "components/ui/filters/sections/product-type-filter.html" %}
+                {% elif section == "availability" %}
+                    {% include "components/ui/filters/sections/availability-filter.html" %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</details>        
+
