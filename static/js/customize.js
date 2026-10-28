@@ -19,14 +19,32 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const FLOWERS = [
-    ["Lisianthus/Paper Roses", 65],
-    ["Tulips", 55],
-    ["Lillies", 45],
-    ["Carnation", 30],
-    ["Sunflowers", 55],
+    // Fresh flowers
+    ["Anthuriums", 55],
+    ["Asters", 55],
+    ["Baby's Breath", 40, "bunch"],
+    ["Carnation", 65],
+    ["Daisies", 45],
     ["Gerberas", 55],
+    ["Goldenrod", 55],
+    ["Lilies", 45],
+    ["Lisianthus/Paper Roses", 30],
+    ["Mixed Flowers", 55],
     ["Roses", 55],
-    ["Mixed Flowers", 55]
+    ["Sunflower", 55],
+    ["Tulips", 55],
+
+    // Artificial, dried and decorative
+    ["Artificial Flowers", 40],
+    ["Decorative Flowers", 35],
+    ["Decorative Roses", 45],
+    ["Dried Flowers", 45],
+
+    // Chocolates and money
+    ["Chocolate", 25, "piece"],
+    ["Chocolate Bouquet", 350, "bouquet"],
+    ["Money Rose", 100, "piece"],
+    ["Money Bouquet", 300, "bouquet"],
   ];
 
   const COLORS = [
@@ -52,14 +70,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderFlowers() {
-    render("#flowers", FLOWERS, ([name, price]) => `
+    render("#flowers", FLOWERS, ([name, price, unit = "stem"]) => `
       <div data-flower="${name}" data-price="${price}"
         class="flex min-w-0 items-center gap-2.5 rounded-xl border border-border px-3 py-3 sm:gap-3.5 sm:pl-7 sm:pr-[22px]">
         <span class="size-4 shrink-0 rounded-full bg-[#c48aa0]"></span>
 
         <p class="min-w-0 flex-1 text-[13px] font-semibold text-foreground sm:text-[15px]">
           ${name}
-          <span class="block text-[12px] font-normal text-muted">₱${price} / stem</span>
+          <span class="block text-[12px] font-normal text-muted">₱${price} / ${unit}</span>
         </p>
 
         <div class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
