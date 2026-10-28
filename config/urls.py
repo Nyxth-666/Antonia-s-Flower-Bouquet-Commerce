@@ -20,7 +20,6 @@ urlpatterns = [
     path("favorites/", include("apps.favorites.urls")),
     path("about/", include("apps.about.urls")),
     path("contact/", include("apps.contact.urls")),
-    path("types-of-flowers/", include("apps.types_of_flowers.urls")),
 ]
 
 if settings.DEBUG:
