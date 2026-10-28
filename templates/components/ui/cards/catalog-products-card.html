@@ -87,7 +87,7 @@
         <div class="flex gap-3 mt-4">
             <button
                 type="button"
-                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary px-2 py-1 text-sm font-medium transition hover:border-primary/90 disabled:cursor-not-allowed"
+                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium transition hover:border-primary/90 disabled:cursor-not-allowed"
             >
                 {% include "components/ui/icons/view_icon.html" %}
                 View
@@ -95,7 +95,7 @@
             <button
                 type="button"
                 {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
-                class="flex w-full items-center justify-center gap-2 rounded-button bg-primary px-2 py-1 text-sm font-medium text-soft-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-border disabled:text-muted"
+                class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-border disabled:text-muted"
             >
                 {% include "components/ui/icons/cart_icon.html" %}
 
