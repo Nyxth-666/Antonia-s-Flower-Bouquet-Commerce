@@ -6,6 +6,7 @@ from apps.core.data.navbar import (
 from apps.core.data.footer import FOOTER_LINKS
 from apps.catalog.data.flower_type import FLOWER_TYPE
 from apps.catalog.data.arrangement_type import ARRANGEMENT_TYPES
+from apps.occasions.data.occasions import OCCASIONS
 
 def navbar_data(request):
     return {
@@ -15,4 +16,5 @@ def navbar_data(request):
         "footer_links": FOOTER_LINKS,
         "flower_types": FLOWER_TYPE,
         "arrangement_types": ARRANGEMENT_TYPES,
+        "occasions": OCCASIONS,
     }
