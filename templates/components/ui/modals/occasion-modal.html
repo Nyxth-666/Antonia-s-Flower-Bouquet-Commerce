@@ -1,0 +1,21 @@
+<div
+  class="w-[700px] max-w-[calc(100vw-2rem)] rounded-b-card border border-secondary bg-background px-8 py-8 shadow-[0_10px_35px_rgba(165,89,75,0.4)]"
+>
+    <h3
+        class="mb-5 border-b border-border pb-3 text-2xl font-bold text-muted transition hover:text-primary"
+    >
+        Occasions
+    </h3>
+  <div class="columns-3 gap-8">
+    {% for occasion in occasions %}
+    <a
+      href="{% url 'occasions:occasions' %}"
+      class="mb-4 block break-inside-avoid transition text-muted hover:text-primary"
+    >
+      {{ occasion.name }}
+    </a>
+    {% empty %}
+    <p class="text-sm">No occasions available.</p>
+    {% endfor %}
+  </div>
+</div>
