@@ -1,37 +1,4 @@
-<style>
-  .dd-group { position: relative; }
-  .dd-menu {
-    position: absolute; top: 100%; left: 50%;
-    transform: translateX(-50%);
-    padding-top: 8px; z-index: 9999;
-    visibility: hidden; opacity: 0; transition: opacity 0.2s;
-  }
-  .dd-group:hover .dd-menu { visibility: visible; opacity: 1; }
-  
-  .dd-box {
-    background: #F1EEE2;
-    border: 2px solid #6B3A32;
-    border-radius: 0 0 1rem 1rem;
-    box-shadow: 0 10px 35px rgba(165, 89, 75, 0.4);
-  }
-  .dd-box a { display: block; color: #8A7A70; }
-  .dd-box a:hover { color: #7f1d1d; }
-
-  /* Occasions: 3 columns */
-  .occ-box { width: 700px; column-count: 3; column-gap: 2rem; padding: 2rem 3rem; }
-  .occ-box a { margin-bottom: 1rem; font-size: 1.125rem; }
-
-  /* By Types: 2 columns with headings */
-  .types-box { width: 700px; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem 3rem; }
-  .types-box h3 {
-    font-size: 1.75rem; color: #8A7A70; font-weight: 400;
-    padding-bottom: 0.75rem; margin-bottom: 1.25rem;
-    border-bottom: 1px solid #8A7A70;
-  }
-  .types-box a { margin-bottom: 0.9rem; font-size: 1.05rem; }
-</style>
-
-<div class="bg-secondary text-soft-white flex items-center">
+<div class="flex items-center bg-secondary text-soft-white">
     <nav
         aria-label="Main navigation"
         class="mx-auto flex min-h-9 max-w-[1240px] items-center gap-7 px-4"
@@ -39,88 +6,52 @@
         {% for item in navbar_links %}
 
             {% if forloop.counter == 3 %}
-                <!-- OCCASIONS dropdown  -->
-                <div class="dd-group">
-                    <a href="{% url item.url %}"
-                       class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent">
+                <div class="group relative">
+                    <a
+                        href="{% url item.url %}"
+                        class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent"
+                    >
                         {{ item.name }}
+
                         <span class="flex items-center">
                             {% include "components/ui/icons/drop-down_icon.html" %}
                         </span>
                     </a>
 
-                    <div class="dd-menu">
-                        <div class="dd-box occ-box">
-                            <a href="#">Birthday</a>
-                            <a href="#">Valentine's Day</a>
-                            <a href="#">Anniversary</a>
-                            <a href="#">Wedding</a>
-                            <a href="#">Sympathy</a>
-                            <a href="#">Get well soon</a>
-                            <a href="#">Congratulations</a>
-                            <a href="#">Mother's Day</a>
-                            <a href="#">Father's Day</a>
-                            <a href="#">Christmas</a>
-                            <a href="#">New Year</a>
-                            <a href="#">Friendship</a>
-                            <a href="#">Thank you</a>
-                            <a href="#">Funeral</a>
-                            <a href="#">Apology</a>
-                            <a href="#">Romantic Date</a>
-                            <a href="#">Debut</a>
-                            <a href="#">Engagement</a>
-                            <a href="#">Housewarming</a>
-                            <a href="#">Corporate Events</a>
-                            <a href="#">Just Because</a>
-                        </div>
+                    <div
+                        class="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                    >
+                        {% include "components/ui/modals/occasion-modal.html" %}
                     </div>
                 </div>
 
             {% elif forloop.counter == 4 %}
-                <!-- BY TYPES dropdown -->
-                <div class="dd-group">
-                    <a href="{% url item.url %}"
-                       class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent">
+                <div class="group relative">
+                    <a
+                        href="{% url item.url %}"
+                        class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent"
+                    >
                         {{ item.name }}
+
                         <span class="flex items-center">
                             {% include "components/ui/icons/drop-down_icon.html" %}
                         </span>
                     </a>
 
-                    <div class="dd-menu">
-                        <div class="dd-box types-box">
-
-                            <div>
-                                <h3>Flower Type</h3>
-                                <a href="#">Lisianthus/Paper Roses</a>
-                                <a href="#">Tulips</a>
-                                <a href="#">Lilies</a>
-                                <a href="#">Carnation</a>
-                                <a href="#">Sunflowers</a>
-                                <a href="#">Gerberas</a>
-                                <a href="#">Roses</a>
-                                <a href="#">Mixed Flowers</a>
-                            </div>
-
-                            <div>
-                                <h3>Arrangement Type</h3>
-                                <a href="#">Inaugural Flowers</a>
-                                <a href="#">Flower Bouquets</a>
-                                <a href="#">Chocolate Bouquets</a>
-                                <a href="#">Flowers in a Card</a>
-                                <a href="#">Flowers in a Box</a>
-                                <a href="#">Flowers in a Vase</a>
-                                <a href="#">Petite Bouquets</a>
-                            </div>
-
-                        </div>
+                    <div
+                        class="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                    >
+                        {% include "components/ui/modals/by-types-modal.html" %}
                     </div>
                 </div>
 
             {% else %}
-                <a href="{% url item.url %}"
-                   class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent">
+                <a
+                    href="{% url item.url %}"
+                    class="flex items-center gap-1.5 whitespace-nowrap py-2 text-sm transition hover:text-accent"
+                >
                     {{ item.name }}
+
                     {% if item.dropdown %}
                         <span class="flex items-center">
                             {% include "components/ui/icons/drop-down_icon.html" %}
