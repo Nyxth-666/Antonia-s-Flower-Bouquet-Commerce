@@ -49,3 +49,24 @@ main :is(button, a)[class*="bg-primary"] { border-radius: 9999px; }
   background-color: #B91C1C !important; /* A standard, recognizable dangerous red (Tailwind red-700) */
   color: #FFFFFF !important;
 }
+
+.form-row :is(input:not([name=q], [type=checkbox], [type=radio], [type=submit], [type=file], [type=hidden]), textarea, select) {
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  background-color: #FFFDF7;
+  padding: 0.5rem 0.75rem;
+}
+
+.form-row :is(input:not([name=q]), textarea, select):focus {
+  border-color: var(--color-accent);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0;
+}
+
+.form-row .selector select {
+  display: block;
+  box-sizing: border-box;
+  width: auto;
+  margin: 0 13px 5px;
+}
