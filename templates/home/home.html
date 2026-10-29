@@ -71,6 +71,31 @@
         </div>
     </section>
 
+    <!-- BEST SELLERS SECTION -->
+    <section id="best-sellers" class="mt-26">
+        <div class="mx-auto w-full max-w-[1240px]">
+            <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
+                Best Sellers
+            </h2>
+
+            <div class="mb-7 flex items-start justify-between">
+
+                <p>
+                    Each flower comes with its meaning, so the bouquet says what you mean.
+                </p>
+
+                <a href="{% url 'catalog:catalog' %}"
+                    class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
+                    Browse the full catalogue →
+                </a>
+            </div>
+
+            <div class="grid grid-cols-4 grid-rows-2 gap-4">
+                {% include "components/ui/cards/best-selling.html" %}
+            </div>
+
+        </div>
+    </section>
 
     <!-- WHAT'S THE OCCASION SECTION -->
     <section id="homeOccasionsSection" class="mt-26">
@@ -133,9 +158,6 @@
             {% include "components/ui/cards/shop-advantage-card.html"%}
         </div>
     </section>
-
-    <!-- BEST SELLERS -->
-{% include "components/ui/cards/best-selling.html" %}
 
     {% endblock %}
 </body>
