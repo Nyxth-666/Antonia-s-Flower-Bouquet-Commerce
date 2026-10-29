@@ -2,19 +2,23 @@
 {% load static %}
 
 {% block content %}
-<main class="mx-auto max-w-[1240px] mt-28 mb-28">
+<section class="mx-auto mt-28 mb-28 w-full max-w-[1240px]">
+  <h1 class="text-5xl font-bold">Build your own bouquet</h1>
+  <p class="mt-3.5 mb-12 max-w-[420px]">
+    Pick the flowers, the wrapping, the extras — the price updates as you go.
+  </p>
 
-  <p class="mt-12 mb-10 text-center text-sm text-secondary">Home <span class="mx-2">/</span> <span class="text-primary">Customize</span></p>
-  <h1 class="text-5xl font-bold leading-none text-primary">Build your own bouquet</h1>
-  <p class="mt-3 mb-12 max-w-[420px] text-secondary">Pick the flowers, the wrapping, the extras — the price updates as you go.</p>
+  <form id="bouquet" method="post" action=""
+    class="grid grid-cols-1 overflow-hidden rounded-card border border-border lg:grid-cols-[5fr_4fr]">
+    {% csrf_token %}
+    <input type="hidden" name="config" id="config">
 
-  <div class="mx-auto mb-16 grid w-[1200px] grid-cols-[669px_531px]">
-
-    <div class="min-h-[1411px] rounded-l-[20px] border border-border bg-[#E8E3D5] px-[56px] pt-[72px] pb-10">
+    <!-- Customization -->
+    <div class="bg-[#E9E3D5] px-4 py-6 sm:px-6 sm:py-8 lg:px-[56px] lg:pt-[72px] lg:pb-10">
 
       <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
-        <h2 class="mb-4 pl-[7px] text-[19px] font-semibold">1. Size</h2>
-        <div class="flex gap-2.5">
+        <h2 class="mb-3.5 pl-2 text-xl font-bold">1. Size</h2>
+        <div class="flex flex-wrap gap-2.5">
           {% include "components/ui/buttons/customization-size-button.html" with label="Small" only %}
           {% include "components/ui/buttons/customization-size-button.html" with label="Medium" only %}
           {% include "components/ui/buttons/customization-size-button.html" with label="Large" only %}
@@ -22,83 +26,92 @@
         </div>
       </section>
 
+      
       <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
-        <h2 class="pl-[7px] text-[19px] font-semibold">2. Choose your flowers</h2>
-        <p class="mt-0.5 mb-3.5 pl-[7px] text-[15px]">Quantities update the total instantly.</p>
+        <h2 class="mb-1 pl-2 text-xl font-bold">2. Choose your flowers</h2>
+        <p class="mb-3.5 text-[15px] text-muted">Quantities update the total instantly.</p>
+        <div id="flowers" class="flex max-h-[360px] flex-col gap-3.5 overflow-y-auto pr-2"></div>
+      </section>
 
-        <div class="mb-3.5 flex items-center gap-3.5 rounded-xl border border-border py-3 pr-[22px] pl-7">
-          <span class="size-[16px] rounded-full bg-[#c48aa0]"></span>
-          <p class="flex-1 leading-tight"><b class="block font-semibold text-foreground">Lisianthus/Paper Roses</b><small class="text-[14px] text-muted">₱55 / stem</small></p>
-          <div class="flex items-center gap-2.5 text-foreground"><button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">−</button>0<button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">+</button></div>
-        </div>
-        <div class="mb-3.5 flex items-center gap-3.5 rounded-xl border border-border py-3 pr-[22px] pl-7">
-          <span class="size-[16px] rounded-full bg-[#c48aa0]"></span>
-          <p class="flex-1 leading-tight"><b class="block font-semibold text-foreground">Tulips</b><small class="text-[14px] text-muted">₱55 / stem</small></p>
-          <div class="flex items-center gap-2.5 text-foreground"><button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">−</button>0<button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">+</button></div>
-        </div>
-        <div class="mb-3.5 flex items-center gap-3.5 rounded-xl border border-border py-3 pr-[22px] pl-7">
-          <span class="size-[16px] rounded-full bg-[#c48aa0]"></span>
-          <p class="flex-1 leading-tight"><b class="block font-semibold text-foreground">Lillies</b><small class="text-[14px] text-muted">₱55 / stem</small></p>
-          <div class="flex items-center gap-2.5 text-foreground"><button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">−</button>0<button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">+</button></div>
-        </div>
-        <div class="flex items-center gap-3.5 rounded-xl border border-border py-3 pr-[22px] pl-7">
-          <span class="size-[16px] rounded-full bg-[#c48aa0]"></span>
-          <p class="flex-1 leading-tight"><b class="block font-semibold text-foreground">Carnation</b><small class="text-[14px] text-muted">₱55 / stem</small></p>
-          <div class="flex items-center gap-2.5 text-foreground"><button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">−</button>0<button class="size-[20px] rounded-full border border-border text-[13px] leading-none text-muted">+</button></div>
-        </div>
+
+      <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
+        <h2 class="mb-3.5 pl-2 text-xl font-bold">3. Wrapping Color</h2>
+        <div id="colors" class="flex flex-wrap gap-2"></div>
       </section>
 
       <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
-        <h2 class="mb-4 pl-[7px] text-[19px] font-semibold">3. Wrapping Color</h2>
-        <div class="flex gap-2.5">
-          <button class="size-[30px] rounded-full border-2 border-foreground bg-[#b5506b]"></button>
-          <button class="size-[30px] rounded-full border-2 border-transparent bg-[#f2d8e0]"></button>
-          <button class="size-[30px] rounded-full border-2 border-transparent bg-[#e8a44a]"></button>
-          <button class="size-[30px] rounded-full border-2 border-transparent bg-[#dde9d8]"></button>
-          <button class="size-[30px] rounded-full border-2 border-transparent bg-[#f6f3ec]"></button>
-        </div>
+        <h2 class="mb-3.5 pl-2 text-xl font-bold">4. Wrapping</h2>
+        <div id="wraps" class="grid grid-cols-2 gap-2.5 sm:grid-cols-3"></div>
       </section>
 
       <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
-        <h2 class="mb-4 pl-[7px] text-[19px] font-semibold">4. Wrapping</h2>
-        <div class="grid grid-cols-3 gap-2.5">
-          <button class="rounded-xl border border-border px-3.5 pt-[7px] pb-2.5 text-[15px] text-muted"><span class="mb-1.5 block h-[22px] rounded-lg bg-[#c9a97f]"></span>Kraft paper</button>
-          <button class="rounded-xl border border-border px-3.5 pt-[7px] pb-2.5 text-[15px] text-muted"><span class="mb-1.5 block h-[22px] rounded-lg bg-[#f6f3ec]"></span>White paper</button>
-          <button class="rounded-xl border border-border px-3.5 pt-[7px] pb-2.5 text-[15px] text-muted"><span class="mb-1.5 block h-[22px] rounded-lg bg-[#dde9d8]"></span>Satin wrap</button>
-          <button class="rounded-xl border border-border px-3.5 pt-[7px] pb-2.5 text-[15px] text-muted"><span class="mb-1.5 block h-[22px] rounded-lg bg-[#8f3d55]"></span>Luxury box</button>
-        </div>
-      </section>
-
-      <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
-        <h2 class="mb-4 pl-[7px] text-[19px] font-semibold">5. Add chocolates &amp; gifts</h2>
-        <div class="grid grid-cols-2 gap-2.5">
+        <h2 class="mb-3.5 pl-2 text-xl font-bold">5. Add chocolates &amp; gifts</h2>
+        <div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
           {% include "components/ui/buttons/customization-addon-button.html" with label="Chocolate box" price="₱180" only %}
           {% include "components/ui/buttons/customization-addon-button.html" with label="Teddy bear" price="₱220" only %}
           {% include "components/ui/buttons/customization-addon-button.html" with label="Greeting card" price="₱40" only %}
-          {% include "components/ui/buttons/customization-addon-button.html" with label="Baloon" price="₱90" only %}
+          {% include "components/ui/buttons/customization-addon-button.html" with label="Balloon" price="₱90" only %}
         </div>
       </section>
 
       <section>
-        <h2 class="mb-4 pl-[7px] text-[19px] font-semibold">6. A message to include</h2>
-        <textarea maxlength="140" placeholder="Write a short note for the card…" class="block h-[110px] w-full resize-none rounded-[10px] border border-border bg-background p-3 text-sm outline-none"></textarea>
-        <p class="mt-1 text-right text-sm">0/140</p>
+        <h2 class="mb-3.5 pl-2 text-xl font-bold">6. A message to include</h2>
+        <textarea id="msg" name="message" maxlength="140"
+          placeholder="Write a short note for the card…"
+          class="block h-[110px] w-full resize-none rounded-lg border border-border bg-background p-3 text-[13px] text-foreground outline-none placeholder:text-muted focus:border-accent"></textarea>
+        <p class="mt-1 text-right text-[13px] text-muted">
+          <span id="cnt">0</span>/140
+        </p>
       </section>
     </div>
 
-    <div class="flex min-h-[1411px] flex-col justify-between rounded-r-[20px] border border-l-0 border-border bg-card px-[59px] pt-[72px] pb-10">
-      <h3 class="text-[19px] font-semibold">Your bouquet</h3>
-      <div>
-        <input type="text" placeholder="Name this design (optional)" class="mb-4 w-full border-b border-dotted border-secondary py-1 font-heading text-2xl text-secondary outline-none placeholder:text-secondary">
-        <div class="mb-[9px] flex justify-between"><span>Base (Large)</span><span>₱800</span></div>
-        <div class="mb-[9px] flex justify-between"><span>Flowers</span><span>₱195</span></div>
-        <div class="mb-[9px] flex justify-between"><span>Wrappings</span><span>₱0</span></div>
-        <div class="mb-[9px] flex justify-between"><span>Add-ons</span><span>₱0</span></div>
-        <div class="mt-3.5 flex items-baseline justify-between border-t border-foreground/70 pt-5 font-heading text-xl font-bold text-foreground"><span>Total</span><span>₱995</span></div>
-        <button class="mt-[22px] h-[52px] w-full rounded-full bg-accent text-white">Add to Cart</button>
-      </div>
-    </div>
+    <!-- Order Summary -->
+    <div class="flex flex-col bg-card px-4 py-6 sm:px-6 sm:py-8 lg:px-[59px] lg:pt-[72px] lg:pb-10">
+      <h2 class="text-xl font-bold text-foreground">Your bouquet</h2>
+      <div class="hidden flex-1 lg:block"></div>
 
-  </div>
-</main>
+      <input name="design_name" maxlength="40"
+        placeholder="Name this design (optional)"
+        class="mt-8 mb-3.5 w-full border-b border-dotted border-foreground/70 bg-transparent pb-1 font-serif text-2xl text-foreground outline-none placeholder:text-muted focus:border-accent lg:mt-0">
+
+      <p class="mb-[9px] flex justify-between gap-3 text-[15px]">
+        <span data-out="size">Base (Large)</span>
+        <span data-out="base">₱800</span>
+      </p>
+
+      <p class="mb-[9px] flex justify-between gap-3 text-[15px]">
+        <span>Flowers</span>
+        <span data-out="fl">₱195</span>
+      </p>
+
+      <p class="mb-[9px] flex justify-between gap-3 text-[15px]">
+        <span>Wrappings</span>
+        <span data-out="wr">₱0</span>
+      </p>
+
+      <p class="mb-[9px] flex justify-between gap-3 text-[15px]">
+        <span>Add-ons</span>
+        <span data-out="ad">₱0</span>
+      </p>
+
+      <p class="mt-3.5 flex items-baseline justify-between gap-3 border-t border-foreground/70 pt-5 font-serif text-xl font-bold text-foreground">
+        <span>Total</span>
+        <span data-out="total">₱995</span>
+      </p>
+
+      <button type="submit"
+        class="mt-[22px] flex h-[52px] w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-accent text-[15px] text-soft-white transition hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        Add to Cart
+        <svg class="size-4" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M2 3h3l2.5 12h11L21 7H6"/>
+          <circle cx="9" cy="20" r="1.3"/>
+          <circle cx="17" cy="20" r="1.3"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</section>
+
+<script src="{% static 'js/customize.js' %}?v=2" defer></script>
 {% endblock %}
