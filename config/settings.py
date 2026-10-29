@@ -4,9 +4,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from django.templatetags.static import static
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
   
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
@@ -155,4 +154,30 @@ UNFOLD = {
     "STYLES": [
         lambda r: static("css/admin_output.css"),
     ],
+    "SIDEBAR": {
+        "show_search": False,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": _("Management"),
+                "separator": False,
+                "collapsible": False,
+                "items": [
+                    {"title": _("Group"), "icon": "dashboard", "link": reverse_lazy("admin:auth_group_changelist")},
+                    {"title": _("Users"), "icon": "people", "link": reverse_lazy("admin:auth_user_changelist")},
+                ],
+            },
+            {
+                "title": _("Catalog"),
+                "separator": True,
+                "collapsible": False,
+                "items": [
+                    {"title": _("Bouquets"), "icon": "local_florist", "link": reverse_lazy("admin:catalog_bouquet_changelist")},
+                    {"title": _("Colors"), "icon": "palette", "link": reverse_lazy("admin:catalog_color_changelist")},
+                    {"title": _("Flower types"), "icon": "filter_vintage", "link": reverse_lazy("admin:catalog_flowertype_changelist")},
+                    {"title": _("Occasions"), "icon": "celebration", "link": reverse_lazy("admin:catalog_occasion_changelist")},
+                ],
+            },
+        ],
+    },
 }
