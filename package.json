@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/output.css --watch",
-    "build:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/output.css"
+    "build:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/output.css",
+    "admin:css": "npx @tailwindcss/cli -i ./static/src/admin.css -o ./static/css/admin_output.css --watch"
   },
   "repository": {
     "type": "git",

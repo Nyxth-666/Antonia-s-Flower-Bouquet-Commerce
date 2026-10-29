@@ -135,8 +135,9 @@ MAILERS = {
 }
 
 # UNFOLD DOCS: https://unfoldadmin.com/docs/configuration/settings/
-UNFOLD = { 
-    "SITE_TITLE": "Antonia's",
+UNFOLD = {
+    "THEME": "light",
+    "SITE_TITLE": "Antonia's Flowershop",
     "SITE_HEADER": "Antonia's Flowershop",
     "SITE_SUBHEADER": "Admin panel",
 
@@ -152,6 +153,6 @@ UNFOLD = {
     },
 
     "STYLES": [
-        lambda request: static("css/output.css"),
+        lambda r: static("css/admin_output.css"),
     ],
 }

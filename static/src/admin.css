@@ -1,0 +1,51 @@
+html:root {
+  --color-accent: #A66A59;
+  --color-secondary: #7A4035;
+  --color-background: #F1EEE3;
+  --color-card: #F7F4EB;
+  --color-border: #C9BFB0;
+  --color-foreground: #2F211D;
+  --color-muted: #75645C;
+  --font-serif: "Georgia", serif;
+  --color-on-brand: #fff;
+
+  /* Unfold hooks */
+  --font-sans: "Inria Sans", sans-serif;
+  --radius-default: 10px;
+  --color-primary-500: var(--color-accent);
+  --color-primary-600: #8A4F42;
+  --color-primary-700: var(--color-secondary);
+  --color-base-50: var(--color-background);
+  --color-base-100: #E8E3D5;
+  --color-base-200: var(--color-border);
+  --color-base-500: var(--color-muted);
+  --color-base-900: var(--color-foreground);
+  --color-white: var(--color-card);
+}
+
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 700; }
+
+main :is(button, a)[class*="bg-primary"] { border-radius: 9999px; }
+
+/* Sidebar: brown paint, white ink. Targets the wrapper of the nav sidebar. */
+:has(> #nav-sidebar) {
+  background-color: var(--color-secondary) !important;
+
+  --color-white: var(--color-secondary);
+  --color-base-50: var(--color-secondary);
+  --color-base-100: rgb(255 255 255 / 0.15);
+  --color-base-200: rgb(255 255 255 / 0.2);
+  --color-base-500: var(--color-on-brand);
+  --color-base-600: var(--color-on-brand);
+  --color-base-700: var(--color-on-brand);
+  --color-base-900: var(--color-on-brand);
+  --color-primary-600: var(--color-on-brand);
+}
+
+/* Fallback for elements that ignore variables */
+:has(> #nav-sidebar) :is(a, p, span, h2, h3, svg, .text-subtle, div) { color: var(--color-on-brand); }
+
+#logout-form > button {
+  background-color: #B91C1C !important; /* A standard, recognizable dangerous red (Tailwind red-700) */
+  color: #FFFFFF !important;
+}
