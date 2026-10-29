@@ -1,8 +1,11 @@
 import os
 import dj_database_url
-
 from pathlib import Path
 from dotenv import load_dotenv
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+  
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,6 +23,7 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
+    "unfold", # For customizing Django admin, placed before "django.contrib.admin"
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -128,4 +132,26 @@ MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
+}
+
+# UNFOLD DOCS: https://unfoldadmin.com/docs/configuration/settings/
+UNFOLD = { 
+    "SITE_TITLE": "Antonia's",
+    "SITE_HEADER": "Antonia's Flowershop",
+    "SITE_SUBHEADER": "Admin panel",
+
+    "SITE_ICON": {
+        "light": lambda request: static("images/logo.png"),  # light mode
+        "dark": lambda request: static("images/logo.png"),  # dark mode
+    },
+
+    "LOGIN": {
+        "image": lambda request: static("sample/login-bg.jpg"),
+        "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
+        # Inherits from `unfold.forms.AuthenticationForm`
+    },
+
+    "STYLES": [
+        lambda request: static("css/output.css"),
+    ],
 }
