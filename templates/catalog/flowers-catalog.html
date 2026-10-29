@@ -4,29 +4,30 @@
 {% block title %}Types | Antonia's{% endblock %}
 
 {% block content %}
-<section id="types" class="flex flex-col mx-auto w-full max-w-[1240px] gap-24">
-    <div class="flex flex-col gap-12">
-        <h1 class="font-bold text-6xl max-w-[730px]">
-            “Every Bloom Tells a Story”
-        </h1>
+<section id="types" class="flex flex-col mx-auto w-full max-w-[1240px] gap-24 mb-28 mt-28">
+    <div>
         <div class="flex flex-col gap-6">
-            <p>
-                Explore a collection of blooms, each carrying its own beauty, character, and meaning. From timeless roses and graceful lilies to cheerful sunflowers and delicate baby's breath, discover the flowers that best express what you wish to say.
-            </p>
+            <div class="flex flex-col gap-12">
+                <h2 class="font-bold text-6xl max-w-[730px]">
+                    “Every Bloom Tells a Story”
+                </h2>
+                <p>
+                    Explore a collection of blooms, each carrying its own beauty, character, and meaning. From timeless roses and graceful lilies to cheerful sunflowers and delicate baby's breath, discover the flowers that best express what you wish to say.
+                </p>
+            </div>
+
             <p>
                 Find a bloom that speaks to your heart, your occasion, and the person you're giving it to.
             </p>
         </div>
     </div>
 
-    <div class="flex flex-col gap-[72px]">
+    <div class="flex flex-col gap-18">
         <h2 class="font-bold text-center text-4xl">Pick a Type of Flowers</h2>
-        <br>
-        <br>
         <ul class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
-            {% for flowertype in flowertypes %}
+            {% for flower_type in flower_types %}
                 <li>
-                    {% include "components/ui/cards/flowertype-card.html" with flowertype=flowertype %}
+                    {% include "components/ui/cards/flowertype-card.html" with flower_type=flower_type %}
                 </li>
             {% empty %}
                 <li class="col-span-full text-center">No flower types are available yet.</li>
