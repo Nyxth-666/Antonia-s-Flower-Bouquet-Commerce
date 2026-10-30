@@ -13,11 +13,19 @@
 
     <form method="post" class="space-y-4">
       {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+
+      {% if form.errors %}
+      <p class="text-center text-sm text-red-800">
+        Incorrect username or password. Please try again.
+      </p>
+      {% endif %}
 
       <input
-        type="email"
+        type="text"
         name="username"
-        placeholder="Email"
+        placeholder="Username"
+        autocomplete="username"
         class="w-full p-4 rounded-xl border bg-stone-50"
       />
 
@@ -25,6 +33,7 @@
         type="password"
         name="password"
         placeholder="Password"
+        autocomplete="current-password"
         class="w-full p-4 rounded-xl border bg-stone-50"
       />
 
@@ -72,7 +81,7 @@
 
     <p class="text-center text-stone-500">
       Don't have an account?
-      <a href="#" class="text-red-800 underline">register here.</a>
+      <a href="{% url 'accounts:register' %}" class="text-red-800 underline">register here.</a>
     </p>
   </div>
 </div>

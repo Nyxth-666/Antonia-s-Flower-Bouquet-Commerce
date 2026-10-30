@@ -12,7 +12,17 @@
 <body>
     {% include "components/layout/navbar.html" %}
 
-    <main>
+        <main>
+        {% if messages %}
+        <div class="mx-auto max-w-299 px-16 pt-6">
+            {% for message in messages %}
+            <p class="rounded-lg border border-border bg-card px-4 py-3 text-sm {% if message.tags == 'error' %}text-red-800{% else %}text-green-800{% endif %}">
+                {{ message }}
+            </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         {% block content %}{% endblock %}
     </main>
 
