@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
+from .models import CustomerProfile
 
 from .forms import RegisterForm
 
@@ -27,35 +28,62 @@ SAMPLE_ORDER = [
 STATUS_STEPS = {"Confirmed": 0, "Preparing": 1, "Out for delivery": 2, "Delivered": 3}
 ORDER_STEPS = list(STATUS_STEPS)
 
+PASSWORD_MESSAGES = {
+    "password_too_common": "This password is too weak. Try something longer and less predictable.",
+    "password_entirely_numeric": "This password is too weak. Add some letters.",
+    "password_too_short": "This password is too weak. Use at least 8 characters.",
+    "password_too_similar": "This password is too similar to your personal details.",
+}
+
+
+def password_error_messages(form):
+    errors = {}
+    for field, error_list in form.errors.as_data().items():
+        for err in error_list:
+            if err.code in PASSWORD_MESSAGES:
+                errors.setdefault("new_password1", PASSWORD_MESSAGES[err.code])
+            else:
+                errors.setdefault(field, err.messages[0])
+    return errors
+
 @login_required
 def accounts_page(request):
+    profile, _ = CustomerProfile.objects.get_or_create(user=request.user)
+
     errors = {}
     values = {
         "full_name": request.user.get_full_name(),
         "email": request.user.email,
+        "phone": profile.phone,
     }
 
     if request.method == "POST" and "full_name" in request.POST:
         full_name = request.POST.get("full_name", "").strip()
         email = request.POST.get("email", "").strip().lower()
-        values = {"full_name": full_name, "email": email}
+        phone = request.POST.get("phone", "").strip()
+        values = {"full_name": full_name, "email": email, "phone": phone}
 
         if not email:
             errors["email"] = "Email is required."
         elif User.objects.filter(email__iexact=email).exclude(pk=request.user.pk).exists():
             errors["email"] = "That email is already used by another account."
+        elif phone and not phone.replace("+", "").replace(" ", "").replace("-", "").isdigit():
+            errors["phone"] = "Enter a valid phone number."
         else:
             first_name, _, last_name = full_name.partition(" ")
             request.user.first_name = first_name
             request.user.last_name = last_name
             request.user.email = email
             request.user.save()
+            profile.phone = phone
+            profile.save()
             messages.success(request, "Your profile was updated.")
             return redirect("accounts:accounts")
 
     orders = [{**o, "step": STATUS_STEPS.get(o["status"], -1)} for o in SAMPLE_ORDER]
 
     password_form = PasswordChangeForm(request.user)
+    password_errors = {}
 
     if request.method == "POST" and "old_password" in request.POST:
         password_form = PasswordChangeForm(request.user, request.POST)
@@ -64,6 +92,7 @@ def accounts_page(request):
             update_session_auth_hash(request, user)
             messages.success(request, "Your password was updated.")
             return redirect("accounts:accounts")
+        password_errors = password_error_messages(password_form)
         
     return render(request, "accounts/accounts.html", {
         "profile_tabs": PROFILE_TABS,
@@ -72,6 +101,7 @@ def accounts_page(request):
         "profile_errors": errors,
         "password_form": password_form,
         "profile_values": values,
+        "password_errors": password_errors,
     })
 
 class CustomLoginView(LoginView):
@@ -86,6 +116,7 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            CustomerProfile.objects.create(user=user)
             login(request, user)
             return redirect("accounts:accounts")
     else:
