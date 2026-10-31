@@ -9,6 +9,9 @@ from .models import CustomerProfile
 
 from .forms import RegisterForm
 
+from django.contrib.auth.views import LoginView, PasswordResetConfirmView
+from django.urls import reverse_lazy
+
 PROFILE_TABS = [
     {"page": "profile",  "label": "Profile",   "template": "components/ui/cards/change-profile-card.html"},
     {"page": "orders",   "label": "My Orders", "template": "components/ui/cards/my-orders-card.html"},
@@ -36,12 +39,12 @@ PASSWORD_MESSAGES = {
 }
 
 
-def password_error_messages(form):
+def password_error_messages(form, target="new_password1"):
     errors = {}
     for field, error_list in form.errors.as_data().items():
         for err in error_list:
             if err.code in PASSWORD_MESSAGES:
-                errors.setdefault("new_password1", PASSWORD_MESSAGES[err.code])
+                errors.setdefault(target, PASSWORD_MESSAGES[err.code])
             else:
                 errors.setdefault(field, err.messages[0])
     return errors
@@ -112,6 +115,8 @@ def register(request):
     if request.user.is_authenticated:
         return redirect("accounts:accounts")
 
+    form_errors = {}
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -119,7 +124,22 @@ def register(request):
             CustomerProfile.objects.create(user=user)
             login(request, user)
             return redirect("accounts:accounts")
+        form_errors = password_error_messages(form, "password1")
     else:
         form = RegisterForm()
 
-    return render(request, "accounts/register.html", {"form": form})
+    return render(request, "accounts/register.html", {
+        "form": form,
+        "form_errors": form_errors,
+    })
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "accounts/password_reset_confirm.html"
+    success_url = reverse_lazy("accounts:password_reset_complete")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = context.get("form")
+        if form is not None and form.is_bound:
+            context["form_errors"] = password_error_messages(form, "new_password1")
+        return context

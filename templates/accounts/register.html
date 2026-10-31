@@ -148,9 +148,9 @@
             autocomplete="new-password"
             class="w-full h-14 px-4 text-lg rounded-xl border border-[#CFC6B8] bg-[#F6F3E9] placeholder-[#6E5F57] outline-none focus:border-[#7B3F38]"
           />
-          {% for error in form.password1.errors %}
-            <p class="mt-1 text-sm text-red-800">{{ error }}</p>
-          {% endfor %}
+          {% if form_errors.password1 %}
+            <p class="mt-1 text-sm text-red-800">{{ form_errors.password1 }}</p>
+          {% endif %}
         </div>
 
         <div>
@@ -161,9 +161,9 @@
             autocomplete="new-password"
             class="w-full h-14 px-4 text-lg rounded-xl border border-[#CFC6B8] bg-[#F6F3E9] placeholder-[#6E5F57] outline-none focus:border-[#7B3F38]"
           />
-          {% for error in form.password2.errors %}
-            <p class="mt-1 text-sm text-red-800">{{ error }}</p>
-          {% endfor %}
+          {% if form_errors.password2 %}
+            <p class="mt-1 text-sm text-red-800">{{ form_errors.password2 }}</p>
+          {% endif %}
         </div>
 
         <label class="flex items-center gap-3 text-[#6E5F57]">

@@ -37,11 +37,7 @@
         class="w-full p-4 rounded-xl border bg-stone-50"
       />
 
-      <a
-        href="#"
-        class="block text-right text-sm hover:text-[#7A4035] text-stone-500"
-        >Forgot Password?</a
-      >
+      <a href="{% url 'accounts:password_reset' %}" class="block text-right text-sm hover:text-[#7A4035] text-stone-500">Forgot Password?</a>
 
       <button
         type="submit"
