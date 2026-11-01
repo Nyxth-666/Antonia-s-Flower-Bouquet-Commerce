@@ -17,10 +17,10 @@
             <form method="post" action="{% url 'accounts:accounts' %}#settings" class="flex flex-col gap-3">
                 {% csrf_token %}
                 <h2 class="text-[20px] font-bold text-foreground mb-6">Change password</h2>
-                {% include "components/ui/forms/profile_form.html" with label="Current password" name="old_password" type="password" class="bg-white" error=password_form.old_password.errors.0 only %}
+                {% include "components/ui/forms/profile_form.html" with label="Current password" name="old_password" type="password" class="bg-white" error=password_errors.old_password only %}
                 <div class="grid grid-cols-1 gap-3 md:grid-cols-2 mt-2">
-                    {% include "components/ui/forms/profile_form.html" with label="New password" name="new_password1" type="password" class="bg-white" error=password_form.new_password1.errors.0 only %}
-                    {% include "components/ui/forms/profile_form.html" with label="Confirm new password" name="new_password2" type="password" class="bg-white" error=password_form.new_password2.errors.0 only %}
+                    {% include "components/ui/forms/profile_form.html" with label="New password" name="new_password1" type="password" class="bg-white" error=password_errors.new_password1 only %}
+                    {% include "components/ui/forms/profile_form.html" with label="Confirm new password" name="new_password2" type="password" class="bg-white" error=password_errors.new_password2 only %}
                 </div>
 
                 <button type="submit" class="hover:opacity-80 hover:-translate-y-0.5 transition bg-secondary text-white w-full h-12 mt-6 focus-visible:outline focus-visible:outline-offset-2 cursor-pointer">Update password</button>

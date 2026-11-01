@@ -11,7 +11,7 @@
             {# EMAIL + PHONE #}
             <div class="grid gap-6 md:grid-cols-2">
                 {% include "components/ui/forms/profile_form.html" with label="Email address" name="email" type="email" value=profile_values.email error=profile_errors.email only %}
-                {% include "components/ui/forms/profile_form.html" with label="Phone number" name="phone" type="tel" value=user.profile.phone only %}
+                {% include "components/ui/forms/profile_form.html" with label="Phone number" name="phone" type="tel" value=profile_values.phone error=profile_errors.phone only %}
             </div>
 
             {# SAVE BUTTON #}
