@@ -6,11 +6,11 @@
             {% csrf_token %}
 
             {# FULL NAME #}
-            {% include "components/ui/forms/profile_form.html" with label="Full name" name="full_name" value=user.get_full_name only %}
+            {% include "components/ui/forms/profile_form.html" with label="Full name" name="full_name" value=profile_values.full_name error=profile_errors.full_name only %}
 
             {# EMAIL + PHONE #}
             <div class="grid gap-6 md:grid-cols-2">
-                {% include "components/ui/forms/profile_form.html" with label="Email address" name="email" type="email" value=user.email only %}
+                {% include "components/ui/forms/profile_form.html" with label="Email address" name="email" type="email" value=profile_values.email error=profile_errors.email only %}
                 {% include "components/ui/forms/profile_form.html" with label="Phone number" name="phone" type="tel" value=user.profile.phone only %}
             </div>
 

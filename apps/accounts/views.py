@@ -1,4 +1,12 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect, render
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+
+from .forms import RegisterForm
 
 PROFILE_TABS = [
     {"page": "profile",  "label": "Profile",   "template": "components/ui/cards/change-profile-card.html"},
@@ -19,10 +27,68 @@ SAMPLE_ORDER = [
 STATUS_STEPS = {"Confirmed": 0, "Preparing": 1, "Out for delivery": 2, "Delivered": 3}
 ORDER_STEPS = list(STATUS_STEPS)
 
+@login_required
 def accounts_page(request):
+    errors = {}
+    values = {
+        "full_name": request.user.get_full_name(),
+        "email": request.user.email,
+    }
+
+    if request.method == "POST" and "full_name" in request.POST:
+        full_name = request.POST.get("full_name", "").strip()
+        email = request.POST.get("email", "").strip().lower()
+        values = {"full_name": full_name, "email": email}
+
+        if not email:
+            errors["email"] = "Email is required."
+        elif User.objects.filter(email__iexact=email).exclude(pk=request.user.pk).exists():
+            errors["email"] = "That email is already used by another account."
+        else:
+            first_name, _, last_name = full_name.partition(" ")
+            request.user.first_name = first_name
+            request.user.last_name = last_name
+            request.user.email = email
+            request.user.save()
+            messages.success(request, "Your profile was updated.")
+            return redirect("accounts:accounts")
+
     orders = [{**o, "step": STATUS_STEPS.get(o["status"], -1)} for o in SAMPLE_ORDER]
+
+    password_form = PasswordChangeForm(request.user)
+
+    if request.method == "POST" and "old_password" in request.POST:
+        password_form = PasswordChangeForm(request.user, request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Your password was updated.")
+            return redirect("accounts:accounts")
+        
     return render(request, "accounts/accounts.html", {
         "profile_tabs": PROFILE_TABS,
         "sample_order": orders,
         "steps": ORDER_STEPS,
+        "profile_errors": errors,
+        "password_form": password_form,
+        "profile_values": values,
     })
+
+class CustomLoginView(LoginView):
+    template_name = "accounts/login.html"
+    redirect_authenticated_user = True
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect("accounts:accounts")
+
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("accounts:accounts")
+    else:
+        form = RegisterForm()
+
+    return render(request, "accounts/register.html", {"form": form})
