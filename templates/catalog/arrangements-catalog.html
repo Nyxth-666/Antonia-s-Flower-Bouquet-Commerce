@@ -2,26 +2,34 @@
 
 {% block content %}
 
-<div class="w-full max-w-[1240px] mt-28 mb-28">
-    {# PAGE-TITLE #}
-    <section>
-        <h1 class="mb-6 mt-4 font-serif text-5xl font-bold leading-tight md:text-6xl">"Beautifully arranged, <br> thoughtfully given"</h1>
-        <div class="pr-12">
-            <p> From delicate hand-tied bouquets to luxurious floral arrangements, discover a style for every expression. Choose an arrangement that matches the occasion, the feeling, and the person you wish to surprise—or create something entirely your own.</p>
-            <p><br>Choose an arrangement, make it yours, and let every bloom become part of the story.</p>
-        </div>
-    </section>
+<section id="types" class="flex flex-col mx-auto w-full max-w-[1240px] gap-24 mb-28 mt-28">
+    <div>
+        <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-12">
+                <h2 class="font-bold text-6xl max-w-[730px]">
+                    “Beautifully arranged, thoughtfully given.”                </h2>
+                <p>
+                    From delicate hand-tied bouquets to luxurious floral arrangements, discover a style for every expression. Choose an arrangement that matches the occasion, the feeling, and the person you wish to surprise—or create something entirely your own.
+                </p>
+            </div>
 
-    {# ARRANGEMENT-TYPE-CARD #}
-    <section class="mt-8">
-        <h2 class="font-bold text-center text-4xl py-8 mb-4">Pick a type of arrangement</h2>
-        <ul class="mx-auto grid max-w-299 grid-cols-1 gap-7.75 sm:grid-cols-2 lg:grid-cols-4">
-            {% for type in arrangement_types %}
-                {% include "components/ui/cards/arrangement-type-card.html" with name=type.name image=type.image description=type.description url=type.url only %}
+            <p>
+                Choose an arrangement, make it yours, and let every bloom become part of the story.
+            </p>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-18">
+        <h2 class="font-bold text-center text-4xl">Pick a Type of Arrangements</h2>
+        <ul class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+            {% for arrangement_type in arrangement_types %}
+                <li>
+                    {% include "components/ui/cards/arrangement-type-card.html" with arrangement_type=arrangement_type %}
+                </li>
             {% empty %}
-                <li class="col-span-full py-12 text-center text-sm text-muted">No arrangement types available.</li>
+                <li class="col-span-full text-center">No arrangement types are available yet.</li>
             {% endfor %}
         </ul>
-    </section>
-</div>
+    </div>
+</section>
 {% endblock %}
