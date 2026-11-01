@@ -134,7 +134,7 @@ def register(request):
     })
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = "accounts/password_reset_confirm.html"
+    template_name = "accounts/password_reset/password_reset_confirm.html"
     success_url = reverse_lazy("accounts:password_reset_complete")
 
     def get_context_data(self, **kwargs):
