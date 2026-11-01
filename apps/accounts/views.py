@@ -108,7 +108,7 @@ def accounts_page(request):
     })
 
 class CustomLoginView(LoginView):
-    template_name = "accounts/login.html"
+    template_name = "accounts/login/login.html"
     redirect_authenticated_user = True
 
 def register(request):
@@ -128,13 +128,13 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "accounts/register.html", {
+    return render(request, "accounts/register/register.html", {
         "form": form,
         "form_errors": form_errors,
     })
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = "accounts/password_reset_confirm.html"
+    template_name = "accounts/password_reset/password_reset_confirm.html"
     success_url = reverse_lazy("accounts:password_reset_complete")
 
     def get_context_data(self, **kwargs):
