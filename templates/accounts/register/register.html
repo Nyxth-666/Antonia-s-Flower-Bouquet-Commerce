@@ -30,29 +30,16 @@
 
         <p class="mb-4">or begin with:</p>
 
-        <div class="flex gap-4">
-          <button
-            href="#"
-            class="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-border cursor-pointer"
-          >
-            <img
-              src="{% static 'images/google.png' %}"
-              alt="Google"
-              class="w-6 h-6 object-contain"
-            />
-          </button>
-
-          <button
-            href="#"
-            class="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-border cursor-pointer"
-          >
-            <img
-              src="{% static 'images/facebook.png' %}"
-              alt="Facebook"
-              class="w-6 h-6 object-contain"
-            />
-          </button>
-        </div>
+        <button
+          href="#"
+          class="w-12 h-12 rounded-full bg-soft-white flex items-center justify-center border border-border cursor-pointer"
+        >
+          <img
+            src="{% static 'images/google.png' %}"
+            alt="Google"
+            class="w-6 h-6 object-contain"
+          />
+        </button>
       </div>
     </div>
 
@@ -78,7 +65,7 @@
               placeholder="First Name"
               value="{{ form.first_name.value|default:'' }}"
               autocomplete="given-name"
-              class="w-full h-14 px-4 text-lg rounded-xl border border-border bg-background outline-none transition focus-within:border-primary"
+              class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
             />
             {% for error in form.first_name.errors %}
             <p class="mt-1 text-sm text-error">{{ error }}</p>
@@ -92,7 +79,7 @@
               placeholder="Last Name"
               value="{{ form.last_name.value|default:'' }}"
               autocomplete="family-name"
-              class="w-full h-14 px-4 text-lg rounded-xl border border-border bg-background outline-none transition focus-within:border-primary"
+              class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
             />
             {% for error in form.last_name.errors %}
             <p class="mt-1 text-sm text-error">{{ error }}</p>
@@ -107,7 +94,7 @@
             placeholder="Username"
             value="{{ form.username.value|default:'' }}"
             autocomplete="username"
-            class="w-full h-14 px-4 text-lg rounded-xl border border-border bg-background outline-none transition focus-within:border-primary"
+            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
           />
           {% for error in form.username.errors %}
           <p class="mt-1 text-sm text-error">{{ error }}</p>
@@ -121,7 +108,7 @@
             placeholder="Email"
             value="{{ form.email.value|default:'' }}"
             autocomplete="email"
-            class="w-full h-14 px-4 text-lg rounded-xl border border-border bg-background outline-none transition focus-within:border-primary"
+            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
           />
           {% for error in form.email.errors %}
           <p class="mt-1 text-sm text-error">{{ error }}</p>
@@ -134,7 +121,7 @@
             name="password1"
             placeholder="Password"
             autocomplete="new-password"
-            class="w-full h-14 px-4 text-lg rounded-xl border border-border bg-background outline-none transition focus-within:border-primary"
+            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
           />
           {% if form_errors.password1 %}
           <p class="mt-1 text-sm text-error">{{ form_errors.password1 }}</p>
@@ -147,7 +134,7 @@
             name="password2"
             placeholder="Confirm Password"
             autocomplete="new-password"
-            class="w-full h-14 px-4 text-lg rounded-xl border border-border bg-background outline-none transition focus-within:border-primary"
+            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
           />
           {% if form_errors.password2 %}
           <p class="mt-1 text-sm text-error">{{ form_errors.password2 }}</p>
@@ -164,7 +151,7 @@
 
         <button
           type="submit"
-          class="w-full h-14 rounded-xl bg-secondary transition text-background text-2xl hover:bg-primary"
+          class="w-full h-14 rounded-button bg-secondary transition text-soft-white text-lg hover:bg-primary"
         >
           Submit
         </button>
