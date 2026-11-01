@@ -1,11 +1,8 @@
 {% load static %}
-<li>
-    <a href="{{ url }}" class="relative mx-auto flex h-[255px] w-full max-w-[275.75px] flex-col justify-end overflow-hidden rounded-card bg-card p-7 hover:shadow-card transition">
-        <img src="{% static image %}" alt="{{ description }}" loading="lazy" decoding="async" class="absolute inset-0 size-full object-cover">
-        <div class="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent"></div>
-        <div class="relative">
-            <h3 class="font-heading text-sm font-bold text-white">{{ name }}</h3>
-            <p class="text-xs text-white/80">Arrangements</p>
-        </div>
-    </a>
-</li>
+
+<a href="{% url 'catalog:catalog' %}"
+   style="padding: 24px 28px;"
+   class="flex h-[255px] w-full max-w-[275.75px] flex-col justify-end rounded-3xl border border-[#d6cdbd] bg-[#f7f4eb] hover:shadow-card transition">
+    <h3 class="font-serif text-base font-bold leading-snug text-[#2b1d18]">{{ arrangement_type.name }}</h3>
+    <p class="text-[13px] leading-snug text-[#7a6a5c]">Arrangements</p>
+</a>
