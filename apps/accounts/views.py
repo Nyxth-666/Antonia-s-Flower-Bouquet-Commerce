@@ -108,7 +108,7 @@ def accounts_page(request):
     })
 
 class CustomLoginView(LoginView):
-    template_name = "accounts/login.html"
+    template_name = "accounts/login/login.html"
     redirect_authenticated_user = True
 
 def register(request):
@@ -128,7 +128,7 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "accounts/register.html", {
+    return render(request, "accounts/register/register.html", {
         "form": form,
         "form_errors": form_errors,
     })
