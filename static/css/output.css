@@ -224,6 +224,9 @@
   }
 }
 @layer utilities {
+  .pointer-events-none {
+    pointer-events: none;
+  }
   .invisible {
     visibility: hidden;
   }
@@ -247,8 +250,14 @@
   .static {
     position: static;
   }
+  .sticky {
+    position: sticky;
+  }
   .inset-x-0 {
     inset-inline: 0px;
+  }
+  .top-0 {
+    top: 0px;
   }
   .top-3 {
     top: calc(var(--spacing) * 3);
@@ -1018,9 +1027,6 @@
   .px-12 {
     padding-inline: calc(var(--spacing) * 12);
   }
-  .px-16 {
-    padding-inline: calc(var(--spacing) * 16);
-  }
   .px-55 {
     padding-inline: calc(var(--spacing) * 55);
   }
@@ -1098,9 +1104,6 @@
   }
   .text-right {
     text-align: right;
-  }
-  .font-sans {
-    font-family: var(--font-sans);
   }
   .font-serif {
     font-family: var(--font-serif);
@@ -1526,6 +1529,9 @@
     .hover\:underline:hover {
       text-decoration-line: underline;
     }
+    .hover\:opacity-50:hover {
+      opacity: 50%;
+    }
     .hover\:opacity-70:hover {
       opacity: 70%;
     }
@@ -1614,9 +1620,6 @@
     .sm\:px-6 {
       padding-inline: calc(var(--spacing) * 6);
     }
-    .sm\:px-16 {
-      padding-inline: calc(var(--spacing) * 16);
-    }
     .sm\:py-8 {
       padding-block: calc(var(--spacing) * 8);
     }
@@ -1657,9 +1660,6 @@
     }
     .md\:justify-center {
       justify-content: center;
-    }
-    .md\:gap-7 {
-      gap: calc(var(--spacing) * 7);
     }
     .md\:px-4 {
       padding-inline: calc(var(--spacing) * 4);
