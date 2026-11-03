@@ -247,8 +247,14 @@
   .static {
     position: static;
   }
+  .sticky {
+    position: sticky;
+  }
   .inset-x-0 {
     inset-inline: 0px;
+  }
+  .top-0 {
+    top: 0px;
   }
   .top-3 {
     top: calc(var(--spacing) * 3);
