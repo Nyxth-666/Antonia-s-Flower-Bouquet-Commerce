@@ -4,6 +4,18 @@ from .models import Bouquet, Occasion, Color, FlowerType
 def filter_bouquets(request):
     bouquets = Bouquet.objects.all()
 
+    search_query = request.GET.get("q", "").strip()
+
+    if search_query:
+        bouquets = bouquets.filter(
+            Q(name__icontains=search_query)
+            | Q(description__icontains=search_query)
+            | Q(arrangement_type__icontains=search_query)
+            | Q(flower_type__name__icontains=search_query)
+            | Q(occasions__name__icontains=search_query)
+            | Q(color__name__icontains=search_query)
+        )
+
     occasion_ids = request.GET.getlist("occasion")
     if occasion_ids:
         bouquets = bouquets.filter(

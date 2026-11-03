@@ -68,5 +68,45 @@
     button {
         border-radius: var(--radius-button);
     }
+
+    .color-swatch {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    border: 1px solid #c9bfb0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 200ms ease, box-shadow 200ms ease;
     }
 
+    .color-swatch:hover {
+        transform: scale(1.12);
+    }
+
+    .color-rose {
+        background-color: #b76e79;
+    }
+
+    .color-blush {
+        background-color: #e8b7c1;
+    }
+
+    .color-gold {
+        background-color: #d4af37;
+    }
+
+    .color-sage {
+        background-color: #9caf88;
+    }
+
+    .color-ivory {
+        background-color: #f5f0df;
+    }
+
+    .color-swatch.selected-color {
+        outline: 2px solid #7a4035;
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px #f1eee3;
+    }
+
+}

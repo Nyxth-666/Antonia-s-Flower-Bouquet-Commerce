@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const num = value => Number(String(value ?? "").replace(/[^\d.-]/g, "")) || 0;
 
   const BASE = {
-    Small: 500,
-    Medium: 650,
-    Large: 800,
-    Extra_Large: 1000
+    "Small": 500,
+    "Medium": 650,
+    "Large": 800,
+    "Extra Large": 1000
   };
 
   const FLOWERS = [
@@ -92,8 +92,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderColors() {
     render("#colors", COLORS, ([name, color]) => `
-      <button type="button" data-color="${name}"
-        aria-label="${name} wrapping" title="${name}"
+      <button
+        type="button"
+        data-color="${name}"
+        aria-label="${name} wrapping"
+        title="${name}"
         aria-pressed="false"
         class="color-swatch color-${color} ${focus}">
       </button>
@@ -138,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const flowers = $$("[data-flower]");
     const addons = $$('[data-addon][aria-pressed="true"]');
 
-    const base = BASE[size];
+    const base = BASE[size] ?? BASE[size.replaceAll(" ", "_")] ?? 0;
 
     const flowerTotal = flowers.reduce((total, flower) => {
       const quantity = Number(flower.querySelector("output").textContent) || 0;
