@@ -37,8 +37,8 @@
     </form>
 
     <div class="flex shrink-0 items-center gap-4">
-        {% for item in navbar_icons %}
-            {% if item.name == "Profile" or user.is_authenticated %}
+        {% if user.is_authenticated %}
+            {% for item in navbar_icons %}
                 <a
                     href="{% url item.url %}"
                     aria-label="{{ item.name }}"
@@ -47,7 +47,14 @@
                 >
                     {% include item.icon_template %}
                 </a>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <a
+                href="{% url 'accounts:register' %}"
+                class="inline-flex items-center justify-center rounded-button border border-border bg-card px-8 py-2 text-[20px] font-normal leading-none tracking-normal text-muted transition-colors duration-200 hover:border-[#7A4035] hover:bg-[#7A4035] hover:text-white"
+            >
+                Sign Up
+            </a>
+        {% endif %}
     </div>
 </div>
