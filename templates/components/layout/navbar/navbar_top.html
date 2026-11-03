@@ -18,20 +18,26 @@
     </a>
 
     <form 
-        action=""
+        action="{% url navbar_search.url %}"
         method="get"
+        role="search"
         class="flex min-w-0 max-w-[733px] flex-1 gap-3 items-center rounded-button border border-border bg-card px-5 py-2 focus-within:border-accent"
     >
-        <div class="text-muted transition-colors duration-200 focus-within:text-primary">
+        <button 
+            class="text-muted transition-colors duration-200 focus-within:text-primary"
+            type="submit"
+            aria-label="Search"
+        >
             {% include "components/ui/icons/search_icon.html" %}
-        </div>
+        </button>
 
-        <input 
+        <input
             type="search"
             name="{{ navbar_search.parameter }}"
             placeholder="{{ navbar_search.placeholder }}"
             value="{{ request.GET.q|default:'' }}"
             aria-label="Search flowers"
+            autocomplete="off"
             class="w-full bg-transparent text-base outline-none placeholder:text-muted"
         >
     </form>
