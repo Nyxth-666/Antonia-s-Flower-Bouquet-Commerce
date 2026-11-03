@@ -38,14 +38,16 @@
 
     <div class="flex shrink-0 items-center gap-4">
         {% for item in navbar_icons %}
-            <a
-                href="{% url item.url %}"
-                aria-label="{{ item.name }}"
-                title="{{ item.name }}"
-                class="inline-flex items-center justify-center text-muted transition-colors duration-200 hover:text-primary"
-            >
-                {% include item.icon_template %}
-        </a>
+            {% if item.name == "Profile" or user.is_authenticated %}
+                <a
+                    href="{% url item.url %}"
+                    aria-label="{{ item.name }}"
+                    title="{{ item.name }}"
+                    class="inline-flex items-center justify-center text-muted transition-colors duration-200 hover:text-primary"
+                >
+                    {% include item.icon_template %}
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
