@@ -43,6 +43,7 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --tracking-tight: -0.025em;
+    --tracking-normal: 0em;
     --leading-tight: 1.25;
     --leading-snug: 1.375;
     --leading-relaxed: 1.625;
@@ -1199,6 +1200,10 @@
     --tw-leading: 15px;
     line-height: 15px;
   }
+  .leading-none {
+    --tw-leading: 1;
+    line-height: 1;
+  }
   .leading-relaxed {
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
@@ -1226,6 +1231,14 @@
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
+  }
+  .font-thin {
+    --tw-font-weight: var(--font-weight-thin);
+    font-weight: var(--font-weight-thin);
+  }
+  .tracking-normal {
+    --tw-tracking: var(--tracking-normal);
+    letter-spacing: var(--tracking-normal);
   }
   .tracking-tight {
     --tw-tracking: var(--tracking-tight);
@@ -1530,8 +1543,19 @@
     .hover\:border-secondary:hover {
       border-color: var(--color-secondary);
     }
-    .hover\:bg-accent:hover {
-      background-color: var(--color-accent);
+  }
+  .hover\:border-\[\#7A4035\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #7A4035;
+      }
+    }
+  }
+  .hover\:border-accent {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-accent);
+      }
     }
     .hover\:bg-primary:hover {
       background-color: var(--color-primary);
@@ -1539,8 +1563,19 @@
     .hover\:bg-primary-dark:hover {
       background-color: var(--color-primary-dark);
     }
-    .hover\:bg-red-900:hover {
-      background-color: var(--color-red-900);
+  }
+  .hover\:bg-\[\#7A4035\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #7A4035;
+      }
+    }
+  }
+  .hover\:bg-\[\#693229\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #693229;
+      }
     }
     .hover\:bg-soft-white\/90:hover {
       background-color: color-mix(in srgb, #FFFDF7 90%, transparent);
@@ -1571,8 +1606,19 @@
     .hover\:opacity-70:hover {
       opacity: 70%;
     }
-    .hover\:opacity-80:hover {
-      opacity: 80%;
+  }
+  .hover\:text-white {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-white);
+      }
+    }
+  }
+  .hover\:underline {
+    &:hover {
+      @media (hover: hover) {
+        text-decoration-line: underline;
+      }
     }
     .hover\:shadow-card:hover {
       --tw-shadow: 0px 5px 15px 0px var(--tw-shadow-color, rgba(61, 23, 20, 0.25));
