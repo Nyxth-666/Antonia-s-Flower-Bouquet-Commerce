@@ -8,6 +8,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 
+import sys
+import uuid
+
+# DEV ONLY: one boot ID per `runserver` command.
+# Django's auto-reloader starts a child process that inherits the
+# environment, so saving a file does not create a new ID.
+if "runserver" in sys.argv and "DEV_BOOT_ID" not in os.environ:
+    os.environ["DEV_BOOT_ID"] = uuid.uuid4().hex
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
 
@@ -43,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'apps.core.middleware.DevLogoutOnStartupMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
