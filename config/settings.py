@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "apps.orders",
     "apps.about",
     "apps.contact",
+    "apps.favorites",
 ]
 
 MIDDLEWARE = [
@@ -139,14 +140,31 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+# Email: real SMTP when SMTP_HOST is set in .env, otherwise print emails in the terminal
+_smtp_host = os.getenv("SMTP_HOST", "").strip()
 
+if _smtp_host:
+    MAILERS = {
+        "default": {
+            "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+            "OPTIONS": {
+                "host": _smtp_host,
+                "port": int(os.getenv("SMTP_PORT", "587")),
+                "use_tls": True,
+                "username": os.getenv("SMTP_USER", ""),
+                "password": os.getenv("SMTP_PASSWORD", ""),
+            },
+        },
+    }
+else:
+    MAILERS = {
+        "default": {
+            "BACKEND": "django.core.mail.backends.console.EmailBackend",
+        },
+    }
+
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Antonia's Flowers <no-reply@localhost>")
 # Authentication redirects
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "accounts:accounts"
 LOGOUT_REDIRECT_URL = "core:home"
-
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
