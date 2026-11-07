@@ -1,164 +1,155 @@
 {% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antonia's | Flowers for Every Occasion</title>
-</head>
+{% block content %}
+<!-- HERO SECTION -->
+<section id="homeHeroSection" class="mt-28">
+    <div class="mx-auto w-full max-w-[1240px]">
 
-<body>
-    {% block content %}
-    <!-- HERO SECTION -->
-    <section id="homeHeroSection" class="mt-28">
-        <div class="mx-auto w-full max-w-[1240px]">
+        <div class="grid items-center gap-10 md:grid-cols-2">
 
-            <div class="grid items-center gap-10 md:grid-cols-2">
-
-                <!-- Hero Text -->
-                <div>
-                    <p class="italic">
-                        A flower shop, and a way to say it exactly right
-                    </p>
-
-                    <h1 class="mb-6 mt-4 text-5xl font-bold leading-tight md:text-6xl">
-                        Flowers, arranged around
-                        <em class="block text-terra text-accent">
-                            the moment
-                        </em>
-                    </h1>
-
-                    <p>
-                        Learn what a flower means before you send it, then build a bouquet stem by stem — size, colour, wrapping, chocolates, and a note in your own words. Ready today, or scheduled for the day that matters.
-                    </p>
-
-                    <div class="mt-7 flex flex-wrap gap-3">
-                        <a href="{% url 'catalog:catalog' %}"
-                            class="px-4 py-3 bg-accent rounded-full border border-accent text-background text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
-                            Shop Flowers →
-                        </a>
-
-                        <a href="{% url 'occasions:occasions' %}"
-                            class="px-4 py-3 rounded-full border border-border text-muted text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
-                            Explore Occasions
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Hero Image -->
-                <div class="flex min-h-[300px] items-center justify-center overflow-hidden rounded-2xl bg-sand md:min-h-[420px]">
-                    <img
-                        src="{% static 'images/hero.jpg' %}"
-                        alt="Beautiful flower bouquet"
-                        class="h-full min-h-[300px] w-full object-cover md:min-h-[420px]"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                    >
-
-                    <div class="hidden min-h-[300px] w-full flex-col items-center justify-center gap-3 text-center text-ink-soft md:min-h-[420px]">
-                        <span class="text-6xl">💐</span>
-                        <p class="text-xl italic">
-                            Flowers for every moment
-                        </p>
-                        <p class="text-sm">
-                            Add your hero image to static/images/hero.jpg
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- BEST SELLERS SECTION -->
-    <section id="best-sellers" class="mt-26">
-        <div class="mx-auto w-full max-w-[1240px]">
-            <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
-                Best Sellers
-            </h2>
-
-            <div class="mb-7 flex items-start justify-between">
-
-                <p>
-                    Each flower comes with its meaning, so the bouquet says what you mean.
+            <!-- Hero Text -->
+            <div>
+                <p class="italic">
+                    A flower shop, and a way to say it exactly right
                 </p>
 
-                <a href="{% url 'catalog:catalog' %}"
-                    class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
-                    Browse the full catalogue →
-                </a>
-            </div>
-
-            <div class="grid grid-cols-4 grid-rows-2 gap-4">
-                {% include "components/ui/cards/best-selling.html" %}
-            </div>
-
-        </div>
-    </section>
-
-    <!-- WHAT'S THE OCCASION SECTION -->
-    <section id="homeOccasionsSection" class="mt-26">
-        <div class="mx-auto w-full max-w-[1240px]">
-
-            <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
-                What’s the occasion?
-            </h2>
-
-            <div class="mb-7 flex items-start justify-between">
+                <h1 class="mb-6 mt-4 text-5xl font-bold leading-tight md:text-6xl">
+                    Flowers, arranged around
+                    <em class="block text-terra text-accent">
+                        the moment
+                    </em>
+                </h1>
 
                 <p>
-                    Start from the moment, and we’ll narrow the flowers, colours, and add-ons to fit it.
+                    Learn what a flower means before you send it, then build a bouquet stem by stem — size, colour, wrapping, chocolates, and a note in your own words. Ready today, or scheduled for the day that matters.
                 </p>
 
-                <a href="{% url 'occasions:occasions' %}"
-                    class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
-                    See all occasions →
-                </a>
+                <div class="mt-7 flex flex-wrap gap-3">
+                    <a href="{% url 'catalog:catalog' %}"
+                        class="px-4 py-3 bg-accent rounded-full border border-accent text-background text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        Shop Flowers →
+                    </a>
 
+                    <a href="{% url 'occasions:occasions' %}"
+                        class="px-4 py-3 rounded-full border border-border text-muted text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        Explore Occasions
+                    </a>
+                </div>
             </div>
 
-            <!-- Occasion Cards -->
-            <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                {% for occasion in occasions|slice:":6" %}
-                    <li>
-                        {% include "components/ui/cards/occasion-card.html" %}
-                    </li>
-                {% empty %}
-                    <li>No occasions are available yet.</li>
-                {% endfor %}
-            </ul>
+            <!-- Hero Image -->
+            <div class="flex min-h-[300px] items-center justify-center overflow-hidden rounded-2xl bg-sand md:min-h-[420px]">
+                <img
+                    src="{% static 'images/hero.jpg' %}"
+                    alt="Beautiful flower bouquet"
+                    class="h-full min-h-[300px] w-full object-cover md:min-h-[420px]"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                >
+
+                <div class="hidden min-h-[300px] w-full flex-col items-center justify-center gap-3 text-center text-ink-soft md:min-h-[420px]">
+                    <span class="text-6xl">💐</span>
+                    <p class="text-xl italic">
+                        Flowers for every moment
+                    </p>
+                    <p class="text-sm">
+                        Add your hero image to static/images/hero.jpg
+                    </p>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- FLOWER MEANING CARD -->
-    <section id="homeFlowerMeaningSection" class="mt-26">
-        <div class="mx-auto w-full max-w-[1240px]">
+<!-- BEST SELLERS SECTION -->
+<section id="best-sellers" class="mt-26">
+    <div class="mx-auto w-full max-w-[1240px]">
+        <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
+            Best Sellers
+        </h2>
 
-        {% include "components/ui/cards/homepage-meaning-card.html" %}
+        <div class="mb-7 flex items-start justify-between">
+
+            <p>
+                Each flower comes with its meaning, so the bouquet says what you mean.
+            </p>
+
+            <a href="{% url 'catalog:catalog' %}"
+                class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
+                Browse the full catalogue →
+            </a>
+        </div>
+
+        <div class="grid grid-cols-4 grid-rows-2 gap-4">
+            {% include "components/ui/cards/best-selling.html" %}
+        </div>
+
+        {% include "components/ui/modals/allproducts-modal.html" %}
+    </div>
+</section>
+
+<!-- WHAT'S THE OCCASION SECTION -->
+<section id="homeOccasionsSection" class="mt-26">
+    <div class="mx-auto w-full max-w-[1240px]">
+
+        <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
+            What’s the occasion?
+        </h2>
+
+        <div class="mb-7 flex items-start justify-between">
+
+            <p>
+                Start from the moment, and we’ll narrow the flowers, colours, and add-ons to fit it.
+            </p>
+
+            <a href="{% url 'occasions:occasions' %}"
+                class="font-bold text-sm hover:underline hover:opacity-80 underline-offset-2 transition">
+                See all occasions →
+            </a>
 
         </div>
-    </section>
 
-    <!-- BUILD YOUR OWN BOUQUET -->
-    <section id="homeBuildBouquetSection" class="mt-26">
-        <div class="w-full flex flex-col items-center text-center">
-            <img src="{% static "icons/icon-build-own-bouquet.svg" %}" class="size-28">
+        <!-- Occasion Cards -->
+        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            {% for occasion in occasions|slice:":6" %}
+                <li>
+                    {% include "components/ui/cards/occasion-card.html" %}
+                </li>
+            {% empty %}
+                <li>No occasions are available yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 
-            <h2 class="text-5xl font-heading font-bold mb-4 mt-6" id="build-bouquet-heading">Build your own bouquet</h2>
-            <p class="text-sm md:text-base max-w-m px-2">Pick the flowers, the wrapping, the extras — the price updates as you go.</p>
+<!-- FLOWER MEANING CARD -->
+<section id="homeFlowerMeaningSection" class="mt-26">
+    <div class="mx-auto w-full max-w-[1240px]">
 
-            {% include "components/ui/buttons/homepage-customization-page-button.html" %}
-        </div>
-    </section>
+    {% include "components/ui/cards/homepage-meaning-card.html" %}
 
-    <!-- BENEFITS CARD -->
-    <section id="homeBenefitsSection" class="mt-26 mb-28">
-        <div class="mx-auto w-full max-w-[1240px]">
-            {% include "components/ui/cards/shop-advantage-card.html"%}
-        </div>
-    </section>
+    </div>
+</section>
 
-    {% endblock %}
-</body>
-</html>
+<!-- BUILD YOUR OWN BOUQUET -->
+<section id="homeBuildBouquetSection" class="mt-26">
+    <div class="w-full flex flex-col items-center text-center">
+        <img src="{% static "icons/icon-build-own-bouquet.svg" %}" class="size-28">
+
+        <h2 class="text-5xl font-heading font-bold mb-4 mt-6" id="build-bouquet-heading">Build your own bouquet</h2>
+        <p class="text-sm md:text-base max-w-m px-2">Pick the flowers, the wrapping, the extras — the price updates as you go.</p>
+
+        {% include "components/ui/buttons/homepage-customization-page-button.html" %}
+    </div>
+</section>
+
+<!-- BENEFITS CARD -->
+<section id="homeBenefitsSection" class="mt-26 mb-28">
+    <div class="mx-auto w-full max-w-[1240px]">
+        {% include "components/ui/cards/shop-advantage-card.html"%}
+    </div>
+</section>
+
+<script src="{% static 'js/product-modal.js' %}" defer></script>
+{% endblock %}
