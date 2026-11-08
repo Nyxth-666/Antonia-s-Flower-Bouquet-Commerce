@@ -1,0 +1,23 @@
+{% load static %}
+{# params: name, desc, category, price, stock, status, out, image #}
+<li class="grid items-center gap-4 py-5 text-center xl:grid-cols-(--cols)">
+    <div class="flex items-center gap-4 text-left">
+        <div class="size-20 shrink-0 overflow-hidden rounded-xl bg-border">
+            {% if image %}<img src="{{ image }}" alt="" class="size-full object-cover">{% endif %}
+        </div>
+        <div>
+            <p class="text-xl font-bold">{{ name }}</p>
+            <p>{{ desc }}</p>
+        </div>
+    </div>
+    <p>{{ category }}</p>
+    <p>{{ price }}</p>
+    <p>{{ stock }}</p>
+    <div class="flex justify-center">
+        <span class="grid h-6.25 w-30 place-items-center rounded-full text-sm text-white {% if out %}bg-[#8E3028]{% else %}bg-[#66765C]{% endif %}">{{ status }}</span>
+    </div>
+    <div class="flex justify-center gap-2">
+        <button type="button" aria-label="Edit {{ name }}" class="grid size-12 place-items-center rounded-button border border-muted bg-[#D9D9D9]"><img src="{% static 'icons/edit.svg' %}" alt="" width="24" height="24" loading="lazy" decoding="async" class="size-6"></button>
+        <button type="button" aria-label="Delete {{ name }}" class="grid size-12 place-items-center rounded-button border border-muted bg-[#D9D9D9]"><img src="{% static 'icons/delete.svg' %}" alt="" width="24" height="24" loading="lazy" decoding="async" class="size-6"></button>
+    </div>
+</li>

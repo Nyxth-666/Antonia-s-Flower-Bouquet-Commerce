@@ -1,0 +1,13 @@
+{# params: label, name, value, type, readonly, textarea, placeholder #}
+<label class="block">
+    <span class="mb-2 block font-bold text-muted">{{ label }}</span>
+    {% with cls="w-full rounded-button border border-border px-4 outline-none focus:border-muted placeholder:text-foreground" %}
+    {% if textarea %}
+    <textarea name="{{ name }}" placeholder="{{ placeholder }}" {% if readonly %}readonly{% endif %}
+              class="{{ cls }} h-21 resize-none py-3 {% if readonly %}bg-[#E8E3D5]{% else %}bg-[#FBF5EF]{% endif %}">{{ value }}</textarea>
+    {% else %}
+    <input type="{{ type|default:'text' }}" name="{{ name }}" value="{{ value|default:'' }}" placeholder="{{ placeholder }}" {% if readonly %}readonly{% endif %}
+           class="{{ cls }} h-12 {% if readonly %}bg-[#E8E3D5]{% else %}bg-[#FBF5EF]{% endif %}">
+    {% endif %}
+    {% endwith %}
+</label>

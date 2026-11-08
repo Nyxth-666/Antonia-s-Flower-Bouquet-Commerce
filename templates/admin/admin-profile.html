@@ -1,0 +1,75 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-300 px-8 py-12 text-foreground">
+
+    {# PAGE TITLE #}
+    <h1 class="font-heading text-4xl font-bold xl:text-5xl">My Profile</h1>
+
+    {# PROFILE CARD #}
+    <section class="relative mt-8 rounded-card border border-border bg-card p-6 xl:px-16 xl:py-12">
+
+        {# Avatar + name/role #}
+        <div class="flex items-end gap-4 xl:gap-8.5">
+            <div class="relative size-24 shrink-0 rounded-full bg-border xl:size-30.25">
+                <button type="button" aria-label="Upload profile photo"
+                        class="absolute -bottom-1 -right-[7px] grid size-[43px] place-items-center rounded-full border-[3px] border-muted bg-white text-border">
+                    <svg viewBox="0 0 21 21" class="size-[21px]" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M10.5 0v21M0 10.5h21"/></svg>
+                </button>
+            </div>
+            <div class="mb-3">
+                <h2 class="font-heading text-3xl font-bold xl:text-[40px]">Admin User</h2>
+                <p class="mt-0.5 text-2xl font-bold">Administrator</p>
+            </div>
+        </div>
+
+        {# Edit button #}
+        <button type="button"
+        class="mt-6 grid h-8 w-35.5 place-items-center rounded-button bg-secondary font-bold text-white xl:absolute xl:right-16 xl:top-7 xl:mt-0"> Edit Profile
+        </button>
+
+        {# Email / contact / joined strip #}
+        <div class="mt-8 grid grid-cols-1 divide-y divide-background-secondary xl:mt-12 xl:h-24 xl:grid-cols-[1fr_1.1fr_1fr] xl:divide-x xl:divide-y-0">
+            <div class="flex items-center justify-center py-4 xl:py-0">
+                <div class="leading-snug">
+                    <p>adminantoniasflowers@gmail.com</p>
+                    <p class="font-bold text-muted">Email</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-center py-4 xl:py-0">
+                <div class="text-center leading-snug">
+                    <p>09XXXXXXXXXX</p>
+                    <p class="font-bold text-muted">Contact&nbsp; Number</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-center py-4 xl:py-0">
+                <div class="font-bold leading-snug text-muted">
+                    <p>Joined on</p>
+                    <p class="text-lg leading-5.25">October 1, 2026</p>
+                    <p>Account Created</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# PERSONAL INFORMATION CARD #}
+    <form method="post" class="mt-8 rounded-card border border-border bg-card p-6 xl:p-16">
+        {% csrf_token %}
+        <h2 class="font-heading text-3xl font-bold xl:text-[40px]">Personal Information</h2>
+
+        <div class="mt-8 flex flex-col gap-8">
+            {% include "components/ui/forms/profile-field.html" with label="Full name" name="full_name" value="Administrator User" only %}
+            {% include "components/ui/forms/profile-field.html" with label="Email" name="email" type="email" value="admin@gmail.com" only %}
+            {% include "components/ui/forms/profile-field.html" with label="Contact&nbsp; Number" name="contact" type="tel" value="09XXXXXXXXXX" only %}
+            {% include "components/ui/forms/profile-field.html" with label="Role" name="role" value="Administrator" readonly=True only %}
+        </div>
+    </form>
+
+</div>
+{% endblock %}

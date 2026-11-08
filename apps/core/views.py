@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 
 from apps.occasions.data.occasions import OCCASIONS
@@ -18,3 +20,16 @@ def home(request):
         "occasions": OCCASIONS,
         "flower": featured_flower,
     })
+
+# admin page
+@staff_member_required
+def profile(request):
+    return render(request, "admin/admin-profile.html", {**admin.site.each_context(request), "title": "My Profile"})
+
+@staff_member_required
+def profile_settings(request):
+    return render(request, "admin/admin-settings.html", {**admin.site.each_context(request), "title": "Profile Settings"})
+
+@staff_member_required
+def product(request):
+    return render(request, "admin/admin-products.html", {**admin.site.each_context(request), "title": "Products"}) 

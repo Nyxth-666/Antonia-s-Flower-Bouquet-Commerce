@@ -4,8 +4,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 from apps.about import views
+from apps.core.views import profile, profile_settings, product
 app_name = "types_of_flowers"
 urlpatterns = [
+    path("admin/profile/", profile, name="admin_profile"),
+    path("admin/profile_settings", profile_settings, name="admin_settings"),
+    path("admin/product", product, name="admin_product"),
     path("admin/", admin.site.urls),
 
     # Homepage

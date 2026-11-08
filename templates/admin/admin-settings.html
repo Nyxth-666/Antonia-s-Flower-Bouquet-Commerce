@@ -1,0 +1,99 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-300 px-8 py-12 text-foreground [&_label>span:first-child]:text-foreground">
+
+    {# PAGE TITLE #}
+    <h1 class="font-heading text-4xl font-bold xl:text-5xl">Settings</h1>
+
+    {# GENERAL + STORE + NOTIFICATIONS #}
+    <form method="post" class="mt-6 flex flex-col gap-8">
+        {% csrf_token %}
+
+        {# GENERAL SETTINGS CARD #}
+        <section class="rounded-card border border-border bg-card p-6 xl:p-8">
+            {% include "admin/admin-card-heading.html" with title="General Settings" text="Update your shop’s basic information" only %}
+
+            <div class="mt-8 grid gap-12 xl:grid-cols-[5fr_4fr] xl:gap-x-24">
+                <div class="flex flex-col gap-12">
+                    {% include "admin/admin-profile-field.html" with label="Shop Name" name="shop_name" value="Antonia’s Flowers" only %}
+                    {% include "admin/admin-profile-field.html" with label="Email" name="email" type="email" value="antoniaflowers@gmail.com" only %}
+                    {% include "admin/admin-profile-field.html" with label="Address" name="address" textarea=True value="123 Flower Street, Lucena City, Quezon" only %}
+                </div>
+                <div class="flex flex-col gap-12">
+                    {% include "admin/admin-profile-field.html" with label="Contact Number" name="contact" type="tel" value="09XXXXXXXXXX" only %}
+                    {% include "admin/admin-profile-field.html" with label="Shop Description" name="description" textarea=True value="Fresh flowers, handcrafted bouquets, and special arrangements for every occasion." only %}
+                    <button type="submit" class="h-12.75 w-41.5 self-end rounded-button bg-secondary font-bold text-white xl:mt-2">Save Changers</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid gap-8 xl:grid-cols-[107fr_100fr]">
+
+            {# STORE SETTINGS CARD #}
+            <section class="rounded-card border border-border bg-card px-6 py-8 xl:px-8 xl:py-10 [&_input]:text-sm">
+                {% include "admin/admin-card-heading.html" with title="Store Settings" only %}
+
+                <div class="mt-8 flex flex-col gap-6">
+                    <div>
+                        {% include "admin/admin-profile-field.html" with label="Delivery Fee" name="delivery_fee" value="₱ 100" only %}
+                        <p class="mt-2 font-bold text-muted">Manage your store operations and delivery preferences</p>
+                    </div>
+                    {% include "admin/admin-profile-field.html" with label="Minimum Order" name="minimum_order" value="₱ 500" only %}
+
+                    {# Operating hours #}
+                    <div>
+                        <p class="mb-2 font-bold">Operating Hours</p>
+                        <div class="flex items-center gap-6">
+                            <input type="time" name="opens" value="09:00" aria-label="Opening time" class="h-12 min-w-0 flex-1 rounded-button border border-border bg-[#FBF5EF] px-4">
+                            <span class="h-px w-8 shrink-0 bg-muted" aria-hidden="true"></span>
+                            <input type="time" name="closes" value="20:00" aria-label="Closing time" class="h-12 min-w-0 flex-1 rounded-button border border-border bg-[#FBF5EF] px-4">
+                        </div>
+                    </div>
+
+                    {# Shop status #}
+                    <fieldset>
+                        <legend class="mb-3 font-bold">Shop Status</legend>
+                        <div class="flex gap-24 px-3">
+                            {% include "admin/admin-radio-option.html" with name="status" value="open" label="Open" checked=True only %}
+                            {% include "admin/admin-radio-option.html" with name="status" value="closed" label="Closed" only %}
+                        </div>
+                    </fieldset>
+                </div>
+            </section>
+
+            {# NOTIFICATIONS CARD #}
+            <section class="rounded-card border border-border bg-card px-6 py-8 xl:px-16 xl:py-14">
+                {% include "admin/admin-card-heading.html" with title="Notifications" text="Choose what notifications you want to receive" only %}
+
+                <div class="mt-2 divide-y-2 divide-background-secondary">
+                    {% include "admin/admin-notification-item.html" with name="notify_orders" title="New order notifications" text="Get notified when a new order is placed" checked=True only %}
+                    {% include "admin/admin-notification-item.html" with name="notify_stock" title="Low Stock Notifications" text="Be alerted when a product is running low" checked=True only %}
+                    {% include "admin/admin-notification-item.html" with name="notify_messages" title="Customer Messages" text="Receives messages rom customers" checked=True only %}
+                </div>
+            </section>
+        </div>
+    </form>
+
+    {# SECURITY CARD #}
+    <form method="post" action="{% url 'admin:password_change' %}" class="mt-14 rounded-card border border-border bg-card px-6 py-6 xl:px-8">
+        {% csrf_token %}
+        {% include "admin/admin-card-heading.html" with title="Security" text="Keep Your account safe and secure" only %}
+
+        <div class="mt-8 grid gap-8 xl:grid-cols-3">
+            {% include "admin/admin-profile-field.html" with label="Current Password" name="old_password" type="password" placeholder="Enter current password" only %}
+            {% include "admin/admin-profile-field.html" with label="New Password" name="new_password1" type="password" placeholder="Enter new password" only %}
+            {% include "admin/admin-profile-field.html" with label="Confirm New Password" name="new_password2" type="password" placeholder="Confirm New password" only %}
+        </div>
+
+        <button type="submit" class="mt-6 ml-auto block h-12.75 w-46.75 rounded-button bg-secondary font-bold text-white">Change Password</button>
+    </form>
+
+</div>
+{% endblock %}

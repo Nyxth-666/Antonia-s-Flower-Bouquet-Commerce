@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-317 px-8 py-12 text-foreground">
+
+    {# PAGE TITLE #}
+    <h1 class="font-heading text-4xl font-bold xl:text-5xl">Products</h1>
+
+    {# FILTERS #}
+    <form method="get" class="mt-6 flex flex-wrap items-center gap-7 xl:flex-nowrap">
+        <input type="search" name="q" placeholder="Search Products..."
+               class="h-12 w-full rounded-button border border-muted bg-[#E8E3D5] px-4 outline-none placeholder:text-foreground xl:w-auto xl:max-w-122 xl:flex-1">
+        <div class="flex flex-wrap gap-4 xl:ml-auto xl:flex-nowrap">
+            <div class="w-40">{% include "admin/admin-filter-select.html" with label="Category" name="category" options=category_options only %}</div>
+            <div class="w-32">{% include "admin/admin-filter-select.html" with label="Stock" name="stock" options=stock_options only %}</div>
+            <div class="w-32">{% include "admin/admin-filter-select.html" with label="Status" name="status" options=status_options only %}</div>
+        </div>
+    </form>
+
+    {# PRODUCT TABLE #}
+    <section class="mt-10 overflow-hidden rounded-card border border-border bg-card [--cols:357fr_214fr_138fr_124fr_212fr_174fr]">
+
+        {# Header #}
+        <div class="hidden h-16.75 grid-cols-(--cols) items-center gap-4 bg-[#E8E3D5] px-3 text-center font-bold xl:grid">
+            <p class="text-left">Product</p>
+            <p>Category</p>
+            <p>Price</p>
+            <p>Stock</p>
+            <p>Status</p>
+            <p>Action</p>
+        </div>
+
+        {# Rows #}
+        <ul class="mx-3 divide-y-2 divide-background-secondary pb-4 xl:pt-3">
+            {% include "admin/admin-product-row.html" with name="Rose Bouquet" desc="Red roses, baby’s breath..." category="Roses" price="P899" stock="12" status="Active" only %}
+            {% include "admin/admin-product-row.html" with name="Sunshine Bouquet" desc="Sunflowers. daisies, greenery" category="Mixed" price="P1,200" stock="8" status="Active" only %}
+            {% include "admin/admin-product-row.html" with name="Daisy Love" desc="White Daisies, eucalyptus..." category="Daisies" price="P750" stock="0" status="Out of Stock" out=True only %}
+            {% include "admin/admin-product-row.html" with name="Pink Elegance" desc="Pink Lilies, carnations" category="Lilies" price="P1,350" status="Active" only %}
+        </ul>
+    </section>
+
+</div>
+{% endblock %}

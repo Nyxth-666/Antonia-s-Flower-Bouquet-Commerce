@@ -1,0 +1,6 @@
+{# Params: label, name, value, type (default text), readonly #}
+<label class="block">
+    <span class="mb-2 block font-bold leading-snug text-muted">{{ label }}</span>
+    <input type="{{ type|default:'text' }}" name="{{ name }}" value="{{ value }}" {% if readonly %}readonly{% endif %}
+           class="h-12 w-full rounded-button border px-4 text-foreground {% if readonly %}border-[#E8E3D5] bg-[#E8E3D5]{% else %}border-border bg-[#FBF5EF]{% endif %}">
+</label>

@@ -159,12 +159,13 @@ UNFOLD = {
         "show_all_applications": False,
         "navigation": [
             {
-                "title": _("Management"),
+                "title": _("My Profile"),
                 "separator": False,
                 "collapsible": False,
                 "items": [
-                    {"title": _("Group"), "icon": "dashboard", "link": reverse_lazy("admin:auth_group_changelist")},
-                    {"title": _("Users"), "icon": "people", "link": reverse_lazy("admin:auth_user_changelist")},
+                    {"title": _("Profile"), "icon": "dashboard", "link": reverse_lazy("admin_profile")},
+                    {"title": _("Settings"), "icon": "people", "link": reverse_lazy("admin_settings")},
+                    {"title": _("Product"), "icon": "box", "link": reverse_lazy("admin_product")},
                 ],
             },
             {

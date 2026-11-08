@@ -1,0 +1,11 @@
+{# params: name, title, text, checked #}
+<label class="flex cursor-pointer items-center gap-5 py-8">
+    <input type="checkbox" name="{{ name }}" {% if checked %}checked{% endif %} class="peer sr-only">
+    <span class="grid size-8 shrink-0 place-items-center rounded-lg border border-foreground bg-card text-transparent peer-checked:bg-foreground peer-checked:text-card peer-focus-visible:ring-2 peer-focus-visible:ring-muted">
+        <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg>
+    </span>
+    <span>
+        <span class="block font-bold">{{ title }}</span>
+        <span class="block">{{ text }}</span>
+    </span>
+</label>
