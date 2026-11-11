@@ -17,3 +17,4 @@ class AddOnInline(admin.TabularInline):
 @admin.register(CustomBouquet)
 class CustomBouquetAdmin(admin.ModelAdmin):
     inlines = [FlowerInline, AddOnInline]
+    search_fields = ("name", "user__email")
