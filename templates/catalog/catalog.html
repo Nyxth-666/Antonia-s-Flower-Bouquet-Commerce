@@ -32,6 +32,8 @@
                             </p>
                         </div>
                     {% endfor %}
+
+                    {% include "components/ui/modals/allproducts-modal.html" %}
                 </div>
 
             </div>
@@ -39,4 +41,5 @@
     </div>
 </section>
 
+<script src="{% static 'js/product-modal.js' %}" defer></script>
 {% endblock %}

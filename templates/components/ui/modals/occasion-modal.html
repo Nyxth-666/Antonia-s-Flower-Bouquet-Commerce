@@ -8,14 +8,14 @@
     </h3>
   <div class="columns-3 gap-8">
     {% for occasion in occasions %}
-    <a
-      href="{% url 'occasions:occasions' %}"
-      class="mb-4 block break-inside-avoid transition text-muted hover:text-primary"
-    >
-      {{ occasion.name }}
-    </a>
-    {% empty %}
-    <p class="text-sm">No occasions available.</p>
+      <a
+        href="{% url 'occasions:occasions' %}"
+        class="mb-4 block break-inside-avoid transition text-muted hover:text-primary"
+      >
+        {{ occasion.name }}
+      </a>
+      {% empty %}
+      <p class="text-sm">No occasions available.</p>
     {% endfor %}
   </div>
 </div>
