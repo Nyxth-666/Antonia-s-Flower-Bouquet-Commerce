@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from apps.occasions.data.occasions import OCCASIONS
+from apps.catalog.models import Occasion
 
 def occasions_page(request):
-    context = {
-        "occasions": OCCASIONS,
-    }
+    occasions = Occasion.objects.filter(is_active=True)
     
-    return render(request, "occasions/occasions.html", context)
+    return render(request, "occasions/occasions.html", {
+        "occasions": occasions,
+    })
