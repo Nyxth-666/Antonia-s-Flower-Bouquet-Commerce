@@ -1,11 +1,9 @@
-{% load static %}
-
 <a href="{% url 'catalog:catalog' %}"
    class="group relative flex h-[255px] w-full max-w-[275.75px] flex-col justify-end overflow-hidden rounded-card border border-border bg-card transition-all duration-300 hover:shadow-lg hover:shadow-accent/30">
 
     {% if flower_type.image %}
         <img
-            src="{% static flower_type.image %}"
+            src="{{ flower_type.image.url }}"
             alt="{{ flower_type.name }}"
             aria-hidden="true"
             class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:opacity-80"
