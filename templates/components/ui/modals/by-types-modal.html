@@ -11,14 +11,14 @@
 
     <div class="grid grid-cols-2 gap-4">
         {% for flower in flower_types %}
-            <a
-            href="{% url 'catalog:catalog' %}"
-            class="mb-2 block text-sm text-muted transition hover:text-primary"
-            >
-            {{ flower.name }}
-            </a>
-            {% empty %}
-            <p class="text-sm">No flower types available.</p>
+          <a
+          href="{% url 'catalog:catalog' %}"
+          class="mb-2 block text-sm text-muted transition hover:text-primary"
+          >
+          {{ flower.name }}
+          </a>
+          {% empty %}
+          <p class="text-sm">No flower types available.</p>
         {% endfor %}
     </div>
   </div>
@@ -33,14 +33,14 @@
 
     <div class="grid grid-cols-2 gap-4">
         {% for arrangement in arrangement_types %}
-        <a
-        href="{% url 'catalog:catalog' %}"
-        class="mb-2 block text-sm text-muted transition hover:text-primary"
-        >
-        {{ arrangement.name }}
-        </a>
-        {% empty %}
-        <p class="text-sm">No arrangements available.</p>
+          <a
+          href="{% url 'catalog:catalog' %}"
+          class="mb-2 block text-sm text-muted transition hover:text-primary"
+          >
+          {{ arrangement.name }}
+          </a>
+          {% empty %}
+          <p class="text-sm">No arrangements available.</p>
         {% endfor %}
     </div>
   </div>
