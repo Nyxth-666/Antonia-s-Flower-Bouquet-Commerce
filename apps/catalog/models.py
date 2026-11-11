@@ -1,5 +1,4 @@
 from django.db import models
-from .modals import Cart, CartItem
 
 class Occasion(models.Model):
     name = models.CharField(max_length=100, unique=True)

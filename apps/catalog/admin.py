@@ -41,7 +41,7 @@ class ColorAdmin(admin.ModelAdmin):
             'background-color:{};"></span>',
             obj.hex_code,
         )
-
+    
 @admin.register(Bouquet)
 class BouquetAdmin(admin.ModelAdmin):
     list_display = (
