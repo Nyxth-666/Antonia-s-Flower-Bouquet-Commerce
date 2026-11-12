@@ -1,16 +1,20 @@
-<a href="{% url 'catalog:catalog' %}"
-   class="flex min-h-[177px] items-end rounded-card border border-border bg-card px-5 py-6 hover:-translate-y-1 hover:border-accent  hover:shadow-card transition">
+<div class="grid grid-cols-1 gap-4">
+        <a
+            href="{% url 'occasions:occasions' %}"
+            class="flex min-h-[177px] items-end rounded-card border border-border bg-card px-5 py-6 transition hover:-translate-y-1 hover:border-accent hover:shadow-card"
+        >
+            <div class="flex flex-col">
+                <span class="mb-2 text-2xl">
+                    {{ occasion.icon }}
+                </span>
 
-   <div class="flex flex-col">
-        <span class="mb-2 text-2xl">{{ occasion.icon }}</span>
+                <h3 class="text-base font-bold leading-snug transition-colors duration-300 hover:text-primary">
+                    {{ occasion.name }}
+                </h3>
 
-        <strong class="font-heading">
-            {{ occasion.name }}
-        </strong>
-
-        <span class="mt-1 text-xs">
-            {{ occasion.description }}
-        </span>
-    </div>
-
-</a>
+                <span class="mt-1 text-xs">
+                    {{ occasion.description }}
+                </span>
+            </div>
+        </a>
+</div>

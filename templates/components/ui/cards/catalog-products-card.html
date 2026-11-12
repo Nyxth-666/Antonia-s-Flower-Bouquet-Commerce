@@ -2,6 +2,34 @@
 
 <article class="group h-full w-full max-w-[290px] overflow-hidden rounded-card border border-border bg-soft-white transition duration-300 hover:-translate-y-1 hover:shadow-lg">
 
+    <div
+        class="hidden"
+        data-product-details
+        data-name="{{ bouquet.name }}"
+        data-description="{{ bouquet.description }}"
+        data-image="{% if bouquet.image %}{{ bouquet.image.url }}{% endif %}"
+        data-price="{{ bouquet.price }}"
+        data-size="{{ bouquet.size }}"
+        data-rating="{{ bouquet.rating }}"
+        data-rating-count="{{ bouquet.rating_count }}"
+        data-available="{% if bouquet.available and bouquet.quantity > 0 %}true{% else %}false{% endif %}"
+    >
+        <div data-product-colors>
+            {% for color in bouquet.color.all %}
+                <span
+                    data-color-name="{{ color.name }}"
+                    data-color-hex="{{ color.hex_code }}"
+                ></span>
+            {% endfor %}
+        </div>
+
+        <div data-product-occasions>
+            {% for occasion in bouquet.occasions.all %}
+                <span data-occasion-name="{{ occasion.name }}"></span>
+            {% endfor %}
+        </div>
+    </div>
+
     <div class="relative h-[230px] max-h-[230px] w-[290px] shrink-0 overflow-hidden bg-background">
 
         {% if bouquet.image %}
@@ -87,7 +115,8 @@
         <div class="flex gap-3 mt-4">
             <button
                 type="button"
-                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium transition hover:border-primary/90 disabled:cursor-not-allowed"
+                data-open-product-modal
+                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium transition hover:opacity-85 disabled:cursor-not-allowed"
             >
                 {% include "components/ui/icons/view_icon.html" %}
                 View
