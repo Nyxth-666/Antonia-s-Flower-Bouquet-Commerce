@@ -43,7 +43,7 @@
     </form>
 
     <div class="flex shrink-0 items-end gap-4">
-        {% if item.name == "Profile" or user.is_authenticated %}
+        {% if user.is_authenticated %}
             {% for item in navbar_icons %}
                 <a
                     href="{% url item.url %}"
@@ -57,7 +57,7 @@
         {% else %}
             <a
                 href="{% url 'accounts:register' %}"
-                class="inline-flex items-center justify-center rounded-button border border-border bg-card px-5 py-3 text-[20px] font-normal leading-none tracking-normal transition-colors duration-200 hover:border-secondary hover:bg-secondary hover:text-white"
+                class="inline-flex items-center justify-center rounded-button border border-border bg-card px-8 py-2 text-[20px] font-normal leading-none tracking-normal text-muted transition-colors duration-200 hover:text-primary"
             >
                 Sign Up
             </a>

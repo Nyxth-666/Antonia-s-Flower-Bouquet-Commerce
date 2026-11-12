@@ -145,7 +145,15 @@ LOGIN_REDIRECT_URL = "accounts:accounts"
 LOGOUT_REDIRECT_URL = "core:home"
 
 MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": "smtp.gmail.com",
+            "use_tls": True,
+            "username": os.environ.get("EMAIL_HOST_USER"),
+            "password": os.environ.get("EMAIL_HOST_PASSWORD"),
+        },
     },
 }
+
+DEFAULT_FROM_EMAIL = f"Antonia's Flowers <{os.environ.get('EMAIL_HOST_USER')}>"
