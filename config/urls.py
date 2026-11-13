@@ -12,7 +12,6 @@ urlpatterns = [
     path("admin/profile/", profile, name="admin_profile"),
     path("admin/profile_settings", profile_settings, name="admin_settings"),
     path("admin/product", product, name="admin_product"),
-    path("admin/welcome/", TemplateView.as_view(template_name="admin/welcome-admin.html"), name="admin_welcome"),
     path("admin/", admin.site.urls),
 
     path("", include("apps.core.urls")),

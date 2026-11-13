@@ -29,7 +29,7 @@
                 <div class="flex flex-col gap-12">
                     {% include "admin/admin-profile-field.html" with label="Contact Number" name="contact" type="tel" value="09XXXXXXXXXX" only %}
                     {% include "admin/admin-profile-field.html" with label="Shop Description" name="description" textarea=True value="Fresh flowers, handcrafted bouquets, and special arrangements for every occasion." only %}
-                    <button type="submit" class="h-12.75 w-41.5 self-end rounded-button bg-secondary font-bold text-white xl:mt-2">Save Changers</button>
+                    <button type="submit" class="h-12.75 w-41.5 self-end rounded-button bg-secondary font-bold text-white xl:mt-2">Save Changes</button>
                 </div>
             </div>
         </section>
@@ -80,6 +80,7 @@
             </section>
         </div>
     </form>
+
 
     {# SECURITY CARD #}
     <form method="post" action="{% url 'admin:password_change' %}" class="mt-14 rounded-card border border-border bg-card px-6 py-6 xl:px-8">
