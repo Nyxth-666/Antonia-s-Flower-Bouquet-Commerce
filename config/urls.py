@@ -5,6 +5,7 @@ from django.urls import include, path
 
 from apps.about import views
 app_name = "types_of_flowers"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
 
@@ -18,10 +19,10 @@ urlpatterns = [
     path("favorites/", include("apps.favorites.urls")),
     path("about/", include("apps.about.urls")),
     path("contact/", include("apps.contact.urls")),
+    
 ]
 
+
+
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT,
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
