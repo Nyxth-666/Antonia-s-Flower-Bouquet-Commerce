@@ -3,30 +3,39 @@
 
 {% block content %}
 {% with profile=user.profile %}
-{# USER DETAILS #}
-<section class="mt-24 flex items-end gap-4 px-4 py-8 md:gap-7 sm:px-16">
-    {# PHOTO SECTION #}
-    <div class="relative shrink-0">
-        <div class="size-30 overflow-hidden rounded-full border border-border bg-card">
-            {% if profile.photo %}
-                <img src="{{ profile.photo }}" alt="Profile photo" width="135" height="135" class="size-full object-cover">
-                {%else%} <img src="{% static 'images/default-profile-photo.jpg' %}" alt="Profile photo" width="135" height="135" class="size-full object-cover"> 
-            {% endif %}
+
+<section class="mx-auto mb-14 mt-8 flex w-full max-w-[1240px] flex-col px-4 md:mb-28 md:mt-28 lg:px-0">
+
+    <div class="flex items-center gap-3 sm:gap-4 md:items-end">
+
+        <!-- Avatar: button is positioned relative to the avatar, not the page -->
+        <div class="relative shrink-0">
+            <div class="size-20 overflow-hidden rounded-full border border-border bg-card pointer-events-none sm:size-24 md:size-30">
+                {% if profile.photo %}
+                    <img src="{{ profile.photo }}" alt="Profile photo" width="135" height="135" class="size-full object-cover">
+                {% else %}
+                    <img src="{% static 'images/default-profile-photo.jpg' %}" alt="Profile photo" width="135" height="135" class="size-full object-cover">
+                {% endif %}
+            </div>
+
+            <button type="button" id="profile-add-photo" aria-label="Add profile photo"
+                    class="absolute bottom-0 right-0 size-8 sm:size-9 md:size-10">
+                <img src="{% static 'icons/profile-add-photo.svg' %}" alt="" width="40" height="40" class="size-full">
+            </button>
         </div>
 
-        <button type="button" id="profile-add-photo" aria-label="Add profile photo" class="absolute top-20 left-19 size-10">
-            <img src="{% static 'icons/profile-add-photo.svg' %}" alt="" width="40" height="40" class="size-10">
-        </button>
+        <div class="min-w-0 py-2 md:py-4">
+            <h2 class="truncate text-xl font-bold sm:text-2xl md:text-4xl">{{ user.get_full_name|default:"User name" }}</h2>
+            <p class="truncate text-sm sm:text-base md:text-2xl">{{ user.email|default:"Username@gmail.com" }}</p>
+        </div>
     </div>
 
-    {# USERNAME SECTION #}
-    <div class="min-w-0 py-4">
-        <h2 class="font-heading text-2xl font-bold md:text-4xl">{{ user.get_full_name|default:"User name" }}</h2>
-        <p class="truncate text-lg font-semibold text-muted md:text-2xl">{{ user.email|default:"Username@gmail.com" }}</p>
+    <div class="mx-auto mt-5 flex w-full flex-col">
+        {% include 'components/ui/buttons/profile-buttons.html' %}
     </div>
+
 </section>
+
 {% endwith %}
 
-{# BUTTONS #}
-{% include 'components/ui/buttons/profile-buttons.html' %}
 {% endblock %}

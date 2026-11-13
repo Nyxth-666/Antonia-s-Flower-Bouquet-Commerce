@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | Antonia's</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+</head>
+<body class="overflow-x-hidden">
+
+<div class="flex min-h-screen items-center justify-center bg-background px-4 py-6 sm:py-10">
+
+  <div class="flex w-full max-w-5xl flex-col overflow-hidden rounded-card shadow-lg shadow-accent md:flex-row">
+
+    <div class="flex flex-col bg-primary p-6 text-soft-white sm:p-10 md:w-1/2">
+
+      <a href="/" class="text-sm font-bold underline-offset-2 transition hover:underline hover:opacity-80">
+        ← Home Page
+      </a>
+
+      <div class="flex flex-1 flex-col items-center justify-center py-8 text-center md:py-20">
+
+        <h2 class="mb-4 mt-2 text-3xl font-bold text-soft-white sm:text-4xl md:mb-8 md:mt-10 md:text-5xl">
+          GET STARTED
+        </h2>
+
+        <p class="mb-4 text-base md:text-lg">Already have an account?</p>
+
+        <a
+          href="{% url 'accounts:login' %}"
+          class="mb-5 rounded-button bg-soft-white px-10 py-2 text-primary transition hover:bg-soft-white/90 md:px-12 md:py-1"
+        >Login</a>
+
+        <hr class="my-6 w-full border-border md:my-10" />
+
+        <p class="mb-4">or begin with:</p>
+
+        <a
+          href="#"
+          aria-label="Sign up with Google"
+          class="flex size-12 cursor-pointer items-center justify-center rounded-full border border-border bg-soft-white"
+        >
+          <img src="{% static 'images/google.png' %}" alt="" class="size-6 object-contain" />
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Right panel: form -->
+    <div class="flex flex-col justify-center bg-background-secondary p-6 sm:p-10 md:w-1/2 md:px-16">
+
+      <h1 class="mb-6 text-center text-3xl font-bold sm:mb-10 sm:text-4xl md:text-5xl">
+        Create Account
+      </h1>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for error in form.non_field_errors %}
+          <p class="text-sm text-error">{{ error }}</p>
+        {% endfor %}
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <input
+              type="text"
+              name="first_name"
+              placeholder="First Name"
+              value="{{ form.first_name.value|default:'' }}"
+              autocomplete="given-name"
+              class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
+            />
+            {% for error in form.first_name.errors %}
+              <p class="mt-1 text-sm text-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <div>
+            <input
+              type="text"
+              name="last_name"
+              placeholder="Last Name"
+              value="{{ form.last_name.value|default:'' }}"
+              autocomplete="family-name"
+              class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
+            />
+            {% for error in form.last_name.errors %}
+              <p class="mt-1 text-sm text-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value="{{ form.username.value|default:'' }}"
+            autocomplete="username"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
+          />
+          {% for error in form.username.errors %}
+            <p class="mt-1 text-sm text-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value="{{ form.email.value|default:'' }}"
+            autocomplete="email"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
+          />
+          {% for error in form.email.errors %}
+            <p class="mt-1 text-sm text-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+        <div>
+          <input
+            type="password"
+            name="password1"
+            placeholder="Password"
+            autocomplete="new-password"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
+          />
+          {% if form_errors.password1 %}
+            <p class="mt-1 text-sm text-error">{{ form_errors.password1 }}</p>
+          {% endif %}
+        </div>
+
+        <div>
+          <input
+            type="password"
+            name="password2"
+            placeholder="Confirm Password"
+            autocomplete="new-password"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
+          />
+          {% if form_errors.password2 %}
+            <p class="mt-1 text-sm text-error">{{ form_errors.password2 }}</p>
+          {% endif %}
+        </div>
+
+        <label class="flex items-start gap-2 text-sm text-muted sm:items-center">
+          <input type="checkbox" name="terms" required class="mt-0.5 size-5 shrink-0 sm:mt-0" />
+          <span>
+            I accept the
+            <a href="#" class="text-accent hover:underline">terms of agreement.</a>
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          class="h-12 w-full rounded-button bg-secondary text-base text-soft-white transition hover:bg-primary sm:h-14 sm:text-lg"
+        >
+          Submit
+        </button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

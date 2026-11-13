@@ -1,8 +1,24 @@
-{% load static %}
-
 <a href="{% url 'catalog:catalog' %}"
-   style="padding: 24px 28px;"
-   class="flex h-[255px] w-full max-w-[275.75px] flex-col justify-end rounded-3xl border border-[#d6cdbd] bg-[#f7f4eb] hover:shadow-card transition">
-    <h3 class="font-serif text-base font-bold leading-snug text-[#2b1d18]">{{ arrangement_type.name }}</h3>
-    <p class="text-[13px] leading-snug text-[#7a6a5c]">Arrangements</p>
+   class="group relative flex h-[255px] w-full max-w-[275.75px] flex-col justify-end overflow-hidden rounded-card border border-border bg-card transition-all duration-300 hover:shadow-lg hover:shadow-accent/30">
+
+       {% if arrangement_type.image %}
+        <img
+            src="{{ arrangement_type.image.url }}"
+            alt="{{ arrangement_type.name }}"
+            aria-hidden="true"
+            class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:opacity-80"
+        >
+    {% endif %}
+
+    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent"></div>
+
+        <div class="relative z-10 p-5">
+            <h3 class="text-base font-bold leading-snug transition-colors duration-300 group-hover:text-primary">
+                {{ arrangement_type.name }}
+            </h3>
+
+            <p class="mt-1 text-xs leading-relaxed">
+                {{ arrangement_type.description }}
+            </p>
+        </div>
 </a>

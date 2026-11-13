@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<section id="types" class="flex flex-col mx-auto w-full max-w-[1240px] gap-24 mb-28 mt-28">
+<section id="types" class="flex flex-col mx-auto w-full max-w-[1240px] gap-12 px-4 mb-16 mt-10 md:gap-24 md:mb-28 md:mt-28 lg:px-0">
     <div>
         <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-12">
-                <h2 class="font-bold text-6xl max-w-[730px]">
-                    “Beautifully arranged, thoughtfully given.”                </h2>
+                <h2 class="font-bold text-4xl md:text-6xl max-w-[730px]">
+                    “Beautifully arranged, thoughtfully given.”</h2>
                 <p>
                     From delicate hand-tied bouquets to luxurious floral arrangements, discover a style for every expression. Choose an arrangement that matches the occasion, the feeling, and the person you wish to surprise—or create something entirely your own.
                 </p>
@@ -20,8 +20,8 @@
     </div>
 
     <div class="flex flex-col gap-18">
-        <h2 class="font-bold text-center text-4xl">Pick a Type of Arrangements</h2>
-        <ul class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+        <h2 class="font-bold text-center text-2xl md:text-4xl">Pick a Type of Arrangements</h2>
+        <ul class="grid grid-cols-2 gap-4 md:gap-8 sm:grid-cols-3 lg:grid-cols-4">
             {% for arrangement_type in arrangement_types %}
                 <li>
                     {% include "components/ui/cards/arrangement-type-card.html" with arrangement_type=arrangement_type %}

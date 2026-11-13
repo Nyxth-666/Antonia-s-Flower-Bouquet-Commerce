@@ -1,8 +1,21 @@
 from django.db.models import Q
-from .models import Bouquet, Occasion, Color, FlowerType
+from .models import Bouquet
+
 
 def filter_bouquets(request):
     bouquets = Bouquet.objects.all()
+
+    search_query = request.GET.get("q", "").strip()
+
+    if search_query:
+        bouquets = bouquets.filter(
+            Q(name__icontains=search_query)
+            | Q(description__icontains=search_query)
+            | Q(arrangement_type__name__icontains=search_query)
+            | Q(flower_type__name__icontains=search_query)
+            | Q(occasions__name__icontains=search_query)
+            | Q(color__name__icontains=search_query)
+        )
 
     occasion_ids = request.GET.getlist("occasion")
     if occasion_ids:
@@ -22,10 +35,10 @@ def filter_bouquets(request):
             flower_type__id__in=flower_type_ids
         )
 
-    arrangement_types = request.GET.getlist("product_type")
-    if arrangement_types:
+    arrangement_type_ids = request.GET.getlist("product_type")
+    if arrangement_type_ids:
         bouquets = bouquets.filter(
-            arrangement_type__in=arrangement_types
+            arrangement_type__id__in=arrangement_type_ids
         )
 
     price_range = request.GET.get("price")
@@ -55,4 +68,13 @@ def filter_bouquets(request):
             Q(available=False) | Q(quantity=0)
         )
 
-    return bouquets.distinct()
+    return (
+        bouquets
+        .select_related("arrangement_type")
+        .prefetch_related(
+            "flower_type",
+            "occasions",
+            "color",
+        )
+        .distinct()
+    )

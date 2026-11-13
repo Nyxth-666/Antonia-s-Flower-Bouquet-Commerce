@@ -1,5 +1,8 @@
 import os
 import dj_database_url
+import sys
+import uuid
+
 from pathlib import Path
 from dotenv import load_dotenv
 from django.templatetags.static import static
@@ -9,6 +12,9 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
+
+if "runserver" in sys.argv and "DEV_BOOT_ID" not in os.environ:
+    os.environ["DEV_BOOT_ID"] = uuid.uuid4().hex
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
@@ -46,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'apps.core.middleware.DevLogoutOnStartupMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -132,6 +139,24 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "accounts:accounts"
+LOGOUT_REDIRECT_URL = "core:home"
+
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": "smtp.gmail.com",
+            "use_tls": True,
+            "username": os.environ.get("EMAIL_HOST_USER"),
+            "password": os.environ.get("EMAIL_HOST_PASSWORD"),
+        },
+    },
+}
+
+DEFAULT_FROM_EMAIL = f"Antonia's Flowers <{os.environ.get('EMAIL_HOST_USER')}>"
 
 # UNFOLD DOCS: https://unfoldadmin.com/docs/configuration/settings/
 UNFOLD = {

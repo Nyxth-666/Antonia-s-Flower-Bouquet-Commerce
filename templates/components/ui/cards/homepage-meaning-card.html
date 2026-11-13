@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="grid grid-cols-1 overflow-hidden rounded-card border border-border md:grid-cols-2">
-    <div class="h-[420px] md:h-[500px] lg:h-[560px]">
+    <div class="h-[220px] sm:h-[300px] md:h-[500px] lg:h-[560px]">
         <img
             src="{% static flower.img %}"
             alt="{{ flower.flower }}"
@@ -9,25 +9,25 @@
         >
     </div>
 
-  <article class="flex flex-col justify-center bg-background-secondary p-8">
-      <p class="mb-4 text-sm italic text-accent">
-          Flower meaning guide
-      </p>
+<article class="flex flex-col justify-center bg-background-secondary p-5 md:p-8">
+    <p class="mb-4 text-sm italic text-accent">
+        Flower meaning guide
+    </p>
 
-      <h2 class="mb-4 text-3xl font-bold">
-          {{ flower.name }}
-      </h2>
+    <h2 class="mb-3 text-2xl font-bold md:mb-4 md:text-3xl">
+        {{ flower.name }}
+    </h2>
 
-      <p class="leading-relaxed text-muted">
-          {{ flower.description }}
-      </p>
+    <p class="text-sm leading-relaxed text-muted md:text-base">
+        {{ flower.description }}
+    </p>
 
-      <div class="mt-8 flex flex-wrap gap-2">
-          {% for occasion in flower.occasions %}
-              <span class="rounded-button border border-border px-4 py-2 text-sm text-muted">
-                  {{ occasion }}
-              </span>
-          {% endfor %}
-      </div>
-  </article>
+    <div class="mt-5 flex flex-wrap gap-2 md:mt-8">
+        {% for occasion in flower.occasions %}
+        <span class="rounded-button border border-border px-3 py-1 text-xs text-muted md:px-4 md:py-2 md:text-sm">
+        {{ occasion }}
+        </span>
+        {% endfor %}
+    </div>
+</article>
 </div>

@@ -1,0 +1,103 @@
+<div
+    id="product-details-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+    aria-hidden="true"
+>
+    <div
+        class="relative flex max-h-[90vh] w-full max-w-5xl flex-col overflow-y-auto rounded-card border border-border bg-card p-5 shadow-2xl md:flex-row md:gap-5 md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-product-name"
+    >
+
+        <button
+            type="button"
+            data-close-product-modal
+            aria-label="Close product details"
+            class="absolute right-4 top-4 z-20 flex size-9 items-center justify-center rounded-full bg-secondary-bg text-primary transition hover:bg-border"
+        >
+            &times;
+        </button>
+
+        <div class="flex w-full shrink-0 items-center justify-center overflow-hidden md:w-[46%]">
+            <img
+                id="modal-product-image"
+                src=""
+                alt=""
+                class="max-h-[65vh] w-full rounded-lg object-contain"
+            >
+        </div>
+
+        <div class="flex min-w-0 flex-1 flex-col gap-4 pt-5 md:pt-3">
+
+            <div>
+                <h2
+                    id="modal-product-name"
+                    class="text-2xl font-bold text-foreground"
+                ></h2>
+
+                <div class="mt-1 flex items-center gap-2">
+                    <span class="text-warning">★★★★★</span>
+                    <span id="modal-product-rating" class="text-xs text-muted"></span>
+                </div>
+
+                <p
+                    id="modal-product-price"
+                    class="mt-1 text-2xl font-bold text-primary"
+                ></p>
+
+                <span
+                    id="modal-product-availability"
+                    class="mt-3 inline-block rounded-full px-3 py-1 text-xs font-medium"
+                ></span>
+            </div>
+
+            <div class="border-t border-border pt-4">
+                <h3 class="font-semibold text-foreground">Description</h3>
+                <p id="modal-product-description" class="mt-1 text-sm leading-relaxed text-muted"></p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-foreground">Size</h3>
+                <p id="modal-product-size" class="mt-1 text-sm text-muted"></p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-foreground">Color</h3>
+                <div id="modal-product-colors" class="mt-2 flex flex-wrap gap-2"></div>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-foreground">Perfect For</h3>
+                <div id="modal-product-occasions" class="mt-2 flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="mt-auto flex flex-wrap gap-2 pt-4">
+                <button
+                    type="button"
+                    id="modal-favorite-button"
+                    class="flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:bg-primary-dark"
+                >
+                    Favorite
+                </button>
+
+                <button
+                    type="button"
+                    id="modal-cart-button"
+                    class="flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:bg-primary-dark"
+                >
+                    Add to Cart
+                </button>
+
+                <button
+                    type="button"
+                    id="modal-buy-button"
+                    class="flex-1 rounded-button border border-primary px-4 py-3 text-sm font-medium text-primary transition hover:bg-primary hover:text-soft-white"
+                >
+                    Buy Now
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

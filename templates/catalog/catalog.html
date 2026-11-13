@@ -3,23 +3,22 @@
 
 {% block content %}
 
-<section class="mb-28 mt-28">
-    <div class="mx-auto w-full max-w-[1240px]">
+<section class="mb-16 mt-10 lg:mb-28 lg:mt-28">
+    <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
 
-        <h1 class="text-5xl font-bold">Shop Flowers</h1>
+        <h1 class="text-3xl font-bold md:text-5xl">Shop Flowers</h1>
 
-        <div class="mt-12 flex flex-col gap-5">
-
-            <div class="flex self-end gap-1">
+        <div class="mt-6 flex flex-col gap-5 md:mt-12">
+            <div class="flex items-end gap-1 self-end">
                 <p>{{ bouquets|length }}</p>
                 <p>products</p>
             </div>
-
-            <div class="flex items-start justify-between">
+            
+            <div class="flex flex-col items-stretch gap-6 lg:flex-row lg:items-start lg:justify-between">
 
                 {% include "components/ui/filters/catalog-filter-card.html" %}
 
-                <div class="grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                <div class="grid min-w-0 w-full flex-1 grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-3">
                     {% for bouquet in bouquets %}
                         {% include "components/ui/cards/catalog-products-card.html" with bouquet=bouquet %}
                     {% empty %}
@@ -32,11 +31,15 @@
                             </p>
                         </div>
                     {% endfor %}
+
+                    {% include "components/ui/modals/allproducts-modal.html" %}
                 </div>
 
             </div>
         </div>
+
     </div>
 </section>
 
+<script src="{% static 'js/product-modal.js' %}" defer></script>
 {% endblock %}

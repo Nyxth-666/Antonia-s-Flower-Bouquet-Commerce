@@ -6,16 +6,15 @@ from django.urls import include, path
 from apps.about import views
 from apps.core.views import profile, profile_settings, product
 app_name = "types_of_flowers"
+
 urlpatterns = [
     path("admin/profile/", profile, name="admin_profile"),
     path("admin/profile_settings", profile_settings, name="admin_settings"),
     path("admin/product", product, name="admin_product"),
     path("admin/", admin.site.urls),
 
-    # Homepage
     path("", include("apps.core.urls")),
 
-    # Website features
     path("catalog/", include("apps.catalog.urls")),
     path("occasions/", include("apps.occasions.urls")),
     path("customize/", include("apps.customization.urls")),
@@ -24,10 +23,10 @@ urlpatterns = [
     path("favorites/", include("apps.favorites.urls")),
     path("about/", include("apps.about.urls")),
     path("contact/", include("apps.contact.urls")),
+    
 ]
 
+
+
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT,
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
