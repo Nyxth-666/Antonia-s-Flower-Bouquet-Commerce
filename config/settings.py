@@ -1,5 +1,7 @@
 import os
 import dj_database_url
+import sys
+import uuid
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -8,13 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 
-import sys
-import uuid
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-# DEV ONLY: one boot ID per `runserver` command.
-# Django's auto-reloader starts a child process that inherits the
-# environment, so saving a file does not create a new ID.
 if "runserver" in sys.argv and "DEV_BOOT_ID" not in os.environ:
     os.environ["DEV_BOOT_ID"] = uuid.uuid4().hex
 
