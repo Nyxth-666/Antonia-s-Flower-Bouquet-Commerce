@@ -109,6 +109,11 @@
         box-shadow: 0 0 0 4px #f1eee3;
     }
 
+    .option-selected {
+        border-color: var(--color-accent);
+        outline: 1px solid var(--color-accent);
+        
+    }
 }
 
 .product-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }

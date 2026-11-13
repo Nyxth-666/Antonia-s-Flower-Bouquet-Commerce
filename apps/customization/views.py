@@ -7,11 +7,8 @@ from .models import (
     AddOn,
 )
 
-
 def customization_page(request):
-    sizes = BouquetSize.objects.filter(
-        is_active=True
-    )
+    sizes = BouquetSize.objects.filter(is_active=True)
 
     flowers = FlowerOption.objects.filter(
         available=True,
