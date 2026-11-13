@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | Antonia's Admin</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-background text-foreground min-h-screen flex items-center justify-center">
+
+    <main class="w-full max-w-2xl px-6 py-12 text-center">
+
+        {# WELCOME #}
+        <h1 class="font-heading text-3xl font-bold md:text-4xl xl:text-5xl text-balance">
+            Welcome to Antonia's Flowershop Admin
+        </h1>
+        <p class="mt-6 text-muted text-lg text-balance">
+            Sign in to access the admin dashboard and manage your flower shop.
+        </p>
+
+        {# PROCEED BUTTON #}
+        <div class="mt-6 flex justify-center">
+            <a href="{% url 'admin:index' %}" class="inline-flex items-center justify-center rounded-lg bg-secondary px-6 py-2.5 font-bold text-white transition hover:bg-primary">
+                Go to Admin Login
+            </a>
+        </div>
+
+    </main>
+
+</body>
+</html>
