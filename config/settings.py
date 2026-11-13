@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-  
+from apps.core.data.navigation import navigation
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
@@ -173,37 +174,19 @@ UNFOLD = {
     "LOGIN": {
         "image": lambda request: static("sample/login-bg.jpg"),
         "redirect_after": lambda request: reverse_lazy("admin_welcome"),
-        # Inherits from `unfold.forms.AuthenticationForm`
     },
 
     "STYLES": [
         lambda r: static("css/admin_output.css"),
     ],
-    "SIDEBAR": {
+
+     "SIDEBAR": {
         "show_search": False,
         "show_all_applications": False,
-        "navigation": [
-            {
-                "title": _("My Profile"),
-                "separator": False,
-                "collapsible": False,
-                "items": [
-                    {"title": _("Profile"), "icon": "dashboard", "link": reverse_lazy("admin_profile")},
-                    {"title": _("Settings"), "icon": "people", "link": reverse_lazy("admin_settings")},
-                    {"title": _("Product"), "icon": "box", "link": reverse_lazy("admin_product")},
-                ],
-            },
-            {
-                "title": _("Catalog"),
-                "separator": True,
-                "collapsible": False,
-                "items": [
-                    {"title": _("Bouquets"), "icon": "local_florist", "link": reverse_lazy("admin:catalog_bouquet_changelist")},
-                    {"title": _("Colors"), "icon": "palette", "link": reverse_lazy("admin:catalog_color_changelist")},
-                    {"title": _("Flower types"), "icon": "filter_vintage", "link": reverse_lazy("admin:catalog_flowertype_changelist")},
-                    {"title": _("Occasions"), "icon": "celebration", "link": reverse_lazy("admin:catalog_occasion_changelist")},
-                ],
-            },
-        ],
+        "navigation": navigation,
     },
+
+    "SCRIPTS": [
+        lambda request: static("js/sidebar-expanded.js"),
+    ],
 }

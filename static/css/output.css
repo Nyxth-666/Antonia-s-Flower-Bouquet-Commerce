@@ -1272,6 +1272,9 @@
   .text-right {
     text-align: right;
   }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
   .font-serif {
     font-family: var(--font-serif);
   }
@@ -1468,6 +1471,10 @@
   }
   .underline-offset-4 {
     text-underline-offset: 4px;
+  }
+  .antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .accent-primary {
     accent-color: var(--color-primary);
