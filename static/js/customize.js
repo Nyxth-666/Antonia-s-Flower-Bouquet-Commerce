@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function update() {
-    const size = selected("[data-size]")?.dataset.size || "Large";
+    const size = selected("[data-size]")?.dataset.size || "";
     const wrap = selected("[data-wrap]");
     const flowers = $$("[data-flower]");
     const addons = $$('[data-addon][aria-pressed="true"]');
