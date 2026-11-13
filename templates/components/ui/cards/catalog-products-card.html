@@ -1,6 +1,6 @@
 {% load static %}
 
-<article class="group h-full w-full max-w-[290px] overflow-hidden rounded-card border border-border bg-soft-white transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+<article class="group flex h-full w-full flex-col overflow-hidden rounded-card border border-border bg-soft-white transition duration-300 hover:-translate-y-1 hover:shadow-lg">
 
     <div
         class="hidden"
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="relative h-[230px] max-h-[230px] w-[290px] shrink-0 overflow-hidden bg-background">
+    <div class="relative aspect-square w-full shrink-0 overflow-hidden bg-background">
 
         {% if bouquet.image %}
             <img
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="min-h-0 flex-1 overflow-hidden p-3">
+    <div class="flex min-h-0 flex-1 flex-col p-2 sm:p-3">
 
         <h3 class="truncate text-sm font-bold text-foreground">
             {{ bouquet.name }}
@@ -81,7 +81,7 @@
             {% endfor %}
         </p>
 
-        <div class="mt-3 flex items-center justify-between gap-2">
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-1 sm:mt-3 sm:gap-2">
 
             <span class="font-semibold text-primary text-sm">
                 ₱{{ bouquet.price|floatformat:2 }}
@@ -101,7 +101,7 @@
 
         </div>
 
-        <div class="mt-3 flex flex-wrap items-center gap-2">
+        <div class="mt-2 flex flex-wrap items-center gap-1.5 sm:mt-3 sm:gap-2">
             {% for color in bouquet.color.all %}
                 <span
                     class="size-4 rounded-full border border-border"
@@ -112,7 +112,7 @@
             {% endfor %}
         </div>
 
-        <div class="flex gap-3 mt-4">
+        <div class="mt-auto flex flex-col gap-2 pt-3 sm:flex-row sm:gap-3 sm:pt-4">
             <button
                 type="button"
                 data-open-product-modal

@@ -1,63 +1,66 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/output.css' %}" />
-<div
-  class="min-h-screen bg-background flex items-center justify-center"
->
-  <div
-    class="w-full max-w-5xl flex flex-col md:flex-row rounded-card shadow-accent shadow-lg overflow-hidden"
-  >
-    <div
-      class="md:w-1/2 bg-primary text-soft-white rounded-card p-10 flex flex-col rounded-r-none  rounded-b-none"
-    >
-      <a href="/" class="text-sm font-bold hover:underline hover:opacity-80 underline-offset-2 transition">← Home Page</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | Antonia's</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+</head>
+<body class="overflow-x-hidden">
 
-      <div
-        class="flex-1 flex flex-col items-center justify-center text-center py-20"
-      >
-        <h2 class="text-soft-white text-5xl font-bold mt-10 mb-8">
+<div class="flex min-h-screen items-center justify-center bg-background px-4 py-6 sm:py-10">
+
+  <div class="flex w-full max-w-5xl flex-col overflow-hidden rounded-card shadow-lg shadow-accent md:flex-row">
+
+    <div class="flex flex-col bg-primary p-6 text-soft-white sm:p-10 md:w-1/2">
+
+      <a href="/" class="text-sm font-bold underline-offset-2 transition hover:underline hover:opacity-80">
+        ← Home Page
+      </a>
+
+      <div class="flex flex-1 flex-col items-center justify-center py-8 text-center md:py-20">
+
+        <h2 class="mb-4 mt-2 text-3xl font-bold text-soft-white sm:text-4xl md:mb-8 md:mt-10 md:text-5xl">
           GET STARTED
         </h2>
 
-        <p class="text-lg mb-4">Already have an account?</p>
+        <p class="mb-4 text-base md:text-lg">Already have an account?</p>
 
         <a
           href="{% url 'accounts:login' %}"
-          class="bg-soft-white text-primary px-12 py-1 rounded-button mb-5 transition hover:bg-soft-white/90"
-          >Login</a
-        >
+          class="mb-5 rounded-button bg-soft-white px-10 py-2 text-primary transition hover:bg-soft-white/90 md:px-12 md:py-1"
+        >Login</a>
 
-        <hr class="w-full border-border my-10" />
+        <hr class="my-6 w-full border-border md:my-10" />
 
         <p class="mb-4">or begin with:</p>
 
-        <button
+        <a
           href="#"
-          class="w-12 h-12 rounded-full bg-soft-white flex items-center justify-center border border-border cursor-pointer"
+          aria-label="Sign up with Google"
+          class="flex size-12 cursor-pointer items-center justify-center rounded-full border border-border bg-soft-white"
         >
-          <img
-            src="{% static 'images/google.png' %}"
-            alt="Google"
-            class="w-6 h-6 object-contain"
-          />
-        </button>
+          <img src="{% static 'images/google.png' %}" alt="" class="size-6 object-contain" />
+        </a>
+
       </div>
     </div>
 
-    <div
-      class="md:w-1/2 bg-background-secondary p-10 md:px-16 flex flex-col justify-center"
-    >
-      <h1
-        class="text-5xl font-bold text-center mb-10"
-      >
+    <!-- Right panel: form -->
+    <div class="flex flex-col justify-center bg-background-secondary p-6 sm:p-10 md:w-1/2 md:px-16">
+
+      <h1 class="mb-6 text-center text-3xl font-bold sm:mb-10 sm:text-4xl md:text-5xl">
         Create Account
       </h1>
 
       <form method="post" class="space-y-4">
-        {% csrf_token %} {% for error in form.non_field_errors %}
-        <p class="text-sm text-error">{{ error }}</p>
+        {% csrf_token %}
+        {% for error in form.non_field_errors %}
+          <p class="text-sm text-error">{{ error }}</p>
         {% endfor %}
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <input
               type="text"
@@ -65,10 +68,10 @@
               placeholder="First Name"
               value="{{ form.first_name.value|default:'' }}"
               autocomplete="given-name"
-              class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
+              class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
             />
             {% for error in form.first_name.errors %}
-            <p class="mt-1 text-sm text-error">{{ error }}</p>
+              <p class="mt-1 text-sm text-error">{{ error }}</p>
             {% endfor %}
           </div>
 
@@ -79,10 +82,10 @@
               placeholder="Last Name"
               value="{{ form.last_name.value|default:'' }}"
               autocomplete="family-name"
-              class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
+              class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
             />
             {% for error in form.last_name.errors %}
-            <p class="mt-1 text-sm text-error">{{ error }}</p>
+              <p class="mt-1 text-sm text-error">{{ error }}</p>
             {% endfor %}
           </div>
         </div>
@@ -94,10 +97,10 @@
             placeholder="Username"
             value="{{ form.username.value|default:'' }}"
             autocomplete="username"
-            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
           />
           {% for error in form.username.errors %}
-          <p class="mt-1 text-sm text-error">{{ error }}</p>
+            <p class="mt-1 text-sm text-error">{{ error }}</p>
           {% endfor %}
         </div>
 
@@ -108,10 +111,10 @@
             placeholder="Email"
             value="{{ form.email.value|default:'' }}"
             autocomplete="email"
-            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
           />
           {% for error in form.email.errors %}
-          <p class="mt-1 text-sm text-error">{{ error }}</p>
+            <p class="mt-1 text-sm text-error">{{ error }}</p>
           {% endfor %}
         </div>
 
@@ -121,10 +124,10 @@
             name="password1"
             placeholder="Password"
             autocomplete="new-password"
-            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
           />
           {% if form_errors.password1 %}
-          <p class="mt-1 text-sm text-error">{{ form_errors.password1 }}</p>
+            <p class="mt-1 text-sm text-error">{{ form_errors.password1 }}</p>
           {% endif %}
         </div>
 
@@ -134,28 +137,32 @@
             name="password2"
             placeholder="Confirm Password"
             autocomplete="new-password"
-            class="w-full h-14 px-4 text-lg rounded-button border border-border bg-soft-white outline-none transition focus-within:border-primary"
+            class="h-12 w-full rounded-button border border-border bg-soft-white px-4 text-base outline-none transition focus-within:border-primary sm:h-14"
           />
           {% if form_errors.password2 %}
-          <p class="mt-1 text-sm text-error">{{ form_errors.password2 }}</p>
+            <p class="mt-1 text-sm text-error">{{ form_errors.password2 }}</p>
           {% endif %}
         </div>
 
-        <label class="flex items-center gap-2 text-muted">
-          <input type="checkbox" name="terms" required class="w-5 h-5" />
-          I accept the
-          <a href="#" class="text-accent hover:underline"
-            >terms of agreement.</a
-          >
+        <label class="flex items-start gap-2 text-sm text-muted sm:items-center">
+          <input type="checkbox" name="terms" required class="mt-0.5 size-5 shrink-0 sm:mt-0" />
+          <span>
+            I accept the
+            <a href="#" class="text-accent hover:underline">terms of agreement.</a>
+          </span>
         </label>
 
         <button
           type="submit"
-          class="w-full h-14 rounded-button bg-secondary transition text-soft-white text-lg hover:bg-primary"
+          class="h-12 w-full rounded-button bg-secondary text-base text-soft-white transition hover:bg-primary sm:h-14 sm:text-lg"
         >
           Submit
         </button>
       </form>
+
     </div>
   </div>
 </div>
+
+</body>
+</html>
