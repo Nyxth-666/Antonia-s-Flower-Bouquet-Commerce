@@ -3,10 +3,9 @@
 
 {% block content %}
 <!-- HERO SECTION -->
-<section id="homeHeroSection" class="mt-28">
-    <div class="mx-auto w-full max-w-[1240px]">
-
-        <div class="grid items-center gap-10 md:grid-cols-2">
+<section id="homeHeroSection" class="mt-10 lg:mt-28">
+    <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
+        <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
 
             <!-- Hero Text -->
             <div>
@@ -14,7 +13,7 @@
                     A flower shop, and a way to say it exactly right
                 </p>
 
-                <h1 class="mb-6 mt-4 text-5xl font-bold leading-tight md:text-6xl">
+                <h1 class="mb-6 mt-4 text-4xl font-bold leading-tight md:text-6xl">
                     Flowers, arranged around
                     <em class="block text-terra text-accent">
                         the moment
@@ -27,12 +26,12 @@
 
                 <div class="mt-7 flex flex-wrap gap-3">
                     <a href="{% url 'catalog:catalog' %}"
-                        class="px-4 py-3 bg-accent rounded-full border border-accent text-background text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        class="px-3 py-2 md:px-4 md:py-3 bg-accent rounded-full border border-accent text-background text-sm md:text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
                         Shop Flowers →
                     </a>
 
                     <a href="{% url 'occasions:occasions' %}"
-                        class="px-4 py-3 rounded-full border border-border text-muted text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
+                        class="px-3 py-2 md:px-4 md:py-3 rounded-full border border-border text-muted text-sm md:text-lg hover:opacity-80 hover:-translate-y-0.5 transition">
                         Explore Occasions
                     </a>
                 </div>
@@ -63,13 +62,13 @@
 </section>
 
 <!-- BEST SELLERS SECTION -->
-<section id="best-sellers" class="mt-26">
-    <div class="mx-auto w-full max-w-[1240px]">
-        <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
+<section id="best-sellers" class="mt-14 lg:mt-26">
+    <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
+        <h2 class="text-3xl font-bold md:text-4xl mb-3.5">
             Best Sellers
         </h2>
 
-        <div class="mb-7 flex items-start justify-between">
+        <div class="mb-7 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
 
             <p>
                 Each flower comes with its meaning, so the bouquet says what you mean.
@@ -81,7 +80,7 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-4 grid-rows-2 gap-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {% include "components/ui/cards/best-selling.html" %}
         </div>
 
@@ -90,14 +89,14 @@
 </section>
 
 <!-- WHAT'S THE OCCASION SECTION -->
-<section id="homeOccasionsSection" class="mt-26">
-    <div class="mx-auto w-full max-w-[1240px]">
+<section id="homeOccasionsSection" class="mt-14 lg:mt-26">
+    <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
 
-        <h2 class="text-5xl font-bold md:text-4xl mb-3.5">
+        <h2 class="text-3xl font-bold md:text-4xl mb-3.5">
             What’s the occasion?
         </h2>
 
-        <div class="mb-7 flex items-start justify-between">
+        <div class="mb-7 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
 
             <p>
                 Start from the moment, and we’ll narrow the flowers, colours, and add-ons to fit it.
@@ -111,7 +110,7 @@
         </div>
 
         <!-- Occasion Cards -->
-        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        <ul class="grid grid-cols-2 gap-3 md:gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
             {% for occasion in occasions|slice:":6" %}
                 <li>
                     {% include "components/ui/cards/occasion-card.html" %}
@@ -124,8 +123,8 @@
 </section>
 
 <!-- FLOWER MEANING CARD -->
-<section id="homeFlowerMeaningSection" class="mt-26">
-    <div class="mx-auto w-full max-w-[1240px]">
+<section id="homeFlowerMeaningSection" class="mt-14 lg:mt-26">
+    <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
 
     {% include "components/ui/cards/homepage-meaning-card.html" %}
 
@@ -133,20 +132,20 @@
 </section>
 
 <!-- BUILD YOUR OWN BOUQUET -->
-<section id="homeBuildBouquetSection" class="mt-26">
-    <div class="w-full flex flex-col items-center text-center">
-        <img src="{% static "icons/icon-build-own-bouquet.svg" %}" class="size-28">
+<section id="homeBuildBouquetSection" class="mt-10 lg:mt-26">
+    <div class="w-full flex flex-col items-center px-4 text-center">
+        <img src="{% static "icons/icon-build-own-bouquet.svg" %}" class="size-16 md:size-28">
 
-        <h2 class="text-5xl font-heading font-bold mb-4 mt-6" id="build-bouquet-heading">Build your own bouquet</h2>
-        <p class="text-sm md:text-base max-w-m px-2">Pick the flowers, the wrapping, the extras — the price updates as you go.</p>
+        <h2 class="text-3xl md:text-5xl font-heading font-bold mb-2 mt-4 md:mb-4 md:mt-6" id="build-bouquet-heading">Build your own bouquet</h2>
+        <p class="text-sm md:text-base max-w-md px-2">Pick the flowers, the wrapping, the extras — the price updates as you go.</p>
 
         {% include "components/ui/buttons/homepage-customization-page-button.html" %}
     </div>
 </section>
 
 <!-- BENEFITS CARD -->
-<section id="homeBenefitsSection" class="mt-26 mb-28">
-    <div class="mx-auto w-full max-w-[1240px]">
+<section id="homeBenefitsSection" class="mt-14 mb-16 lg:mt-26 lg:mb-28>
+    <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
         {% include "components/ui/cards/shop-advantage-card.html"%}
     </div>
 </section>

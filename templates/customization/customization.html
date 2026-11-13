@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-<section class="mx-auto mt-28 mb-28 w-full max-w-[1240px]">
-  <h1 class="text-5xl font-bold">Build your own bouquet</h1>
-  <p class="mt-3.5 mb-12 max-w-[420px]">
+<section class="mx-auto mt-10 mb-16 w-full max-w-[1240px] px-4 lg:mt-28 lg:mb-28 lg:px-0">
+  <h1 class="text-3xl font-bold md:text-5xl">Build your own bouquet</h1>
+  <p class="mt-3 mb-6 max-w-[420px] text-sm md:mt-3.5 md:mb-12 md:text-base">
     Pick the flowers, the wrapping, the extras — the price updates as you go.
   </p>
 
@@ -30,7 +30,7 @@
       <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
         <h2 class="mb-1 pl-2 text-xl font-bold">2. Choose your flowers</h2>
         <p class="mb-3.5 text-[15px] text-muted">Quantities update the total instantly.</p>
-        <div id="flowers" class="flex max-h-[360px] flex-col gap-3.5 overflow-y-auto pr-2"></div>
+        <div id="flowers" class="flex max-h-[300px] flex-col gap-3.5 overflow-y-auto pr-2 md:max-h-[360px]"></div>
       </section>
 
 
@@ -46,7 +46,7 @@
 
       <section class="mb-[26px] border-b border-foreground/70 pb-[26px]">
         <h2 class="mb-3.5 pl-2 text-xl font-bold">5. Add chocolates &amp; gifts</h2>
-        <div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        <div class="grid grid-cols-2 gap-2.5">
           {% include "components/ui/buttons/customization-addon-button.html" with label="Chocolate box" price="₱180" only %}
           {% include "components/ui/buttons/customization-addon-button.html" with label="Teddy bear" price="₱220" only %}
           {% include "components/ui/buttons/customization-addon-button.html" with label="Greeting card" price="₱40" only %}
@@ -72,7 +72,7 @@
 
       <input name="design_name" maxlength="40"
         placeholder="Name this design (optional)"
-        class="mt-8 mb-3.5 w-full border-b border-dotted border-foreground/70 bg-transparent pb-1 font-serif text-2xl text-foreground outline-none placeholder:text-muted focus:border-accent lg:mt-0">
+        class="mt-5 md:mt-8 mb-3.5 w-full border-b border-dotted border-foreground/70 bg-transparent pb-1 font-serif text-xl md:text-2xl text-foreground outline-none placeholder:text-muted focus:border-accent lg:mt-0">
 
       <p class="mb-[9px] flex justify-between gap-3 text-[15px]">
         <span data-out="size">Base (Large)</span>

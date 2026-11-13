@@ -3,40 +3,45 @@
 
 {% block content %}
 
-<section id="contact-page" class="relative mt-28">
+<section id="contact-page" class="relative mt-10 lg:mt-28">
 
-    <div class="relative z-10 mx-auto grid w-full max-w-[1240px] gap-10 pb-16 lg:grid-cols-[1fr_52.2%] lg:gap-12 lg:pb-24">
+    <div class="relative z-10 mx-auto grid w-full max-w-[1240px] gap-8 px-4 pb-24 md:gap-10 md:pb-16 lg:grid-cols-[1fr_52.2%] lg:gap-12 lg:px-0 lg:pb-24">
 
         <article class="flex w-full flex-col gap-12 lg:max-w-[522px]">
 
-            <div class="flex flex-col gap-3.5">
-                <h1 class="text-5xl font-bold">
-                    Contact Us
-                </h1>
+            <div class="flex flex-col gap-2 md:gap-3.5">
+    <p class="text-[10px] uppercase tracking-widest text-muted lg:hidden">Let's talk flowers</p>
 
-                <p class="max-w-lg text-sm leading-relaxed">
-                    Have Questions About Our Blooms or Need Help Making Your Special Moments More Meaningful?
-                </p>
-            </div>
+    <h1 class="text-3xl font-bold md:text-5xl">
+        Contact Us
+    </h1>
 
-            <div class="flex flex-col gap-8">
+    <p class="hidden max-w-lg text-sm leading-relaxed lg:block">
+        Have Questions About Our Blooms or Need Help Making Your Special Moments More Meaningful?
+    </p>
+
+    <p class="text-sm leading-relaxed text-muted lg:hidden">
+        Whether you have questions about our bouquets, need help with an order, or have a special floral request, we're here to help.
+    </p>
+</div>
+
+            <div class="flex flex-col gap-4 rounded-card bg-background-secondary p-4 lg:gap-8 lg:bg-transparent lg:p-0">
 
                 <div class="flex flex-col gap-2.5">
-                    <h2 class="text-xl font-bold uppercase leading-6 tracking-tight text-primary">
+                    <h2 class="text-[10px] lg:text-xl font-bold uppercase leading-6 tracking-tight text-primary">
                         Phone number:
                     </h2>
-                    <p>{{ contact_info.phone }}</p>
+                    <p class="font-bold lg:font-normal">{{ contact_info.phone }}</p>
                 </div>
 
-                <div class="flex flex-col gap-2.5">
-                    <h2 class="text-xl font-bold uppercase leading-6 tracking-tight text-primary">
-                        Email:
-                    </h2>
-                    <p>{{ contact_info.email }}</p>
-                </div>
+                <h2 class="text-[10px] lg:text-xl font-bold uppercase leading-6 tracking-tight text-primary">
+                    Email:
+                </h2>
+                <p class="font-bold lg:font-normal">{{ contact_info.email }}</p>
+            </div>
 
                 <div class="flex flex-col gap-2.5">
-                    <h2 class="text-xl font-bold uppercase leading-6 tracking-tight text-primary">
+                    <h2 class="text-[10px] lg:text-xl font-bold uppercase leading-6 tracking-tight text-primary">
                         Socials:
                     </h2>
 
@@ -66,12 +71,12 @@
 
     </div>
 
-    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-[300px] bg-primary-dark lg:h-[433px] z--5">
+    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-[260px] bg-primary-dark md:h-[300px] lg:h-[433px] -z-10">
         <div class="relative z--10 w-full max-w-[1240px] mx-auto">
-            <div class="flex flex-col gap-6 mt-15 max-w-[522px]">
+            <div class="flex flex-col gap-4 px-4 mt-8 max-w-[522px] md:gap-6 md:mt-15 lg:px-0">
 
                 <div class="max-w-md">
-                    <p class="font-heading text-2xl font-bold text-soft-white">
+                    <p class="font-heading text-xl md:text-2xl font-bold text-soft-white">
                         Let Every Bloom Tell a Story.
                     </p>
 
