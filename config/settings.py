@@ -177,7 +177,7 @@ UNFOLD = {
     },
 
     "STYLES": [
-        lambda r: static("css/admin_output.css"),
+        lambda r: static("css/output.css"),
     ],
 
      "SIDEBAR": {
