@@ -121,19 +121,22 @@
                 {% include "components/ui/icons/view_icon.html" %}
                 View
             </button>
-            <button
-                type="button"
-                {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
-                class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-border disabled:text-muted"
-            >
-                {% include "components/ui/icons/cart_icon.html" %}
+            <form method="post" action="{% url 'orders:add_to_cart' bouquet.id %}" class="w-full">
+                {% csrf_token %}
+                <button
+                    type="submit"
+                    {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
+                    class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white ...rest of your old classes..."
+                >
+                    {% include "components/ui/icons/cart_icon.html" %}
 
-                {% if bouquet.available and bouquet.quantity > 0 %}
-                    Add to Cart
-                {% else %}
-                    Out of Stock
-                {% endif %}
-            </button>
+                    {% if bouquet.available and bouquet.quantity > 0 %}
+                        Add to Cart
+                    {% else %}
+                        Out of Stock
+                    {% endif %}
+                </button>
+            </form>
         </div>
 
     </div>
