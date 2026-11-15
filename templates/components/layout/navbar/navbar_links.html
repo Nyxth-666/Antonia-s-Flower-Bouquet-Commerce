@@ -1,7 +1,7 @@
-<div class="flex items-center bg-secondary text-soft-white">
+<div id="nav-menu" class="hidden bg-secondary text-soft-white lg:flex lg:items-center">
     <nav
         aria-label="Main navigation"
-        class="mx-auto flex min-h-9 max-w-[1240px] items-center gap-7 px-4"
+        class="mx-auto flex w-full max-w-[1240px] flex-col items-start gap-1 px-4 py-3 lg:min-h-9 lg:flex-row lg:items-center lg:justify-center lg:gap-7 lg:py-0"
     >
         {% for item in navbar_links %}
 
@@ -19,7 +19,7 @@
                     </a>
 
                     <div
-                        class="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                        class="hidden lg:block invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
                     >
                         {% include "components/ui/modals/occasion-modal.html" %}
                     </div>
@@ -39,7 +39,7 @@
                     </a>
 
                     <div
-                        class="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                        class="hidden lg:block invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
                     >
                         {% include "components/ui/modals/by-types-modal.html" %}
                     </div>
@@ -59,7 +59,13 @@
                     {% endif %}
                 </a>
             {% endif %}
+                    {% endfor %}
 
-        {% endfor %}
+        {% if not user.is_authenticated %}
+            <div class="mt-2 flex w-full gap-2 border-t border-white/20 pt-3 md:hidden">
+                <a href="{% url 'accounts:login' %}" class="flex-1 rounded-full border border-white/60 px-4 py-2 text-center text-sm">Sign In</a>
+                <a href="{% url 'accounts:register' %}" class="flex-1 rounded-full bg-card px-4 py-2 text-center text-sm text-foreground">Sign Up</a>
+            </div>
+        {% endif %}
     </nav>
 </div>
