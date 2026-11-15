@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!product) return;
 
         const {
+            id,
             name,
             description,
             image,
@@ -24,13 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
             size,
             rating,
             ratingCount,
-            available
+            available,
         } = product.dataset;
 
         $("#modal-product-name").textContent = name;
         $("#modal-product-description").textContent = description;
         $("#modal-product-price").textContent = peso(price);
         $("#modal-product-size").textContent = size || "Not specified";
+        const favForm = document.querySelector("[data-modal-favorite-form]");
+        const cartForm = document.querySelector("[data-modal-cart-form]");
+        if (favForm) favForm.action = `/favorites/toggle/${id}/`;
+        if (cartForm) cartForm.action = `/orders/cart/add/${id}/`;
 
         const imageElement = $("#modal-product-image");
 
