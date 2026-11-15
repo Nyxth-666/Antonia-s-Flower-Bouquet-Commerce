@@ -1,5 +1,5 @@
 <div class="space-y-3">
-    {% for value, label in arrangement_types %}
+    {% for arrangement in arrangement_types %}
         <label class="flex cursor-pointer items-center gap-3 text-sm transition hover:text-primary">
             <input
                 type="checkbox"
@@ -8,7 +8,7 @@
                 class="size-4 accent-primary"
                 {% if value in selected_product_types %}checked{% endif %}
             >
-            <span>{{ label }}</span>
+            <span>{{ arrangement.name }}</span>
         </label>
     {% empty %}
         <p class="text-sm">

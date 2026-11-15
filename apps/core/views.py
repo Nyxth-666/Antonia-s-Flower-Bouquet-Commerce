@@ -2,10 +2,8 @@ from datetime import datetime
 
 from django.shortcuts import render
 
-from apps.occasions.data.occasions import OCCASIONS
+from apps.catalog.models import Occasion, Bouquet
 from apps.core.data.flower_meaning import FLOWER_MEANINGS
-
-from apps.catalog.models import Bouquet
 
 
 def home(request):
@@ -18,8 +16,10 @@ def home(request):
 
     best_sellers = Bouquet.objects.filter(available=True).order_by("-rating")[:8]
 
+    occasions = Occasion.objects.filter(is_active=True)
+
     return render(request, "home/home.html", {
-        "occasions": OCCASIONS,
+        "occasions": occasions,
         "flower": featured_flower,
         "best_sellers": best_sellers,
     })

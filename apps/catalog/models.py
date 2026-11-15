@@ -2,6 +2,14 @@ from django.db import models
 
 class Occasion(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    icon = models.CharField(
+        max_length=20,
+        blank=True,
+        help_text="Enter an emoji, e.g. 🎂 or 💐",
+    )
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+
     class Meta:
         ordering = ["name"]
 
@@ -10,12 +18,36 @@ class Occasion(models.Model):
 
 class FlowerType(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(
+        upload_to="flower_types/",
+        blank=True,
+        null=True,
+    )
+    is_active = models.BooleanField(default=True)
+
     class Meta:
         ordering = ["name"]
 
     def __str__(self):
         return self.name
-    
+
+class ArrangementType(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(
+        upload_to="arrangement_types/",
+        blank=True,
+        null=True,
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = "Arrangement Types"
+
+    def __str__(self):
+        return self.name
 class Color(models.Model):
     name = models.CharField(max_length=100, unique=True)
     hex_code = models.CharField(
@@ -31,16 +63,6 @@ class Color(models.Model):
         return self.name
     
 class Bouquet(models.Model):
-    ARRANGEMENT_CHOICES = [
-        ("Chocolate Bouquets", "Chocolate Bouquets"),
-        ("Flower Bouquets", "Flower Bouquets"),
-        ("Flower in a Box", "Flower in a Box"),
-        ("Flower in a Card", "Flower in a Card"),
-        ("Flower in a Vase", "Flower in a Vase"),
-        ("Inaugural Flowers", "Inaugural Flowers"),
-        ("Petite Bouquets", "Petite Bouquets"),
-    ]
-
     name = models.CharField(max_length=150)
     description = models.TextField()
 
@@ -57,9 +79,10 @@ class Bouquet(models.Model):
         related_name="bouquets",
     )
 
-    arrangement_type = models.CharField(
-        max_length=50,
-        choices=ARRANGEMENT_CHOICES,
+    arrangement_type = models.ForeignKey(
+        ArrangementType,
+        on_delete=models.PROTECT,
+        related_name="bouquets",
     )
 
     color = models.ManyToManyField(

@@ -1,18 +1,30 @@
 from django.contrib import admin
-from .models import Bouquet, Occasion, Color, FlowerType
+from .models import (
+    Bouquet,
+    Color,
+    FlowerType,
+    Occasion,
+    ArrangementType,
+)
 from django.utils.html import format_html
 
 @admin.register(Occasion)
 class OccasionAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("name", "icon", "description", "is_active",)
     search_fields = ("name",)
     ordering = ("name",)
 
 @admin.register(FlowerType)
 class FlowerTypeAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("name", "description", "image", "is_active",)
     search_fields = ("name",)
     ordering = ("name",)
+
+@admin.register(ArrangementType)
+class ArrangementTypeAdmin(admin.ModelAdmin):
+    list_display = ("name", "description", "image", "is_active",)
+    list_filter = ("is_active",)
+    search_fields = ("name",)
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
@@ -29,7 +41,7 @@ class ColorAdmin(admin.ModelAdmin):
             'background-color:{};"></span>',
             obj.hex_code,
         )
-
+    
 @admin.register(Bouquet)
 class BouquetAdmin(admin.ModelAdmin):
     list_display = (

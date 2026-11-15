@@ -1,18 +1,23 @@
 from django.shortcuts import render
 from . filters import filter_bouquets
-from . models import Bouquet, Occasion, Color, FlowerType
-from apps.catalog.data.flower_type import FLOWER_TYPE
-from apps.catalog.data.arrangement_type import ARRANGEMENT_TYPES
+from . models import (
+    Bouquet,
+    Occasion,
+    Color,
+    FlowerType,
+    ArrangementType,
+)
 
 def catalog_page(request):
     bouquets = filter_bouquets(request)
 
     context = {
         "bouquets": bouquets,
-        "occasions": Occasion.objects.all(),
+
+        "occasions": Occasion.objects.filter(is_active=True),
         "colors": Color.objects.all(),
-        "flower_types": FlowerType.objects.all(),
-        "arrangement_types": Bouquet.ARRANGEMENT_CHOICES,
+        "flower_types": FlowerType.objects.filter(is_active=True),
+        "arrangement_types": ArrangementType.objects.filter(is_active=True),
 
         "selected_occasions": request.GET.getlist("occasion"),
         "selected_colors": request.GET.getlist("color"),
@@ -31,18 +36,27 @@ def catalog_page(request):
 def flower_types_page(request):
     selected_type = request.GET.get("type", "")
 
-    return render(request, "catalog/flowers-catalog.html", {
-        "flower_types": FLOWER_TYPE,
-        "selected_types": selected_type,
-        }  
+    context = {
+        "flower_types": FlowerType.objects.filter(is_active=True),
+        "selected_type": selected_type,
+    }
+
+    return render(
+        request,
+        "catalog/flowers-catalog.html",
+        context,
     )
 
 def arrangement_types_page(request):
     selected_type = request.GET.get("type", "")
 
+    context = {
+        "arrangement_types": ArrangementType.objects.filter(is_active=True),
+        "selected_type": selected_type,
+    }
+
     return render(
-        request, "catalog/arrangements-catalog.html", {
-            "arrangement_types": ARRANGEMENT_TYPES,
-            "selected_type": selected_type,
-        }
+        request,
+        "catalog/arrangements-catalog.html",
+        context,
     )
