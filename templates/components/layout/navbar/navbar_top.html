@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="mx-auto flex w-full max-w-[1240px] items-center justify-between px-5 py-4 lg:px-0">
+<div class="mx-auto flex w-full max-w-[1240px] flex-wrap items-center justify-between gap-2 px-4 py-2 md:px-5 md:py-4 lg:px-0">
     <a 
         href="{% url 'core:home' %}"
         class="flex shrink-0 items-center gap-2"
@@ -9,10 +9,10 @@
         <img 
             src="{% static 'images/logo.png' %}" 
             alt="Antonia's"
-            class="h-14 w-14 rounded-full object-contain"
+            class="h-10 w-10 rounded-full object-contain md:h-14 md:w-14"
         >
 
-        <h3 class="text-2xl text-accent italic font-bold">
+        <h3 class="text-xl text-accent italic font-bold md:text-2xl">
             Antonia's
         </h3>
     </a>
@@ -21,7 +21,7 @@
         action="{% url navbar_search.url %}"
         method="get"
         role="search"
-        class="flex min-w-0 max-w-[733px] flex-1 gap-3 items-center rounded-button border border-border bg-card px-5 py-2 focus-within:border-accent"
+        class="order-last flex w-full min-w-0 items-center gap-3 rounded-button border border-border bg-card px-4 py-2 focus-within:border-accent md:order-none md:w-auto md:max-w-[733px] md:flex-1 md:px-5"
     >
         <button 
             class="text-muted transition-colors duration-200 focus-within:text-primary"
@@ -42,7 +42,7 @@
         >
     </form>
 
-    <div class="flex shrink-0 items-end gap-4">
+    <div class="flex shrink-0 items-center gap-3 md:gap-4">
         {% if item.name == "Profile" or user.is_authenticated %}
             {% for item in navbar_icons %}
                 <a
@@ -54,13 +54,28 @@
                     {% include item.icon_template %}
                 </a>
             {% endfor %}
-        {% else %}
-            <a
-                href="{% url 'accounts:register' %}"
-                class="inline-flex items-center justify-center rounded-button border border-border bg-card px-5 py-3 text-[20px] font-normal leading-none tracking-normal transition-colors duration-200 hover:border-secondary hover:bg-secondary hover:text-white"
-            >
-                Sign Up
-            </a>
-        {% endif %}
+            {% else %}
+            <div class="hidden items-center gap-2 md:flex">
+                <a
+                    href="{% url 'accounts:login' %}"
+                    class="inline-flex items-center justify-center rounded-button border border-border px-4 py-2 text-base leading-none transition-colors duration-200 hover:border-secondary hover:bg-secondary hover:text-white md:px-5 md:py-3 md:text-[20px]"
+                >Sign In</a>
+                <a
+                    href="{% url 'accounts:register' %}"
+                    class="inline-flex items-center justify-center rounded-button border border-border bg-card px-4 py-2 text-base leading-none transition-colors duration-200 hover:border-secondary hover:bg-secondary hover:text-white md:px-5 md:py-3 md:text-[20px]"
+                >Sign Up</a>
+            </div>
+            {% endif %}
+        <button
+        id="nav-toggle"
+        type="button"
+        aria-label="Toggle menu"
+        aria-controls="nav-menu"
+        aria-expanded="false"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-button border border-border bg-card text-primary lg:hidden"
+    >
+        <svg id="nav-icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="nav-icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
     </div>
 </div>

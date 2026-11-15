@@ -1,7 +1,9 @@
 from django.contrib import admin
-from .models import Entry
+from .models import ContactMessage
 
-@admin.register(Entry)
-class EntryAdmin(admin.ModelAdmin):
 
-    list_display = ('last_name', 'first_name', 'email', 'time_of_entry')
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "email", "phone", "sender_type", "is_read", "created_at")
+    list_filter = ("sender_type", "is_read", "created_at")
+    search_fields = ("first_name", "last_name", "email", "message")
