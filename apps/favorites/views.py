@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpRequest
+from apps.catalog.models import Bouquet
 
-
-def favorites_page(request):
-    return render(request, "favorites/favorites.html")
+def favorites(request):
+    # Temporary, for frontend preview only
+    if request.GET.get("empty"):
+        items = []
+    else:
+        items = Bouquet.objects.all()[:3]
+    return render(request, "favorites/favorites.html", {"favorites": items})

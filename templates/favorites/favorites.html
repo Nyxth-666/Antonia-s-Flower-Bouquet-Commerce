@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Wishlist | Antonia's{% endblock %}
+
+{% block content %}
+<style>
+    /* Force the heart icon inside the shared catalog card to be red on this page.
+       Adjust the selectors below if your card uses different class names. */
+    .favorites-grid [data-favorite],
+    .favorites-grid .favorite-btn,
+    .favorites-grid .heart-btn,
+    .favorites-grid button[aria-label*="avorite" i],
+    .favorites-grid button[aria-label*="ishlist" i] {
+        color: #e05561 !important;
+    }
+    .favorites-grid [data-favorite] svg,
+    .favorites-grid .favorite-btn svg,
+    .favorites-grid .heart-btn svg,
+    .favorites-grid button[aria-label*="avorite" i] svg,
+    .favorites-grid button[aria-label*="ishlist" i] svg,
+    .favorites-grid .fa-heart,
+    .favorites-grid .bi-heart-fill {
+        fill: #e05561 !important;
+        stroke: #e05561 !important;
+        color: #e05561 !important;
+    }
+</style>
+
+<section class="bg-[#f6f2e9] min-h-[60vh]">
+    <div class="mx-auto max-w-6xl px-6 pt-10 pb-20">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="Breadcrumb" class="text-center text-[11px] text-stone-600">
+            <a href="/" class="hover:underline">Home</a>
+            <span class="mx-1.5">/</span>
+            <span class="text-stone-900">Favorites</span>
+        </nav>
+
+        {% if favorites %}
+        <!-- ============ WISHLIST WITH ITEMS ============ -->
+        <div class="mt-10 flex flex-wrap items-end justify-between gap-4">
+            <div class="flex items-baseline gap-3">
+                <h1 class="font-serif text-4xl font-bold text-stone-900">My Wishlist</h1>
+                <span class="text-[11px] text-stone-500">({{ favorites|length }} item{{ favorites|length|pluralize }})</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button type="button"
+                        class="rounded-md border border-stone-400 bg-transparent px-3 py-1.5 text-[11px] font-medium text-stone-800 transition hover:bg-stone-200">
+                    Add All to Cart
+                </button>
+                <button type="button"
+                        class="rounded-md border border-rose-300 bg-transparent px-3 py-1.5 text-[11px] font-medium text-rose-500 transition hover:bg-rose-50">
+                    Clear All
+                </button>
+            </div>
+        </div>
+
+        <!-- Cards grid -->
+        <div class="favorites-grid mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {% for bouquet in favorites %}
+                {% include "components/ui/cards/catalog-products-card.html" with bouquet=bouquet %}
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <!-- ============ EMPTY STATE ============ -->
+        <div class="flex min-h-[50vh] flex-col items-center justify-center text-center">
+            <h1 class="font-serif text-3xl font-bold text-stone-900">Your wishlist is empty</h1>
+            <p class="mt-3 max-w-[200px] text-[11px] leading-relaxed text-stone-600">
+                Save flowers you love by tapping the heart icon on any product.
+            </p>
+            <a href="{% url 'catalog:catalog' %}"
+               class="mt-4 inline-block rounded-md bg-[#e05561] px-4 py-1.5 text-[11px] font-medium text-white transition hover:bg-[#c9434f]">
+                Browse Flowers
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
