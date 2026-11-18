@@ -40,7 +40,7 @@ def cart_page(request):
         "items": cart.items.select_related("bouquet"),
         "custom_items": cart.custom_items.select_related("custom_bouquet"),
     }
-    return render(request, "orders/cart.html", context)
+    return render(request, "orders/orders.html", context)
 
 
 def _get_item(request, kind, item_id):
