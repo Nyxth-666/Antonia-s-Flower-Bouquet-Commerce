@@ -5,6 +5,7 @@
     <div
         class="hidden"
         data-product-details
+        data-id="{{ bouquet.id }}"
         data-name="{{ bouquet.name }}"
         data-description="{{ bouquet.description }}"
         data-image="{% if bouquet.image %}{{ bouquet.image.url }}{% endif %}"
@@ -45,13 +46,17 @@
             </div>
         {% endif %}
 
-        <button
-            type="button"
-            aria-label="Add {{ bouquet.name }} to favorites"
-            class="absolute right-3 top-3 flex size-8 items-center justify-center rounded-full bg-soft-white/95 text-primary shadow-sm transition hover:bg-white"
-        >
-            {% include "components/ui/icons/heart_icon.html" %}
-        </button>
+        <form method="post" action="{% url 'favorites:toggle' bouquet.id %}" class="absolute right-3 top-3 z-10">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button
+                type="submit"
+                aria-label="Add {{ bouquet.name }} to favorites"
+                class="flex size-8 items-center justify-center rounded-full bg-soft-white text-primary shadow"
+            >
+                {% include "components/ui/icons/heart_icon.html" %}
+            </button>
+        </form>
 
         <div class="absolute bottom-3 left-3">
             {% if bouquet.available and bouquet.quantity > 0 %}
@@ -112,28 +117,35 @@
             {% endfor %}
         </div>
 
+<<<<<<< HEAD
+        <div class="mt-4 flex gap-3">
+=======
         <div class="mt-auto flex flex-col gap-2 pt-3 sm:flex-row sm:gap-3 sm:pt-4">
+>>>>>>> b8e9fe79be9a7903765b44bdaa112a0c7653b591
             <button
                 type="button"
                 data-open-product-modal
-                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium transition hover:opacity-85 disabled:cursor-not-allowed"
+                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium"
             >
                 {% include "components/ui/icons/view_icon.html" %}
                 View
             </button>
-            <button
-                type="button"
-                {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
-                class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-border disabled:text-muted"
-            >
-                {% include "components/ui/icons/cart_icon.html" %}
 
-                {% if bouquet.available and bouquet.quantity > 0 %}
-                    Add to Cart
-                {% else %}
-                    Out of Stock
-                {% endif %}
-            </button>
+            <form method="post" action="{% url 'orders:add_to_cart' bouquet.id %}" class="w-full">
+                {% csrf_token %}
+                <button
+                    type="submit"
+                    {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
+                    class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white disabled:opacity-50"
+                >
+                    {% include "components/ui/icons/cart_icon.html" %}
+                    {% if bouquet.available and bouquet.quantity > 0 %}
+                        Add to Cart
+                    {% else %}
+                        Out of Stock
+                    {% endif %}
+                </button>
+            </form>
         </div>
 
     </div>
