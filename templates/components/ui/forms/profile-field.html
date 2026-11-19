@@ -1,6 +1,6 @@
-{# Params: label, name, value, type (default text), readonly #}
+{# Params: label, name, value, type (default text), readonly, error #}
 <label class="block">
     <span class="mb-2 block font-bold leading-snug text-muted">{{ label }}</span>
-    <input type="{{ type|default:'text' }}" name="{{ name }}" value="{{ value }}" {% if readonly %}readonly{% endif %}
-           class="h-12 w-full rounded-button border px-4 text-foreground {% if readonly %}border-[#E8E3D5] bg-[#E8E3D5]{% else %}border-border bg-[#FBF5EF]{% endif %}">
+    <input type="{{ type|default:'text' }}" name="{{ name }}" value="{{ value }}" {% if readonly %}readonly{% endif %} {% if error %}aria-invalid="true" aria-describedby="{{ name }}-error"{% endif %} class="h-12 w-full rounded-button border bg-[#FBF5EF] px-4 text-foreground read-only:border-[#E8E3D5] read-only:bg-[#E8E3D5] read-only:text-muted read-only:cursor-not-allowed {% if error %}border-error{% else %}border-border{% endif %}">
+    {% if error %}<span id="{{ name }}-error" class="mt-1 block text-sm font-bold text-error">{{ error }}</span>{% endif %}
 </label>

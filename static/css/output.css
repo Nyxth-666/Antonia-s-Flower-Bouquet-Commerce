@@ -704,6 +704,9 @@
   .max-w-\[calc\(100vw-2rem\)\] {
     max-width: calc(100vw - 2rem);
   }
+  .max-w-full {
+    max-width: 100%;
+  }
   .max-w-lg {
     max-width: var(--container-lg);
   }
@@ -967,14 +970,14 @@
     --tw-border-style: dotted;
     border-style: dotted;
   }
-  .border-\[\#E8E3D5\] {
-    border-color: #E8E3D5;
-  }
   .border-accent {
     border-color: var(--color-accent);
   }
   .border-border {
     border-color: var(--color-border);
+  }
+  .border-error {
+    border-color: var(--color-error);
   }
   .border-foreground {
     border-color: var(--color-foreground);
@@ -1694,6 +1697,18 @@
   .checked\:after\:content-\[\'✓\'\]:checked::after {
     --tw-content: '✓';
     content: var(--tw-content);
+  }
+  .read-only\:cursor-not-allowed:read-only {
+    cursor: not-allowed;
+  }
+  .read-only\:border-\[\#E8E3D5\]:read-only {
+    border-color: #E8E3D5;
+  }
+  .read-only\:bg-\[\#E8E3D5\]:read-only {
+    background-color: #E8E3D5;
+  }
+  .read-only\:text-muted:read-only {
+    color: var(--color-muted);
   }
   .focus-within\:border-accent:focus-within {
     border-color: var(--color-accent);
@@ -2476,6 +2491,9 @@
     .xl\:flex-nowrap {
       flex-wrap: nowrap;
     }
+    .xl\:justify-center {
+      justify-content: center;
+    }
     .xl\:gap-8\.5 {
       gap: calc(var(--spacing) * 8.5);
     }
@@ -2522,9 +2540,16 @@
     .xl\:pt-3 {
       padding-top: calc(var(--spacing) * 3);
     }
+    .xl\:text-center {
+      text-align: center;
+    }
     .xl\:text-5xl {
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+    .xl\:text-xl {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
     }
     .xl\:text-\[40px\] {
       font-size: 40px;

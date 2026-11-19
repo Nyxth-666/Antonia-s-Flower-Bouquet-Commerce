@@ -23,35 +23,34 @@
                     <svg viewBox="0 0 21 21" class="size-[21px]" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M10.5 0v21M0 10.5h21"/></svg>
                 </button>
             </div>
-            <div class="mb-3">
-                <h2 class="font-heading text-3xl font-bold xl:text-[40px]">Admin User</h2>
-                <p class="mt-0.5 text-2xl font-bold">Administrator</p>
+            <div class="mb-3 min-w-0">
+                <h2 class="font-heading text-3xl font-bold xl:text-[40px]">{{ profile_account.full_name }}</h2>
+                <p class="mt-0.5 max-w-full text-balance break-words text-lg font-bold leading-snug xl:text-xl">{{ admin_role }}</p>
             </div>
         </div>
 
         {# Edit button #}
-        <button type="button"
-        class="mt-6 grid h-8 w-35.5 place-items-center rounded-button bg-secondary font-bold text-white xl:absolute xl:right-16 xl:top-7 xl:mt-0"> Edit Profile
-        </button>
+        <button type="button" id="profile-edit-btn" aria-live="polite"
+        class="mt-6 grid h-8 w-35.5 place-items-center rounded-button bg-secondary font-bold text-white xl:absolute xl:right-16 xl:top-7 xl:mt-0">{% if profile_editing %}Save{% else %}Edit Profile{% endif %}</button>
 
         {# Email / contact / joined strip #}
         <div class="mt-8 grid grid-cols-1 divide-y divide-background-secondary xl:mt-12 xl:h-24 xl:grid-cols-[1fr_1.1fr_1fr] xl:divide-x xl:divide-y-0">
-            <div class="flex items-center justify-center py-4 xl:py-0">
+            <div class="flex items-center justify-start py-4 xl:justify-center xl:py-0">
                 <div class="leading-snug">
-                    <p>adminantoniasflowers@gmail.com</p>
+                    <p class="{% if profile_account.email %}text-foreground{% else %}italic text-muted{% endif %}">{{ profile_account.email|default:"Not set" }}</p>
                     <p class="font-bold text-muted">Email</p>
                 </div>
             </div>
-            <div class="flex items-center justify-center py-4 xl:py-0">
-                <div class="text-center leading-snug">
-                    <p>09XXXXXXXXXX</p>
+            <div class="flex items-center justify-start py-4 xl:justify-center xl:py-0">
+                <div class="text-left leading-snug xl:text-center">
+                    <p class="{% if profile_account.phone %}text-foreground{% else %}italic text-muted{% endif %}">{{ profile_account.phone|default:"Not set" }}</p>
                     <p class="font-bold text-muted">Contact&nbsp; Number</p>
                 </div>
             </div>
-            <div class="flex items-center justify-center py-4 xl:py-0">
+            <div class="flex items-center justify-start py-4 xl:justify-center xl:py-0">
                 <div class="font-bold leading-snug text-muted">
                     <p>Joined on</p>
-                    <p class="text-lg leading-5.25">October 1, 2026</p>
+                    <p class="text-lg leading-5.25">{{ joined_on|date:"F j, Y" }}</p>
                     <p>Account Created</p>
                 </div>
             </div>
@@ -59,17 +58,19 @@
     </section>
 
     {# PERSONAL INFORMATION CARD #}
-    <form method="post" class="mt-8 rounded-card border border-border bg-card p-6 xl:p-16">
+    <form method="post" id="profile-form" data-editing="{{ profile_editing|yesno:'true,false' }}"
+          class="mt-8 rounded-card border border-border bg-card p-6 xl:p-16">
         {% csrf_token %}
         <h2 class="font-heading text-3xl font-bold xl:text-[40px]">Personal Information</h2>
 
         <div class="mt-8 flex flex-col gap-8">
-            {% include "components/ui/forms/profile-field.html" with label="Full name" name="full_name" value="Administrator User" only %}
-            {% include "components/ui/forms/profile-field.html" with label="Email" name="email" type="email" value="admin@gmail.com" only %}
-            {% include "components/ui/forms/profile-field.html" with label="Contact&nbsp; Number" name="contact" type="tel" value="09XXXXXXXXXX" only %}
-            {% include "components/ui/forms/profile-field.html" with label="Role" name="role" value="Administrator" readonly=True only %}
+            {% include "components/ui/forms/profile-field.html" with label="Full name" name="full_name" value=profile_values.full_name error=profile_errors.full_name readonly=True only %}
+            {% include "components/ui/forms/profile-field.html" with label="Email" name="email" type="email" value=profile_values.email error=profile_errors.email readonly=True only %}
+            {% include "components/ui/forms/profile-field.html" with label="Contact&nbsp; Number" name="phone" type="tel" value=profile_values.phone error=profile_errors.phone readonly=True only %}
+            <div><span class="mb-2 block font-bold leading-snug text-muted">Role</span><p class="flex h-12 w-full items-center rounded-button border border-secondary bg-secondary px-4 font-bold text-white">{{ admin_role }}</p></div>
         </div>
     </form>
 
 </div>
+<script src="{% static 'js/admin-profile.js' %}" defer></script>
 {% endblock %}
