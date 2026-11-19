@@ -1,228 +1,402 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const $ = selector => document.querySelector(selector);
-  const $$ = selector => [...document.querySelectorAll(selector)];
 
-  const peso = amount => new Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
-    maximumFractionDigits: 0
-  }).format(amount);
+    const $ = (selector, parent = document) =>
+        parent.querySelector(selector);
 
-  const num = value => Number(String(value ?? "").replace(/[^\d.-]/g, "")) || 0;
+    const $$ = (selector, parent = document) =>
+        [...parent.querySelectorAll(selector)];
 
-  const BASE = {
-    "Small": 500,
-    "Medium": 650,
-    "Large": 800,
-    "Extra Large": 1000
-  };
+    const form = $("#bouquet");
+    const preview = $("#bouquet-preview");
 
-  const FLOWERS = [
-    // Fresh flowers
-    ["Anthuriums", 55],
-    ["Asters", 55],
-    ["Baby's Breath", 40, "bunch"],
-    ["Carnation", 65],
-    ["Daisies", 45],
-    ["Gerberas", 55],
-    ["Goldenrod", 55],
-    ["Lilies", 45],
-    ["Lisianthus/Paper Roses", 30],
-    ["Mixed Flowers", 55],
-    ["Roses", 55],
-    ["Sunflower", 55],
-    ["Tulips", 55],
+    if (!form || !preview) return;
 
-    // Artificial, dried and decorative
-    ["Artificial Flowers", 40],
-    ["Decorative Flowers", 35],
-    ["Decorative Roses", 45],
-    ["Dried Flowers", 45],
+    const peso = amount =>
+        new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(amount);
 
-    // Chocolates and money
-    ["Chocolate", 25, "piece"],
-    ["Chocolate Bouquet", 350, "bouquet"],
-    ["Money Rose", 100, "piece"],
-    ["Money Bouquet", 300, "bouquet"],
-  ];
+    const money = value => Number(value) || 0;
 
-  const COLORS = [
-    ["Rose", "rose"],
-    ["Blush", "blush"],
-    ["Gold", "gold"],
-    ["Sage", "sage"],
-    ["Ivory", "ivory"]
-  ];
-
-  const WRAPS = [
-    ["Kraft paper", 0, "kraft"],
-    ["White paper", 0, "white"],
-    ["Satin wrap", 60, "sage"],
-    ["Luxury box", 150, "wine"]
-  ];
-
-  const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-  const quantityButton = `flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border text-[13px] text-muted transition hover:border-accent hover:text-accent ${focus}`;
-
-  function render(selector, items, template) {
-    $(selector).innerHTML = items.map(template).join("");
-  }
-
-  function renderFlowers() {
-    render("#flowers", FLOWERS, ([name, price, unit = "stem"]) => `
-      <div data-flower="${name}" data-price="${price}"
-        class="flex min-w-0 items-center gap-2.5 rounded-xl border border-border px-3 py-3 sm:gap-3.5 sm:pl-7 sm:pr-[22px]">
-        <span class="size-4 shrink-0 rounded-full bg-[#c48aa0]"></span>
-
-        <p class="min-w-0 flex-1 text-[13px] font-semibold text-foreground sm:text-[15px]">
-          ${name}
-          <span class="block text-[12px] font-normal text-muted">₱${price} / ${unit}</span>
-        </p>
-
-        <div class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
-          <button type="button" data-step="-1"
-            aria-label="Remove ${name}" class="${quantityButton}">−</button>
-          <output class="w-4 text-center text-[13px]">0</output>
-          <button type="button" data-step="1"
-            aria-label="Add ${name}" class="${quantityButton}">+</button>
-        </div>
-      </div>
-    `);
-  }
-
-  function renderColors() {
-    render("#colors", COLORS, ([name, color]) => `
-      <button
-        type="button"
-        data-color="${name}"
-        aria-label="${name} wrapping"
-        title="${name}"
-        aria-pressed="false"
-        class="color-swatch color-${color} ${focus}">
-      </button>
-    `);
-  }
-
-  function renderWraps() {
-    render("#wraps", WRAPS, ([name, price, color]) => `
-      <button type="button" data-wrap="${name}" data-price="${price}"
-        aria-pressed="false"
-        class="wrap-button cursor-pointer rounded-xl border border-border px-2 py-1.5 text-center text-[12px] text-muted transition hover:border-accent hover:text-accent sm:px-3.5 sm:text-[15px] ${focus}">
-        <span class="wrap-preview wrap-${color}"></span>
-        ${name}
-      </button>
-    `);
-  }
-
-  function selectOption(selector, selected) {
-    $$(selector).forEach(button => {
-      const active = button === selected;
-      button.setAttribute("aria-pressed", String(active));
-
-      if (selector === "[data-color]") {
-        button.classList.toggle("selected-color", active);
-      } else {
-        button.classList.toggle("bg-secondary", active);
-        button.classList.toggle("border-secondary", active);
-        button.classList.toggle("text-soft-white", active);
-        button.classList.toggle("border-border", !active);
-        button.classList.toggle("text-muted", !active);
-      }
-    });
-  }
-
-  function selected(selector) {
-    return $(`${selector}[aria-pressed="true"]`);
-  }
-
-  function update() {
-    const size = selected("[data-size]")?.dataset.size || "";
-    const wrap = selected("[data-wrap]");
-    const flowers = $$("[data-flower]");
-    const addons = $$('[data-addon][aria-pressed="true"]');
-
-    const base = BASE[size] ?? BASE[size.replaceAll(" ", "_")] ?? 0;
-
-    const flowerTotal = flowers.reduce((total, flower) => {
-      const quantity = Number(flower.querySelector("output").textContent) || 0;
-      return total + Number(flower.dataset.price) * quantity;
-    }, 0);
-
-    const wrapTotal = num(wrap?.dataset.price);
-    const addonTotal = addons.reduce(
-      (total, addon) => total + num(addon.dataset.price),
-      0
-    );
-
-    const totals = {
-      base,
-      fl: flowerTotal,
-      wr: wrapTotal,
-      ad: addonTotal,
-      total: base + flowerTotal + wrapTotal + addonTotal
+    const state = {
+        size: null,
+        flowers: {},
+        color: null,
+        wrapping: null,
+        addons: new Set()
     };
 
-    Object.entries(totals).forEach(([key, value]) => {
-      $(`[data-out="${key}"]`).textContent = peso(value);
+    $$("[data-flower-option]").forEach(flower => {
+        state.flowers[flower.dataset.flowerId] = 0;
     });
 
-    $('[data-out="size"]').textContent = `Base (${size})`;
+    function selectOption(container, selectedButton) {
+        $$(".option-selected", container).forEach(button => {
+            button.classList.remove("option-selected");
+        });
 
-    $("#config").value = JSON.stringify({
-      size,
-      flowers: Object.fromEntries(
-        flowers
-          .map(flower => [
-            flower.dataset.flower,
-            Number(flower.querySelector("output").textContent) || 0
-          ])
-          .filter(([, quantity]) => quantity > 0)
-      ),
-      color: selected("[data-color]")?.dataset.color || null,
-      wrap: wrap?.dataset.wrap || null,
-      addons: addons.map(addon => addon.dataset.addon)
+        $$("button", container).forEach(button => {
+            const active = button === selectedButton;
+
+            button.setAttribute("aria-pressed", String(active));
+
+            button.classList.toggle(
+                "option-selected",
+                active
+            );
+        });
+
+        selectedButton.classList.add("option-selected");
+    }
+
+    function getSelected(containerId) {
+        return $(
+            `#${containerId} button[aria-pressed="true"]`
+        );
+    }
+
+    function calculatePrices() {
+        const selectedSize = getSelected("size-options");
+
+        const base = money(
+            selectedSize?.dataset.basePrice
+        );
+
+        const flowerTotal = $$("[data-flower-option]")
+            .reduce((total, flower) => {
+                const quantity = state.flowers[
+                    flower.dataset.flowerId
+                ] || 0;
+
+                const price = money(
+                    flower.dataset.flowerPrice
+                );
+
+                return total + quantity * price;
+            }, 0);
+
+        const selectedWrapping = getSelected(
+            "wrapping-options"
+        );
+
+        const wrappingTotal = money(
+            selectedWrapping?.dataset.wrappingPrice
+        );
+
+        const addonTotal = $$(
+            "#addon-options button[aria-pressed='true']"
+        ).reduce((total, addon) => {
+            return total + money(addon.dataset.addonPrice);
+        }, 0);
+
+        return {
+            base,
+            flowers: flowerTotal,
+            wrapping: wrappingTotal,
+            addons: addonTotal,
+            total: base + flowerTotal +
+                wrappingTotal + addonTotal
+        };
+    }
+
+    function updatePrices() {
+        const prices = calculatePrices();
+
+        const selectedSize = getSelected("size-options");
+
+        $('[data-out="size"]').textContent =
+            selectedSize
+                ? `Base (${selectedSize.dataset.sizeName})`
+                : "Base (Not selected)";
+
+        $('[data-out="base"]').textContent =
+            peso(prices.base);
+
+        $('[data-out="fl"]').textContent =
+            peso(prices.flowers);
+
+        $('[data-out="wr"]').textContent =
+            peso(prices.wrapping);
+
+        $('[data-out="ad"]').textContent =
+            peso(prices.addons);
+
+        $('[data-out="total"]').textContent =
+            peso(prices.total);
+
+        return prices;
+    }
+
+    function updateQuantity(flower, amount) {
+        const flowerId = flower.dataset.flowerId;
+
+        const currentQuantity = state.flowers[flowerId] || 0;
+
+        const newQuantity = Math.max(
+            0,
+            Math.min(99, currentQuantity + amount)
+        );
+
+        state.flowers[flowerId] = newQuantity;
+
+        $("[data-quantity]", flower).textContent =
+            newQuantity;
+    }
+
+    function createFlower(x, y, color, index) {
+        const rotation = (index * 37) % 360;
+
+        return `
+            <g transform="translate(${x} ${y}) rotate(${rotation})">
+                ${Array.from({ length: 8 }, (_, i) => {
+                    const angle = i * 45;
+
+                    return `
+                        <ellipse
+                            cx="0"
+                            cy="-11"
+                            rx="7"
+                            ry="11"
+                            fill="${color}"
+                            transform="rotate(${angle})"
+                        />
+                    `;
+                }).join("")}
+
+                <circle
+                    cx="0"
+                    cy="0"
+                    r="5"
+                    fill="#D8A45E"
+                />
+            </g>
+        `;
+    }
+
+    function renderPreview() {
+        const selectedFlowers = $$("[data-flower-option]")
+            .flatMap(flower => {
+                const quantity = state.flowers[
+                    flower.dataset.flowerId
+                ] || 0;
+
+                return Array.from(
+                    { length: quantity },
+                    () => flower.dataset.flowerName
+                );
+            });
+
+        const wrapping = getSelected("wrapping-options");
+        const color = getSelected("color-options");
+
+        const wrappingColor =
+            color?.dataset.colorHex || "#D8C5A5";
+
+        const visibleFlowers = selectedFlowers.slice(0, 24);
+
+        const flowerPositions = [
+            [100, 95], [140, 65], [180, 65],
+            [220, 95], [120, 125], [160, 115],
+            [200, 125], [80, 130], [240, 130],
+            [140, 155], [180, 155], [110, 90],
+            [210, 90], [160, 45], [130, 105],
+            [190, 105], [95, 115], [225, 115],
+            [145, 85], [175, 85], [125, 140],
+            [195, 140], [160, 145], [160, 95]
+        ];
+
+        const flowersSVG = visibleFlowers.map(
+            (flower, index) => {
+                const [x, y] = flowerPositions[index];
+
+                return createFlower(
+                    x,
+                    y,
+                    "#D58A9B",
+                    index
+                );
+            }
+        ).join("");
+
+        const stemsSVG = visibleFlowers.map(
+            (_, index) => {
+                const [x, y] = flowerPositions[index];
+
+                return `
+                    <path
+                        d="M160 225 Q${x} 190 ${x} ${y + 10}"
+                        stroke="#63805B"
+                        stroke-width="3"
+                        fill="none"
+                    />
+                `;
+            }
+        ).join("");
+
+        preview.innerHTML = `
+            <div class="flex w-full flex-col items-center gap-3">
+                <svg
+                    viewBox="0 0 320 300"
+                    class="w-full max-w-[340px]"
+                    role="img"
+                    aria-label="Your customized bouquet preview"
+                >
+                    ${stemsSVG}
+
+                    <g fill="#718D60">
+                        <path d="M145 190 Q105 155 100 170 Q120 195 145 190"/>
+                        <path d="M175 190 Q215 155 220 170 Q200 195 175 190"/>
+                        <path d="M155 205 Q125 185 120 200 Q140 215 155 205"/>
+                    </g>
+
+                    ${flowersSVG}
+
+                    <path
+                        d="M95 190 Q160 215 225 190
+                           L205 275 L115 275 Z"
+                        fill="${wrappingColor}"
+                        stroke="#A58B6B"
+                        stroke-width="2"
+                    />
+
+                    <path
+                        d="M95 190 Q160 207 225 190"
+                        stroke="#A58B6B"
+                        stroke-width="3"
+                        fill="none"
+                    />
+
+                    <path
+                        d="M150 207 L160 220 L170 207"
+                        fill="none"
+                        stroke="#A66A59"
+                        stroke-width="4"
+                    />
+                </svg>
+
+                <p class="text-xs text-muted">
+                    ${visibleFlowers.length} flower(s) displayed
+                    ${wrapping ? ` · ${wrapping.dataset.wrappingName}` : ""}
+                </p>
+            </div>
+        `;
+
+        if (visibleFlowers.length === 0) {
+            preview.innerHTML = `
+                <p class="text-sm text-muted">
+                    Select flowers to build your bouquet.
+                </p>
+            `;
+        }
+    }
+
+    function updateConfig() {
+        const selectedSize = getSelected("size-options");
+        const selectedColor = getSelected("color-options");
+        const selectedWrapping = getSelected(
+            "wrapping-options"
+        );
+
+        const selectedAddons = $$(
+            "#addon-options button[aria-pressed='true']"
+        );
+
+        const config = {
+            size_id: selectedSize?.dataset.sizeId || null,
+
+            flowers: Object.entries(state.flowers)
+                .filter(([, quantity]) => quantity > 0)
+                .map(([flowerId, quantity]) => ({
+                    flower_option_id: Number(flowerId),
+                    quantity
+                })),
+
+            color_id: selectedColor?.dataset.colorId || null,
+
+            wrapping_id:
+                selectedWrapping?.dataset.wrappingId || null,
+
+            addon_ids: selectedAddons.map(
+                addon => Number(addon.dataset.addonId)
+            )
+        };
+
+        $("#config").value = JSON.stringify(config);
+    }
+
+    function update() {
+        updatePrices();
+        renderPreview();
+        updateConfig();
+    }
+
+    form.addEventListener("click", event => {
+        const button = event.target.closest("button");
+
+        if (!button || !form.contains(button)) return;
+
+        if (
+            button.matches(
+                "[data-quantity-increase], [data-quantity-decrease]"
+            )
+        ) {
+            const flower = button.closest(
+                "[data-flower-option]"
+            );
+
+            if (!flower) return;
+
+            const amount = button.hasAttribute(
+                "data-quantity-increase"
+            ) ? 1 : -1;
+
+            updateQuantity(flower, amount);
+        }
+
+        else if (button.matches("[data-size-id]")) {
+            selectOption($("#size-options"), button);
+        }
+
+        else if (button.matches("[data-color-id]")) {
+            selectOption($("#color-options"), button);
+        }
+
+        else if (button.matches("[data-wrapping-id]")) {
+            selectOption($("#wrapping-options"), button);
+        }
+
+        else if (button.matches("[data-addon-id]")) {
+            const active =
+                button.getAttribute("aria-pressed") === "true";
+
+            button.setAttribute(
+                "aria-pressed",
+                String(!active)
+            );
+
+            button.classList.toggle(
+                "option-selected",
+                !active
+            );
+        } else {
+            return;
+        }
+
+        update();
     });
-  }
 
-  $("#bouquet").addEventListener("click", event => {
-    const button = event.target.closest("button");
-    if (!button) return;
+    $("#msg")?.addEventListener("input", event => {
+        $("#cnt").textContent = event.target.value.length;
+    });
 
-    if (button.dataset.step) {
-      const flower = button.closest("[data-flower]");
-      const output = flower.querySelector("output");
-      const quantity = Number(output.textContent) + Number(button.dataset.step);
+    const firstSize = $("#size-options button");
 
-      output.textContent = Math.max(0, Math.min(99, quantity));
-    } else if (button.matches("[data-size]")) {
-      selectOption("[data-size]", button);
-    } else if (button.matches("[data-color]")) {
-      selectOption("[data-color]", button);
-    } else if (button.matches("[data-wrap]")) {
-      selectOption("[data-wrap]", button);
-    } else if (button.matches("[data-addon]")) {
-      const active = button.getAttribute("aria-pressed") === "true";
-      button.setAttribute("aria-pressed", String(!active));
-
-      button.classList.toggle("bg-secondary", !active);
-      button.classList.toggle("border-secondary", !active);
-      button.classList.toggle("text-soft-white", !active);
-      button.classList.toggle("border-border", active);
-      button.classList.toggle("text-muted", active);
-    } else {
-      return;
+    if (firstSize) {
+        selectOption($("#size-options"), firstSize);
     }
 
     update();
-  });
-
-  $("#msg").addEventListener("input", event => {
-    $("#cnt").textContent = event.target.value.length;
-  });
-
-  renderFlowers();
-  renderColors();
-  renderWraps();
-
-  update();
 });

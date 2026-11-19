@@ -39,4 +39,13 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path(
+        "password-reset/",
+        auth_views.PasswordResetView.as_view(
+            template_name="accounts/password_reset/password_reset.html",
+            email_template_name="accounts/password_reset/password_reset_email.txt",
+            subject_template_name="accounts/password_reset/password_reset_subject.html",
+        ),
+        name="password_reset",
+    ),
 ]

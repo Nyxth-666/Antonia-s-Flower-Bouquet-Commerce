@@ -1,11 +1,187 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>this is orders</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Flower Cart | Antonia's{% endblock %}
+
+{% block content %}
+<section class="bg-[#f6f2e9] min-h-[60vh]">
+    <div class="mx-auto max-w-6xl px-6 pt-10 pb-20">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="Breadcrumb" class="text-center text-[11px] text-stone-600">
+            <a href="/" class="hover:underline">Home</a>
+            <span class="mx-1.5">/</span>
+            <span class="text-stone-900">Carts</span>
+        </nav>
+
+        <!-- ============ CART WITH ITEMS ============ -->
+        <div id="cartFilled" class="mt-10 {% if not cart_items %}hidden{% endif %}">
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]">
+
+                <!-- Left: cart table -->
+                <div>
+                    <div class="flex items-end justify-between">
+                        <h1 class="font-serif text-4xl font-bold text-stone-900">Flower Cart</h1>
+                        <span id="cartCount" class="text-[11px] text-stone-600">
+                            {{ cart_items|length }} Item{{ cart_items|length|pluralize }}
+                        </span>
+                    </div>
+
+                    <!-- Table header -->
+                    <div class="mt-6 grid grid-cols-[1fr_90px_70px_60px] items-center gap-3 border-b border-stone-400 pb-2 text-[11px] text-stone-600 sm:grid-cols-[2fr_1fr_1fr_1fr]">
+                        <span>Flower Details</span>
+                        <span class="text-center">Quantity</span>
+                        <span class="text-center">Price</span>
+                        <span class="text-right">Total</span>
+                    </div>
+
+                    <!-- Rows -->
+                    <div id="cartRows">
+                        {% for item in cart_items %}
+                        <div data-cart-row data-price="{{ item.price }}"
+                             class="grid grid-cols-[1fr_90px_70px_60px] items-center gap-3 border-b border-stone-300 py-5 sm:grid-cols-[2fr_1fr_1fr_1fr]">
+
+                            <!-- Details -->
+                            <div class="flex items-center gap-3">
+                                <div class="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-[#e4dccd]">
+                                    {% if item.image %}
+                                        <img src="{{ item.image }}" alt="{{ item.name }}" class="h-full w-full object-cover">
+                                    {% else %}
+                                        <span class="text-xl">💐</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <p class="font-serif text-sm font-bold text-stone-900">{{ item.name }}</p>
+                                    <button type="button" data-remove
+                                            class="text-[9px] text-rose-500 hover:underline">Remove</button>
+                                </div>
+                            </div>
+
+                            <!-- Quantity -->
+                            <div class="flex items-center justify-center gap-1.5">
+                                <button type="button" data-minus aria-label="Decrease quantity"
+                                        class="flex size-4 items-center justify-center rounded-sm bg-[#c9bfa9] text-[11px] leading-none text-stone-800 transition hover:bg-[#b9ae96]">−</button>
+                                <span data-qty class="min-w-3 text-center text-[11px] text-stone-900">{{ item.quantity|default:1 }}</span>
+                                <button type="button" data-plus aria-label="Increase quantity"
+                                        class="flex size-4 items-center justify-center rounded-sm bg-[#c9bfa9] text-[11px] leading-none text-stone-800 transition hover:bg-[#b9ae96]">+</button>
+                            </div>
+
+                            <!-- Price -->
+                            <span class="text-center text-[11px] text-stone-700">₱ {{ item.price|floatformat:0 }}</span>
+
+                            <!-- Total -->
+                            <span data-line-total class="text-right text-[11px] text-stone-900"></span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" id="clearCart"
+                            class="mt-3 text-[9px] text-rose-500 hover:underline">Clear Entire Cart</button>
+                </div>
+
+                <!-- Right: order summary -->
+                <aside id="orderSummary" data-delivery="{{ delivery_fee|default:100 }}"
+                       class="h-fit rounded-lg border border-stone-300 bg-[#f9f6ef] p-5">
+                    <h2 class="font-serif text-sm font-bold text-stone-900">Order Summary</h2>
+
+                    <div class="mt-3 flex items-center justify-between border-b border-stone-300 pb-2 text-[10px] text-stone-600">
+                        <span>Items <span id="summaryItems">0</span></span>
+                        <span id="summaryItemsPrice">₱ 0</span>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-between text-[11px] text-stone-700">
+                        <span>Subtotal</span>
+                        <span id="summarySubtotal">₱ 0</span>
+                    </div>
+                    <div class="mt-3 flex items-center justify-between border-b border-stone-300 pb-3 text-[11px] text-stone-700">
+                        <span>Delivery</span>
+                        <span id="summaryDelivery">₱ 0</span>
+                    </div>
+
+                    <div class="mt-3 flex items-center justify-between font-serif text-xs font-bold text-stone-900">
+                        <span>Total Cost</span>
+                        <span id="summaryTotal">₱ 0</span>
+                    </div>
+
+                    <button type="button"
+                            class="mt-5 w-full rounded-md bg-[#e05561] py-2 text-[11px] font-medium text-white transition hover:bg-[#c9434f]">
+                        Checkout
+                    </button>
+                </aside>
+            </div>
+        </div>
+
+        <!-- ============ EMPTY STATE ============ -->
+        <div id="cartEmpty"
+             class="flex min-h-[50vh] flex-col items-center justify-center text-center {% if cart_items %}hidden{% endif %}">
+            <h1 class="font-serif text-3xl font-bold text-stone-900">Your cart is empty</h1>
+            <p class="mt-3 text-[11px] text-stone-600">Add some flowers to get started</p>
+            <a href="{% url 'catalog:catalog' %}"
+               class="mt-4 inline-block rounded-md bg-[#e05561] px-4 py-1.5 text-[11px] font-medium text-white transition hover:bg-[#c9434f]">
+                Browse Flowers
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Frontend-only behavior: quantity, remove, clear, live totals -->
+<script>
+(function () {
+    const filled = document.getElementById('cartFilled');
+    const empty = document.getElementById('cartEmpty');
+    const summary = document.getElementById('orderSummary');
+    if (!filled || !summary) return;
+
+    const delivery = Number(summary.dataset.delivery) || 0;
+    const peso = (n) => '₱ ' + n.toLocaleString('en-PH');
+
+    function update() {
+        const rows = document.querySelectorAll('[data-cart-row]');
+        let subtotal = 0;
+
+        rows.forEach((row) => {
+            const price = Number(row.dataset.price) || 0;
+            const qty = Number(row.querySelector('[data-qty]').textContent) || 1;
+            const line = price * qty;
+            row.querySelector('[data-line-total]').textContent = peso(line);
+            subtotal += line;
+        });
+
+        const count = rows.length;
+        document.getElementById('cartCount').textContent = count + (count === 1 ? ' Item' : ' Items');
+        document.getElementById('summaryItems').textContent = count;
+        document.getElementById('summaryItemsPrice').textContent = peso(subtotal);
+        document.getElementById('summarySubtotal').textContent = peso(subtotal);
+        document.getElementById('summaryDelivery').textContent = peso(delivery);
+        document.getElementById('summaryTotal').textContent = peso(subtotal + delivery);
+
+        filled.classList.toggle('hidden', count === 0);
+        empty.classList.toggle('hidden', count !== 0);
+    }
+
+    document.getElementById('cartRows').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-cart-row]');
+        if (!row) return;
+        const qtyEl = row.querySelector('[data-qty]');
+        let qty = Number(qtyEl.textContent) || 1;
+
+        if (e.target.closest('[data-plus]')) {
+            qtyEl.textContent = qty + 1;
+        } else if (e.target.closest('[data-minus]')) {
+            qtyEl.textContent = Math.max(1, qty - 1);
+        } else if (e.target.closest('[data-remove]')) {
+            row.remove();
+        }
+        update();
+    });
+
+    document.getElementById('clearCart').addEventListener('click', () => {
+        document.querySelectorAll('[data-cart-row]').forEach((r) => r.remove());
+        update();
+    });
+
+    update();
+})();
+</script>
+{% endblock %}

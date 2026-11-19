@@ -45,7 +45,7 @@ NAVBAR_ICONS = [
     {
         "name": "Cart",
         "icon_template": "components/ui/icons/cart_icon.html",
-        "url": "orders:orders",
+        "url": "orders:cart",
     },
 ]
 

@@ -73,21 +73,29 @@
             </div>
 
             <div class="mt-auto flex flex-wrap gap-2 pt-4">
-                <button
-                    type="button"
-                    id="modal-favorite-button"
-                    class="flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:bg-primary-dark"
-                >
-                    Favorite
-                </button>
+                <form method="post" data-modal-favorite-form action="" class="flex flex-1">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button
+                        type="submit"
+                        id="modal-favorite-button"
+                        class="flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:opacity-90"
+                    >
+                        Favorite
+                    </button>
+                </form>
 
-                <button
-                    type="button"
-                    id="modal-cart-button"
-                    class="flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:bg-primary-dark"
-                >
-                    Add to Cart
-                </button>
+                <form method="post" data-modal-cart-form action="" class="flex flex-1">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button
+                        type="submit"
+                        id="modal-cart-button"
+                        class="flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:opacity-90"
+                    >
+                        Add to Cart
+                    </button>
+                </form>
 
                 <button
                     type="button"

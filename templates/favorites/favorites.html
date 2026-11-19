@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto w-full max-w-[1240px] mt-28 mb-28">
+  <h1 class="text-5xl font-bold">My Favorites</h1>
+  <p class="mt-2 text-sm">{{ favorites|length }} saved bouquet{{ favorites|length|pluralize }}</p>
+
+  {% if not favorites %}
+    <div class="mt-10 rounded-card border border-primary bg-soft-white p-12 text-center">
+      <p class="text-xl font-semibold">No favorites yet</p>
+      <a href="{% url 'catalog:catalog' %}" class="mt-6 inline-block rounded-button bg-primary px-6 py-3 text-sm font-medium text-soft-white">
+        Browse Flowers
+      </a>
+    </div>
+  {% else %}
+  <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    {% for fav in favorites %}
+    <article class="flex flex-col overflow-hidden rounded-card border border-primary/30 bg-soft-white">
+      <div class="h-56 w-full bg-primary/10">
+        {% if fav.bouquet.image %}
+          <img src="{{ fav.bouquet.image.url }}" alt="{{ fav.bouquet.name }}" class="h-full w-full object-cover">
+        {% endif %}
+      </div>
+
+      <div class="flex flex-1 flex-col gap-3 p-4">
+        <p class="text-lg font-semibold">{{ fav.bouquet.name }}</p>
+        <p class="text-sm">₱{{ fav.bouquet.price }}</p>
+
+        <div class="mt-auto flex flex-col gap-2">
+          <form method="post" action="{% url 'orders:add_to_cart' fav.bouquet.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'favorites:favorites' %}">
+            <button type="submit"
+                    {% if not fav.bouquet.available or fav.bouquet.quantity == 0 %}disabled{% endif %}
+                    class="w-full rounded-button bg-primary p-2 text-sm font-medium text-soft-white disabled:opacity-40">
+              {% if fav.bouquet.available and fav.bouquet.quantity > 0 %}Add to Cart{% else %}Out of Stock{% endif %}
+            </button>
+          </form>
+
+          <form method="post" action="{% url 'favorites:toggle' fav.bouquet.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'favorites:favorites' %}">
+            <button type="submit" class="w-full rounded-button border border-primary p-2 text-sm font-medium">
+              Remove
+            </button>
+          </form>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
