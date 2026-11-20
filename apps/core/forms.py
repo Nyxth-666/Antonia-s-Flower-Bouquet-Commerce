@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
+from apps.catalog.models import Bouquet
 from apps.core.models import NotificationPreference, StoreSettings
 
 phone_validator = RegexValidator(r"^\+?[\d\s-]+$", "Enter a valid phone number.")
@@ -51,6 +52,18 @@ class StoreSettingsForm(forms.ModelForm):
         if data.get("opens") and data.get("closes") and data["closes"] <= data["opens"]:
             self.add_error("closes", "Closing time must be after opening time.")
         return data
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Bouquet
+        fields = ["name", "description", "price", "size", "arrangement_type", "quantity", "available", "image"]
+
+    def clean_price(self):
+        price = self.cleaned_data["price"]
+        if price <= 0:
+            raise ValidationError("Price must be greater than zero.")
+        return price
 
 
 class NotificationForm(forms.ModelForm):

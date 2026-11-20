@@ -475,6 +475,12 @@
   .ml-auto {
     margin-left: auto;
   }
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
   .block {
     display: block;
   }
@@ -529,6 +535,10 @@
   .size-9 {
     width: calc(var(--spacing) * 9);
     height: calc(var(--spacing) * 9);
+  }
+  .size-10 {
+    width: calc(var(--spacing) * 10);
+    height: calc(var(--spacing) * 10);
   }
   .size-12 {
     width: calc(var(--spacing) * 12);
@@ -717,6 +727,9 @@
   .max-w-6xl {
     max-width: var(--container-6xl);
   }
+  .max-w-129 {
+    max-width: calc(var(--spacing) * 129);
+  }
   .max-w-298 {
     max-width: calc(var(--spacing) * 298);
   }
@@ -904,6 +917,9 @@
   }
   .gap-12 {
     gap: calc(var(--spacing) * 12);
+  }
+  .gap-16 {
+    gap: calc(var(--spacing) * 16);
   }
   .gap-18 {
     gap: calc(var(--spacing) * 18);
@@ -1129,6 +1145,12 @@
   }
   .bg-background-secondary {
     background-color: var(--color-background-secondary);
+  }
+  .bg-black\/50 {
+    background-color: color-mix(in srgb, #000 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+    }
   }
   .bg-black\/60 {
     background-color: color-mix(in srgb, #000 60%, transparent);
@@ -2586,6 +2608,9 @@
     }
     .xl\:grid-cols-\(--cols\) {
       grid-template-columns: var(--cols);
+    }
+    .xl\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .xl\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));

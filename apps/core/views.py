@@ -1,16 +1,19 @@
 import time
+from decimal import Decimal
 
 from django.contrib import admin, messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import redirect, render
+from django.db.models import Q
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.accounts.models import CustomerProfile
 from apps.accounts.passwords import password_error_messages
-from apps.catalog.models import Bouquet, Occasion
+from apps.catalog.models import ArrangementType, Bouquet, Occasion
 from apps.core.data.flower_meaning import FLOWER_MEANINGS
-from apps.core.forms import NotificationForm, ProfileForm, StoreSettingsForm
+from apps.core.forms import NotificationForm, ProductForm, ProfileForm, StoreSettingsForm
 from apps.core.models import NotificationPreference, StoreSettings
 
 
@@ -92,6 +95,103 @@ def profile_settings(request):
     ))
 
 
+LOW_STOCK_THRESHOLD = 5
+
+STATUS_CHOICES = [("active", "Active"), ("out", "Out of Stock"), ("inactive", "Inactive")]
+STOCK_CHOICES = [("in", "In Stock"), ("low", "Low Stock"), ("out", "Out of Stock")]
+
+STOCK_FILTERS = {
+    "in": Q(quantity__gt=LOW_STOCK_THRESHOLD),
+    "low": Q(quantity__gte=1, quantity__lte=LOW_STOCK_THRESHOLD),
+    "out": Q(quantity=0),
+}
+STATUS_FILTERS = {
+    "active": Q(available=True, quantity__gt=0),
+    "out": Q(quantity=0),
+    "inactive": Q(available=False, quantity__gt=0),
+}
+
+
+def peso(amount):
+    text = f"{Decimal(amount):,.2f}"
+    return f"₱{text[:-3] if text.endswith('.00') else text}"
+
+
+def product_status(bouquet):
+    if not bouquet.quantity:
+        return "out", "Out of Stock"
+    return ("active", "Active") if bouquet.available else ("inactive", "Inactive")
+
+
+def filter_products(request):
+    products = Bouquet.objects.select_related("arrangement_type")
+    query, category = request.GET.get("q", "").strip(), request.GET.get("category", "")
+
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+            | Q(arrangement_type__name__icontains=query)
+        )
+    if category.isdigit():
+        products = products.filter(arrangement_type_id=category)
+    for name, filters in (("stock", STOCK_FILTERS), ("status", STATUS_FILTERS)):
+        if condition := filters.get(request.GET.get(name, "")):
+            products = products.filter(condition)
+
+    return products
+
+
+def select_options(request, name, choices):
+    current = request.GET.get(name, "")
+    return [{"value": v, "label": label, "selected": v == current} for v, label in choices]
+
+
+def get_product(pk):
+    """The bouquet for a posted id; 404 for a malformed or missing one."""
+    if not pk or not pk.isdigit():
+        raise Http404("Product not found")
+    return get_object_or_404(Bouquet, pk=pk)
+
+
 @staff_member_required
 def product(request):
-    return render(request, "admin/admin-products.html", admin_ctx(request, "Products"))
+    form, open_modal = ProductForm(), False
+
+    if request.method == "POST":
+        if request.POST.get("action") == "delete":
+            target = get_product(request.POST.get("product_id"))
+            name = target.name
+            target.delete()
+            messages.success(request, f"“{name}” was deleted.")
+            return redirect("admin_product")
+
+        pk = request.POST.get("product_id")
+        editing = get_product(pk) if pk else None
+        form = ProductForm(request.POST, request.FILES, instance=editing)
+
+        if form.is_valid():
+            saved = form.save()
+            messages.success(request, f"“{saved.name}” was {'updated' if editing else 'added'}.")
+            return redirect("admin_product")
+
+        open_modal = True
+
+    products = list(filter_products(request))
+    for bouquet in products:
+        bouquet.price_display = peso(bouquet.price)
+        bouquet.status_key, bouquet.status_label = product_status(bouquet)
+
+    categories = ArrangementType.objects.all()
+
+    return render(request, "admin/admin-products.html", admin_ctx(
+        request, "Products",
+        products=products,
+        product_form=form,
+        open_product_modal=open_modal,
+        editing_product=form.instance if form.instance.pk else None,
+        arrangement_types=categories,
+        search_query=request.GET.get("q", ""),
+        category_options=select_options(request, "category", [(str(a.pk), a.name) for a in categories]),
+        stock_options=select_options(request, "stock", STOCK_CHOICES),
+        status_options=select_options(request, "status", STATUS_CHOICES),
+    ))
