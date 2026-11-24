@@ -5,6 +5,10 @@ import uuid
 
 from pathlib import Path
 from dotenv import load_dotenv
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from apps.core.data.navigation import navigation
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,6 +29,7 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
+    "unfold", # For customizing Django admin, placed before "django.contrib.admin"
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -164,3 +169,49 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Antonia's Flowers <no-repl
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "accounts:accounts"
 LOGOUT_REDIRECT_URL = "core:home"
+
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": "smtp.gmail.com",
+            "use_tls": True,
+            "username": os.environ.get("EMAIL_HOST_USER"),
+            "password": os.environ.get("EMAIL_HOST_PASSWORD"),
+        },
+    },
+}
+
+DEFAULT_FROM_EMAIL = f"Antonia's Flowers <{os.environ.get('EMAIL_HOST_USER')}>"
+
+# UNFOLD DOCS: https://unfoldadmin.com/docs/configuration/settings/
+UNFOLD = {
+    "THEME": "light",
+    "SITE_TITLE": "Antonia's Flowershop",
+    "SITE_HEADER": "Antonia's Flowershop",
+    "SITE_SUBHEADER": "Admin panel",
+
+    "SITE_ICON": {
+        "light": lambda request: static("images/logo.png"),  # light mode
+        "dark": lambda request: static("images/logo.png"),  # dark mode
+    },
+
+    "LOGIN": {
+        "image": lambda request: static("sample/login-bg.jpg"),
+        "redirect_after": lambda request: reverse_lazy("admin_welcome"),
+    },
+
+    "STYLES": [
+        lambda r: static("css/output.css"),
+    ],
+
+     "SIDEBAR": {
+        "show_search": False,
+        "show_all_applications": False,
+        "navigation": navigation,
+    },
+
+    "SCRIPTS": [
+        lambda request: static("js/sidebar-expanded.js"),
+    ],
+}

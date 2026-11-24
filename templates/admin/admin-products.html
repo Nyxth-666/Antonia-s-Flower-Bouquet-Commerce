@@ -1,0 +1,130 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-317 px-8 py-12 text-foreground">
+
+    {# PAGE TITLE #}
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <h1 class="font-heading text-4xl font-bold xl:text-5xl">Products</h1>
+        <button type="button" data-add-product
+                class="h-12 rounded-button bg-secondary px-8 font-bold text-white">Add Product</button>
+    </div>
+
+    {# FILTERS #}
+    <form method="get" class="mt-6 flex flex-wrap items-center gap-7 xl:flex-nowrap">
+        <input type="search" name="q" value="{{ search_query }}" placeholder="Search Products..."
+               class="h-12 w-full rounded-button border border-muted bg-[#E8E3D5] px-4 outline-none placeholder:text-foreground xl:w-auto xl:max-w-122 xl:flex-1">
+        <div class="flex flex-wrap gap-4 xl:ml-auto xl:flex-nowrap">
+            <div class="w-40">{% include "admin/admin-filter-select.html" with label="Category" name="category" options=category_options only %}</div>
+            <div class="w-32">{% include "admin/admin-filter-select.html" with label="Stock" name="stock" options=stock_options only %}</div>
+            <div class="w-32">{% include "admin/admin-filter-select.html" with label="Status" name="status" options=status_options only %}</div>
+        </div>
+    </form>
+
+    {# PRODUCT TABLE #}
+    <section class="mt-10 overflow-hidden rounded-card border border-border bg-card [--cols:357fr_214fr_138fr_124fr_212fr_174fr]">
+
+        {# Header #}
+        <div class="hidden h-16.75 grid-cols-(--cols) items-center gap-4 bg-[#E8E3D5] px-3 text-center font-bold xl:grid">
+            <p class="text-left">Product</p>
+            <p>Category</p>
+            <p>Price</p>
+            <p>Stock</p>
+            <p>Status</p>
+            <p>Action</p>
+        </div>
+
+        {# Rows #}
+        <ul class="mx-3 divide-y-2 divide-background-secondary pb-4 xl:pt-3">
+            {% for product in products %}
+                {% include "admin/admin-product-row.html" with product=product csrf_token=csrf_token only %}
+            {% empty %}
+                <li class="py-10 text-center font-bold text-muted">No products found. Add a product to get started.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+</div>
+
+{# ADD / EDIT PRODUCT MODAL #}
+<div id="product-form-modal" role="dialog" aria-modal="true" aria-hidden="{{ open_product_modal|yesno:'false,true' }}"
+     class="fixed inset-0 z-50 {% if open_product_modal %}grid{% else %}hidden{% endif %} place-items-center bg-black/50 px-4 py-8">
+    <div class="max-h-[90vh] w-full max-w-129 overflow-y-auto rounded-card border border-border bg-card p-6 xl:p-8">
+        <div class="flex items-start justify-between gap-4">
+            <h2 id="product-form-title" class="font-heading text-[32px] font-bold leading-tight">
+                {% if editing_product %}Edit Product{% else %}Add Product{% endif %}
+            </h2>
+            <button type="button" data-close-product-modal aria-label="Close"
+                    class="grid size-10 shrink-0 place-items-center rounded-button border border-muted bg-[#D9D9D9] text-xl font-bold">×</button>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" id="product-form" class="mt-6 flex flex-col gap-6">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product_form.instance.pk|default_if_none:'' }}">
+
+            {% include "admin/admin-profile-field.html" with label="Product Name" name="name" value=product_form.name.value|default_if_none:'' error=product_form.name.errors.0 only %}
+            {% include "admin/admin-profile-field.html" with label="Description" name="description" textarea=True value=product_form.description.value|default_if_none:'' error=product_form.description.errors.0 only %}
+
+            <div class="grid gap-6 xl:grid-cols-2">
+                {% include "admin/admin-profile-field.html" with label="Price" name="price" type="number" step="0.01" prefix="₱" value=product_form.price.value|default_if_none:'' error=product_form.price.errors.0 only %}
+                {% include "admin/admin-profile-field.html" with label="Stock Quantity" name="quantity" type="number" step="1" value=product_form.quantity.value|default_if_none:'' error=product_form.quantity.errors.0 only %}
+                {% include "admin/admin-profile-field.html" with label="Size" name="size" value=product_form.size.value|default_if_none:'' error=product_form.size.errors.0 only %}
+
+                <label class="block">
+                    <span class="mb-2 block font-bold text-muted">Category</span>
+                    <div class="relative">
+                        <select name="arrangement_type" aria-label="Category"
+                                class="h-12 w-full appearance-none rounded-button border bg-[#FBF5EF] px-4 pr-10 outline-none focus:border-muted {% if product_form.arrangement_type.errors %}border-error{% else %}border-border{% endif %}">
+                            <option value="">Select category</option>
+                            {% for arrangement in arrangement_types %}
+                                <option value="{{ arrangement.pk }}"{% if product_form.arrangement_type.value|stringformat:"s" == arrangement.pk|stringformat:"s" %} selected{% endif %}>{{ arrangement.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <svg viewBox="0 0 10 6" class="pointer-events-none absolute right-4 top-1/2 w-2.5 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+                    </div>
+                    {% if product_form.arrangement_type.errors %}<span class="mt-1 block text-sm font-bold text-error">{{ product_form.arrangement_type.errors.0 }}</span>{% endif %}
+                    {% if not arrangement_types %}<span class="mt-1 block text-sm font-bold text-error">No product categories exist yet — add one under Catalog → Arrangement Types first.</span>{% endif %}
+                </label>
+            </div>
+
+            <fieldset>
+                <legend class="mb-3 font-bold text-muted">Availability</legend>
+                <div class="flex gap-16 px-3">
+                    <label class="flex cursor-pointer items-center gap-4 text-sm text-muted">
+                        <input type="radio" name="available" value="true" {% if product_form.available.value %}checked{% endif %} class="peer sr-only">
+                        <span class="size-6 rounded-full border-2 border-muted bg-border peer-checked:border-foreground peer-checked:bg-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-muted"></span>
+                        Available
+                    </label>
+                    <label class="flex cursor-pointer items-center gap-4 text-sm text-muted">
+                        <input type="radio" name="available" value="false" {% if not product_form.available.value %}checked{% endif %} class="peer sr-only">
+                        <span class="size-6 rounded-full border-2 border-muted bg-border peer-checked:border-foreground peer-checked:bg-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-muted"></span>
+                        Unavailable
+                    </label>
+                </div>
+            </fieldset>
+
+            <label class="block">
+                <span class="mb-2 block font-bold text-muted">Product Image</span>
+                <input type="file" name="image" accept="image/*"
+                       class="w-full rounded-button border border-border bg-[#FBF5EF] px-4 py-2.5 outline-none focus:border-muted">
+                {% if editing_product.image %}<span class="mt-1 block text-sm font-bold text-muted">Current: {{ editing_product.image.name }}</span>{% endif %}
+                {% if product_form.image.errors %}<span class="mt-1 block text-sm font-bold text-error">{{ product_form.image.errors.0 }}</span>{% endif %}
+            </label>
+
+            <div class="flex justify-end gap-3">
+                <button type="button" data-close-product-modal
+                        class="h-12 rounded-button border border-muted bg-[#D9D9D9] px-8 font-bold">Cancel</button>
+                <button type="submit" class="h-12 rounded-button bg-secondary px-8 font-bold text-white">Save Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/admin-products.js' %}" defer></script>
+{% endblock %}

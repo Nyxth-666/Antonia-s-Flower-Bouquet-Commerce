@@ -1,0 +1,6 @@
+{# params: name, value, label, checked #}
+<label class="flex cursor-pointer items-center gap-4 text-sm text-muted">
+    <input type="radio" name="{{ name }}" value="{{ value }}" {% if checked %}checked{% endif %} class="peer sr-only">
+    <span class="size-6 rounded-full border-2 border-muted bg-border peer-checked:border-foreground peer-checked:bg-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-muted"></span>
+    {{ label }}
+</label>

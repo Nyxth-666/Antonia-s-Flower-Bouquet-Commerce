@@ -1,0 +1,427 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+{# Loaded after Unfold's styles so the dashboard utilities win the cascade. #}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="-mx-4 -mb-4 min-h-screen bg-background px-4 pb-12">
+    <div class="mx-auto w-full max-w-317 px-4 py-10 xl:px-8 xl:py-12">
+
+        {# PAGE HEADER #}
+        <header class="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.22em] text-accent">Dashboard</p>
+                <h1 class="mt-2 font-heading text-4xl font-bold leading-tight xl:text-5xl">
+                    Welcome back, <span class="text-secondary">{{ admin_name }}</span>
+                </h1>
+                <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-bold text-muted">
+                    <span>{{ period_start|date:"M j, Y" }} – {{ period_end|date:"M j, Y" }}</span>
+                    <span class="size-1 rounded-full bg-border" aria-hidden="true"></span>
+                    <span class="inline-flex items-center gap-2">
+                        <span class="size-2 rounded-full {% if store_is_open %}bg-success{% else %}bg-error{% endif %}"></span>
+                        Shop is {% if store_is_open %}Open{% else %}Closed{% endif %}
+                    </span>
+                    <span class="size-1 rounded-full bg-border" aria-hidden="true"></span>
+                    <span>{{ store.opens|time:"g:i A" }} – {{ store.closes|time:"g:i A" }}</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+                <form method="get">
+                    <label for="dashboard-period" class="sr-only">Date range</label>
+                    <div class="relative">
+                        <img src="{% static 'icons/calendar.svg' %}" alt="" width="24" height="24" aria-hidden="true" class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2">
+                        <select id="dashboard-period" name="period" onchange="this.form.submit()"
+                                class="h-12 appearance-none rounded-full border border-border bg-card pl-11 pr-10 text-sm font-bold text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30">
+                            {% for option in period_choices %}
+                                <option value="{{ option.value }}"{% if option.selected %} selected{% endif %}>{{ option.label }}</option>
+                            {% endfor %}
+                        </select>
+                        <img src="{% static 'icons/chevron-down.svg' %}" alt="" width="10" height="6" aria-hidden="true" class="pointer-events-none absolute right-4 top-1/2 w-2.5 -translate-y-1/2">
+                    </div>
+                </form>
+
+                <a href="{% url 'admin_profile' %}"
+                   class="inline-flex h-12 items-center gap-2 rounded-full bg-secondary px-6 text-sm font-bold text-white transition hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary">
+                    <img src="{% static 'icons/user.svg' %}" alt="" width="24" height="24" class="size-5">
+                    My Profile
+                </a>
+            </div>
+        </header>
+
+        {# TOP ROW #}
+        <div class="mt-10 grid grid-cols-1 gap-6 xl:grid-cols-12">
+
+            {# LEFT COLUMN #}
+            <div class="flex flex-col gap-6 xl:col-span-3">
+
+                {# INVENTORY VALUE CARD #}
+                <section class="rounded-card border border-border bg-card p-6">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                                <img src="{% static 'icons/layers.svg' %}" alt="" width="24" height="24" class="size-5">
+                            </span>
+                            <div>
+                                <h2 class="font-heading text-base font-bold text-foreground">Stock Value</h2>
+                                <p class="mt-1 text-sm font-bold text-muted">Based on current stock</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'admin_product' %}" aria-label="View products"
+                           class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 17 17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <p class="mt-6 text-4xl font-bold tracking-tight text-foreground xl:text-[42px]">{{ inventory_value_display }}</p>
+
+                    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold text-muted">
+                        <span class="inline-flex items-center gap-1.5"><span class="size-1.5 rounded-full bg-success"></span>{{ active_product_count }} active</span>
+                        <span class="inline-flex items-center gap-1.5"><span class="size-1.5 rounded-full bg-warning"></span>{{ low_stock_count }} low</span>
+                        <span class="inline-flex items-center gap-1.5"><span class="size-1.5 rounded-full bg-error"></span>{{ out_of_stock_count }} out</span>
+                    </div>
+
+                    <div class="mt-6 flex items-end justify-between gap-4 border-t border-border pt-4 text-sm font-bold">
+                        <div>
+                            <p class="text-foreground">{{ product_count }} product{{ product_count|pluralize }}</p>
+                            <p class="text-muted">{{ total_units }} unit{{ total_units|pluralize }} in stock</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-muted">Updated</p>
+                            <p class="text-foreground">{% now "M j, Y" %}</p>
+                        </div>
+                    </div>
+                </section>
+
+                {# WEEKLY CART VALUE #}
+                <section class="flex flex-1 flex-col rounded-card border border-border bg-card p-6">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-sm font-bold text-muted">Cart Value</p>
+                            <p class="mt-1 text-xs font-bold text-muted/80">Last 7 days</p>
+                        </div>
+                        {% include "admin/admin-trend-badge.html" with trend=weekly_cart_trend only %}
+                    </div>
+
+                    <p class="mt-5 text-3xl font-bold tracking-tight text-foreground">{{ weekly_cart_value_display }}</p>
+                    <p class="mt-2 text-sm font-bold text-muted">
+                        {{ active_cart_count }} active cart{{ active_cart_count|pluralize }} · {{ total_pending_display }} total pending
+                    </p>
+                </section>
+            </div>
+
+            {# CENTER CHART #}
+            <section class="flex flex-col rounded-card border border-border bg-card p-6 xl:col-span-6">
+                <div class="flex flex-wrap items-start justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                        <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-secondary">
+                            <img src="{% static 'icons/chart-bar.svg' %}" alt="" width="24" height="24" class="size-5">
+                        </span>
+                        <div>
+                            <h2 class="font-heading text-xl font-bold text-foreground">Custom Bouquet Activity</h2>
+                            <div class="mt-1 flex flex-wrap items-center gap-2">
+                                <p class="text-sm font-bold text-muted">Value of bouquets built in the studio</p>
+                                {% include "admin/admin-trend-badge.html" with trend=custom_period_trend only %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <div class="flex rounded-full border border-border bg-background p-1" role="tablist" aria-label="Chart range">
+                            <button type="button" role="tab" aria-selected="true" aria-controls="chart-panel-monthly" id="chart-tab-monthly" data-chart-tab="monthly"
+                                    class="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-white">Monthly</button>
+                            <button type="button" role="tab" aria-selected="false" aria-controls="chart-panel-annually" id="chart-tab-annually" data-chart-tab="annually"
+                                    class="rounded-full px-3 py-1.5 text-xs font-bold text-muted transition hover:text-foreground">Annually</button>
+                        </div>
+                        <a href="{% url 'admin:customization_custombouquet_changelist' %}" aria-label="View custom bouquets"
+                           class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 17 17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex-1">
+                    <div data-chart-panel="monthly" id="chart-panel-monthly" role="tabpanel" aria-labelledby="chart-tab-monthly" class="h-full">
+                        {% include "admin/admin-dashboard-chart.html" with chart=monthly_chart only %}
+                    </div>
+                    <div data-chart-panel="annually" id="chart-panel-annually" role="tabpanel" aria-labelledby="chart-tab-annually" class="hidden h-full">
+                        {% include "admin/admin-dashboard-chart.html" with chart=annual_chart only %}
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4 text-sm font-bold text-muted">
+                    <p>This period: <span class="text-foreground">{{ custom_period_value_display }}</span> across {{ custom_period_count }} bouquet{{ custom_period_count|pluralize }}</p>
+                    <p>{{ period_favorites_count }} favorite{{ period_favorites_count|pluralize }} added</p>
+                </div>
+            </section>
+
+            {# RIGHT COLUMN #}
+            <div class="flex flex-col gap-6 xl:col-span-3">
+
+                {# STUDIO VALUE #}
+                <section class="rounded-card border border-border bg-card p-6">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-secondary/10 text-secondary">
+                                <img src="{% static 'icons/flower.svg' %}" alt="" width="24" height="24" class="size-5">
+                            </span>
+                            <div>
+                                <h2 class="font-heading text-lg font-bold text-foreground">Studio Value</h2>
+                                <p class="mt-1 text-sm font-bold text-muted">Saved custom bouquets</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:customization_custombouquet_changelist' %}" aria-label="View custom bouquets"
+                           class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 17 17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="mt-6 flex flex-wrap items-end justify-between gap-3">
+                        <p class="text-4xl font-bold tracking-tight text-foreground">{{ custom_total_value_display }}</p>
+                        {% include "admin/admin-trend-badge.html" with trend=custom_period_trend only %}
+                    </div>
+                    <p class="mt-1 text-sm font-bold text-muted">{{ custom_total_count }} custom bouquet{{ custom_total_count|pluralize }} saved</p>
+
+                    <div class="mt-6">
+                        <svg viewBox="0 0 320 96" class="h-24 w-full overflow-visible" role="img" aria-label="Studio value trend for the last 6 months" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="studio-area-fill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#7A4035" stop-opacity="0.28"/>
+                                    <stop offset="100%" stop-color="#7A4035" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="{{ studio_area.area }}" fill="url(#studio-area-fill)"/>
+                            <path d="{{ studio_area.line }}" fill="none" stroke="#7A4035" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+                            <circle cx="{{ studio_area.last_x }}" cy="{{ studio_area.last_y }}" r="3.5" fill="#7A4035"/>
+                        </svg>
+                        <div class="mt-2 flex justify-between text-[10px] font-bold uppercase tracking-wide text-muted">
+                            {% for label in studio_area.labels %}<span>{{ label }}</span>{% endfor %}
+                        </div>
+                        {% if not studio_area.has_data %}
+                            <p class="mt-3 text-sm font-bold text-muted">No studio activity yet.</p>
+                        {% endif %}
+                    </div>
+                </section>
+
+                {# UNREAD MESSAGES #}
+                <section class="flex flex-1 flex-col rounded-card border border-border bg-card p-6">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-warning/10 text-warning">
+                                <img src="{% static 'icons/envelope.svg' %}" alt="" width="24" height="24" class="size-5">
+                            </span>
+                            <div>
+                                <h2 class="font-heading text-lg font-bold text-foreground">Unread Messages</h2>
+                                <p class="mt-1 text-sm font-bold text-muted">Customer inquiries waiting</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:contact_contactmessage_changelist' %}?is_read__exact=0" aria-label="View unread messages"
+                           class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 17 17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="mt-5 flex flex-wrap items-end justify-between gap-3">
+                        <p class="text-4xl font-bold tracking-tight text-foreground">{{ unread_count }}</p>
+                        {% if new_messages_count %}
+                            <span class="inline-flex items-center gap-1 rounded-full bg-warning/10 px-2.5 py-1 text-xs font-bold text-warning">+{{ new_messages_count }} new</span>
+                        {% else %}
+                            <span class="inline-flex items-center gap-1 rounded-full bg-background-secondary px-2.5 py-1 text-xs font-bold text-muted">No new messages</span>
+                        {% endif %}
+                    </div>
+                    <p class="mt-1 text-sm font-bold text-muted">{{ period_label|lower }}</p>
+                </section>
+            </div>
+        </div>
+
+        {# BOTTOM ROW #}
+        <div class="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-12">
+
+            {# PREVIOUS ORDERS #}
+            <section class="flex flex-col overflow-hidden rounded-card border border-border bg-card xl:col-span-8">
+                <header class="flex flex-wrap items-start justify-between gap-4 p-6">
+                    <div>
+                        <h2 class="font-heading text-2xl font-bold text-foreground">Previous Orders</h2>
+                        <p class="mt-1 text-sm font-bold text-muted">Recent custom bouquet records — full order tracking coming soon.</p>
+                    </div>
+                    <a href="{% url 'admin:customization_custombouquet_changelist' %}" aria-label="View all custom bouquets"
+                       class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M7 17 17 7M7 7h10v10"/>
+                        </svg>
+                    </a>
+                </header>
+
+                <div class="flex-1 overflow-x-auto">
+                    <table class="w-full min-w-[720px] text-left text-sm">
+                        <caption class="sr-only">Recent custom bouquet records</caption>
+                        <thead class="bg-background-secondary/60 text-xs font-bold uppercase tracking-wide text-muted">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">Order</th>
+                                <th scope="col" class="px-4 py-4">Customer</th>
+                                <th scope="col" class="px-4 py-4">Date</th>
+                                <th scope="col" class="px-4 py-4">Time</th>
+                                <th scope="col" class="px-4 py-4">Status</th>
+                                <th scope="col" class="px-6 py-4 text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border/70">
+                            {% for build in recent_builds %}
+                                <tr class="transition hover:bg-background/60">
+                                    <td class="px-6 py-4">
+                                        <a href="{% url 'admin:customization_custombouquet_change' build.pk %}"
+                                           class="font-bold text-foreground transition hover:text-secondary">{{ build.reference }}</a>
+                                        <p class="mt-0.5 max-w-44 truncate text-xs font-bold text-muted">
+                                            {{ build.name|default:"Custom bouquet" }}{% if build.size %} · {{ build.size.name }}{% endif %}
+                                        </p>
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 font-bold text-foreground">{{ build.customer_name }}</td>
+                                    <td class="whitespace-nowrap px-4 py-4 font-bold text-muted">{{ build.created_at|date:"M j, Y" }}</td>
+                                    <td class="whitespace-nowrap px-4 py-4 font-bold text-muted">{{ build.created_at|time:"g:i A" }}</td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold {% if build.status_tone == 'success' %}bg-success/10 text-success{% else %}bg-background-secondary text-muted{% endif %}">
+                                            <span class="size-1.5 rounded-full {% if build.status_tone == 'success' %}bg-success{% else %}bg-muted{% endif %}"></span>
+                                            {{ build.status_label }}
+                                        </span>
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4 text-right font-bold text-foreground">{{ build.total_display }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="px-6 py-12 text-center">
+                                        <p class="font-bold text-foreground">No previous orders yet</p>
+                                        <p class="mt-1 text-sm text-muted">Saved custom bouquets will appear here once customers start building.</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="flex flex-wrap items-center justify-between gap-3 border-t border-border px-6 py-4">
+                    <p class="text-sm font-bold text-muted">
+                        Showing {{ recent_builds|length }} most recent record{{ recent_builds|length|pluralize }}
+                    </p>
+                    <a href="{% url 'admin:customization_custombouquet_changelist' %}"
+                       class="text-sm font-bold text-secondary transition hover:text-primary">View all custom bouquets →</a>
+                </footer>
+            </section>
+
+            {# BOTTOM RIGHT STACK #}
+            <div class="flex flex-col gap-6 xl:col-span-4">
+
+                {# CUSTOMERS #}
+                <section class="rounded-card border border-border bg-card p-6">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-success/10 text-success">
+                                <img src="{% static 'icons/users.svg' %}" alt="" width="24" height="24" class="size-5">
+                            </span>
+                            <div>
+                                <h2 class="font-heading text-lg font-bold text-foreground">Customers</h2>
+                                <p class="mt-1 text-sm font-bold text-muted">Recent sign-ups</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:accounts_customer_changelist' %}" aria-label="View all customers"
+                           class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 17 17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="mt-6 flex flex-wrap items-end justify-between gap-4">
+                        <div>
+                            <p class="text-3xl font-bold text-foreground">{{ customer_total }}</p>
+                            <p class="mt-1 text-sm font-bold text-muted">{{ new_customers_count }} new this period</p>
+                        </div>
+
+                        {% if recent_customers %}
+                            <div class="flex -space-x-3">
+                                {% for customer in recent_customers %}
+                                    <span class="grid size-11 place-items-center rounded-full border-2 border-card bg-accent/15 text-sm font-bold text-secondary"
+                                          title="{{ customer.display_name }}">{{ customer.initials }}</span>
+                                {% endfor %}
+                                {% if extra_customers %}
+                                    <span class="grid size-11 place-items-center rounded-full border-2 border-card bg-secondary text-sm font-bold text-white">+{{ extra_customers }}</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <p class="text-sm font-bold text-muted">No customers yet.</p>
+                        {% endif %}
+                    </div>
+                </section>
+
+                {# LOW STOCK #}
+                <section class="rounded-card border border-border bg-card p-6">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-error/10 text-error">
+                                <img src="{% static 'icons/box.svg' %}" alt="" width="24" height="24" class="size-5">
+                            </span>
+                            <div>
+                                <h2 class="font-heading text-lg font-bold text-foreground">Low Stock</h2>
+                                <p class="mt-1 text-sm font-bold text-muted">Needs restocking</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'admin_product' %}?stock=low" aria-label="View low-stock products"
+                           class="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted transition hover:border-accent hover:text-secondary">
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 17 17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    {% if low_stock_products %}
+                        <ul class="mt-5 divide-y divide-border/70">
+                            {% for product in low_stock_products %}
+                                <li class="flex items-center gap-3 py-3">
+                                    <div class="size-11 shrink-0 overflow-hidden rounded-xl bg-background">
+                                        {% if product.image %}
+                                            <img src="{{ product.image.url }}" alt="" class="size-full object-cover">
+                                        {% else %}
+                                            <span class="grid size-full place-items-center text-secondary">
+                                                <img src="{% static 'icons/flower.svg' %}" alt="" width="24" height="24" class="size-5">
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="truncate text-sm font-bold text-foreground">{{ product.name }}</p>
+                                        <p class="truncate text-xs font-bold text-muted">{{ product.arrangement_type.name }}</p>
+                                    </div>
+                                    <span class="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold {% if product.stock_tone == 'error' %}bg-error/10 text-error{% else %}bg-warning/10 text-warning{% endif %}">{{ product.stock_label }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{% url 'admin_product' %}?stock=low" class="mt-4 inline-flex text-sm font-bold text-secondary transition hover:text-primary">Manage low stock →</a>
+                    {% else %}
+                        <div class="mt-6 rounded-2xl border border-dashed border-border bg-background/60 px-4 py-8 text-center">
+                            {% if product_count %}
+                                <p class="font-bold text-foreground">All products are well stocked</p>
+                                <p class="mt-1 text-sm text-muted">Low-stock items will appear here.</p>
+                            {% else %}
+                                <p class="font-bold text-foreground">No products yet</p>
+                                <a href="{% url 'admin_product' %}" class="mt-2 inline-flex text-sm font-bold text-secondary transition hover:text-primary">Add your first product →</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/admin-dashboard.js' %}" defer></script>
+{% endblock %}

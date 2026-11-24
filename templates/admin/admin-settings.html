@@ -1,0 +1,102 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-300 px-8 py-12 text-foreground [&_label>span:first-child]:text-foreground">
+
+    {# PAGE TITLE #}
+    <h1 class="font-heading text-4xl font-bold xl:text-5xl">Settings</h1>
+
+    {# GENERAL + STORE + NOTIFICATIONS #}
+    <form method="post" class="mt-6 flex flex-col gap-8">
+        {% csrf_token %}
+
+        {# GENERAL SETTINGS CARD #}
+        <section class="rounded-card border border-border bg-card p-6 xl:p-8">
+            {% include "admin/admin-card-heading.html" with title="General Settings" text="Update your shop’s basic information" only %}
+
+            <div class="mt-8 grid gap-8 xl:grid-cols-[5fr_4fr] xl:gap-x-24">
+                <div class="flex flex-col gap-8">
+                    {% include "admin/admin-profile-field.html" with label="Shop Name" name="shop_name" value=form.shop_name.value error=form.shop_name.errors.0 only %}
+                    {% include "admin/admin-profile-field.html" with label="Email" name="email" type="email" value=form.email.value error=form.email.errors.0 only %}
+                    {% include "admin/admin-profile-field.html" with label="Address" name="address" textarea=True value=form.address.value error=form.address.errors.0 only %}
+                </div>
+                <div class="flex flex-col gap-8">
+                    {% include "admin/admin-profile-field.html" with label="Contact Number" name="contact" type="tel" value=form.contact.value placeholder="09XXXXXXXXXX" error=form.contact.errors.0 only %}
+                    {% include "admin/admin-profile-field.html" with label="Shop Description" name="description" textarea=True value=form.description.value error=form.description.errors.0 only %}
+                    <button type="submit" class="h-12.75 w-41.5 self-end rounded-button bg-secondary font-bold text-white xl:mt-2">Save Changes</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid gap-8 xl:grid-cols-[107fr_100fr]">
+
+            {# STORE SETTINGS CARD #}
+            <section class="rounded-card border border-border bg-card px-6 py-8 xl:px-8 xl:py-10 [&_input]:text-sm">
+                {% include "admin/admin-card-heading.html" with title="Store Settings" only %}
+
+                <div class="mt-8 flex flex-col gap-6">
+                    <div>
+                        {% include "admin/admin-profile-field.html" with label="Delivery Fee" name="delivery_fee" type="number" step="0.01" value=form.delivery_fee.value|floatformat:2 prefix="₱" error=form.delivery_fee.errors.0 only %}
+                        <p class="mt-2 font-bold text-muted">Manage your store operations and delivery preferences</p>
+                    </div>
+                    {% include "admin/admin-profile-field.html" with label="Minimum Order" name="minimum_order" type="number" step="0.01" value=form.minimum_order.value|floatformat:2 prefix="₱" error=form.minimum_order.errors.0 only %}
+
+                    {# Operating hours #}
+                    <div>
+                        <p class="mb-2 font-bold">Operating Hours</p>
+                        <div class="flex items-center gap-6">
+                            <input type="time" name="opens" value="{{ form.opens.value }}" aria-label="Opening time" class="h-12 min-w-0 flex-1 rounded-button border bg-[#FBF5EF] px-4 {% if form.opens.errors %}border-error{% else %}border-border{% endif %}">
+                            <span class="h-px w-8 shrink-0 bg-muted" aria-hidden="true"></span>
+                            <input type="time" name="closes" value="{{ form.closes.value }}" aria-label="Closing time" class="h-12 min-w-0 flex-1 rounded-button border bg-[#FBF5EF] px-4 {% if form.closes.errors %}border-error{% else %}border-border{% endif %}">
+                        </div>
+                        {% if form.opens.errors or form.closes.errors %}<p class="mt-1 text-sm font-bold text-error">{% if form.opens.errors %}{{ form.opens.errors.0 }}{% else %}{{ form.closes.errors.0 }}{% endif %}</p>{% endif %}
+                    </div>
+
+                    {# Shop status #}
+                    <fieldset>
+                        <legend class="mb-3 font-bold">Shop Status</legend>
+                        <div class="flex gap-24 px-3">
+                            {% include "admin/admin-radio-option.html" with name="status" value="open" label="Open" checked=status_open only %}
+                            {% include "admin/admin-radio-option.html" with name="status" value="closed" label="Closed" checked=status_closed only %}
+                        </div>
+                        {% if form.status.errors %}<p class="mt-1 text-sm font-bold text-error">{{ form.status.errors.0 }}</p>{% endif %}
+                    </fieldset>
+                </div>
+            </section>
+
+            {# NOTIFICATIONS CARD #}
+            <section class="rounded-card border border-border bg-card px-6 py-8 xl:px-16 xl:py-14">
+                {% include "admin/admin-card-heading.html" with title="Notifications" text="Choose what notifications you want to receive" only %}
+
+                <div class="mt-2 divide-y-2 divide-background-secondary">
+                    {% include "admin/admin-notification-item.html" with name="new_orders" title="New order notifications" text="Get notified when a new order is placed" checked=notify_form.new_orders.value only %}
+                    {% include "admin/admin-notification-item.html" with name="low_stock" title="Low Stock Notifications" text="Be alerted when a product is running low" checked=notify_form.low_stock.value only %}
+                    {% include "admin/admin-notification-item.html" with name="customer_messages" title="Customer Messages" text="Receive messages from customers" checked=notify_form.customer_messages.value only %}
+                </div>
+            </section>
+        </div>
+    </form>
+
+
+    {# SECURITY CARD #}
+    <form method="post" class="mt-14 rounded-card border border-border bg-card px-6 py-6 xl:px-8">
+        {% csrf_token %}
+        {% include "admin/admin-card-heading.html" with title="Security" text="Keep your account safe and secure" only %}
+
+        <div class="mt-8 grid gap-8 xl:grid-cols-3">
+            {% include "admin/admin-profile-field.html" with label="Current Password" name="old_password" type="password" placeholder="Enter current password" error=password_errors.old_password only %}
+            {% include "admin/admin-profile-field.html" with label="New Password" name="new_password1" type="password" placeholder="Enter New password" error=password_errors.new_password1 only %}
+            {% include "admin/admin-profile-field.html" with label="Confirm New Password" name="new_password2" type="password" placeholder="Confirm New password" error=password_errors.new_password2 only %}
+        </div>
+
+        <button type="submit" class="mt-6 ml-auto block h-12.75 w-46.75 rounded-button bg-secondary font-bold text-white">Change Password</button>
+    </form>
+
+</div>
+{% endblock %}

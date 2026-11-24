@@ -1,0 +1,17 @@
+{# params: label, name, value, type, readonly, textarea, placeholder, error, prefix, step #}
+<label class="block">
+    <span class="mb-2 block font-bold text-muted">{{ label }}</span>
+    {% with cls="w-full rounded-button border outline-none focus:border-muted placeholder:text-foreground" %}
+    {% if textarea %}
+    <textarea name="{{ name }}" placeholder="{{ placeholder }}" {% if readonly %}readonly{% endif %} {% if error %}aria-invalid="true" aria-describedby="{{ name }}-error"{% endif %}
+              class="{{ cls }} h-21 resize-none px-4 py-3 {% if error %}border-error{% else %}border-border{% endif %} {% if readonly %}bg-[#E8E3D5]{% else %}bg-[#FBF5EF]{% endif %}">{{ value }}</textarea>
+    {% else %}
+    <div class="relative">
+        {% if prefix %}<span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 flex items-center font-bold text-muted">{{ prefix }}</span>{% endif %}
+        <input type="{{ type|default:'text' }}" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}" {% if step %}step="{{ step }}"{% endif %} {% if readonly %}readonly{% endif %} {% if error %}aria-invalid="true" aria-describedby="{{ name }}-error"{% endif %}
+               class="{{ cls }} h-12 {% if prefix %}pl-10 pr-4{% else %}px-4{% endif %} {% if error %}border-error{% else %}border-border{% endif %} {% if readonly %}bg-[#E8E3D5]{% else %}bg-[#FBF5EF]{% endif %}">
+    </div>
+    {% endif %}
+    {% if error %}<span id="{{ name }}-error" class="mt-1 block text-sm font-bold text-error">{{ error }}</span>{% endif %}
+    {% endwith %}
+</label>
