@@ -113,6 +113,18 @@
     }
 }
 
+@layer components {
+    .dashboard-bar {
+        background-image: repeating-linear-gradient(
+            135deg,
+            rgba(122, 64, 53, 0.22) 0px,
+            rgba(122, 64, 53, 0.22) 6px,
+            rgba(122, 64, 53, 0.08) 6px,
+            rgba(122, 64, 53, 0.08) 12px
+        );
+    }
+}
+
 .product-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 
 @media (min-width: 768px)  { .product-grid { grid-template-columns: repeat(2, 1fr); } }

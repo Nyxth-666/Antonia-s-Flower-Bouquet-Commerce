@@ -6,7 +6,7 @@ from django.urls import include, path, reverse
 from django.views.generic import TemplateView
 
 from apps.about import views
-from apps.core.views import profile, profile_settings, product
+from apps.core.views import dashboard, profile, profile_settings, product
 app_name = "types_of_flowers"
 
 def admin_login(request): # welcome page after admin login
@@ -20,6 +20,7 @@ def admin_login(request): # welcome page after admin login
     return admin.site.login(request)
 
 urlpatterns = [
+    path("admin/dashboard/", dashboard, name="admin_dashboard"),
     path("admin/profile/", profile, name="admin_profile"),
     path("admin/profile_settings", profile_settings, name="admin_settings"),
     path("admin/product", product, name="admin_product"),

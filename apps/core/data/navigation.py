@@ -26,9 +26,18 @@ MODEL_ICONS = {
     "orders.CustomCartItem": "shopping_cart_checkout",
 }
 
+DASHBOARD_SECTION = {
+    "title": "Overview",
+    "separator": False,
+    "collapsible": False,
+    "items": [
+        {"title": "Dashboard", "icon": "dashboard", "link": reverse_lazy("admin_dashboard")},
+    ],
+}
+
 MY_PROFILE_SECTION = {
     "title": "My Profile",
-    "separator": False,
+    "separator": True,
     "collapsible": False,
     "items": [
         {"title": "Profile", "icon": "account_circle", "link": reverse_lazy("admin_profile")},
@@ -43,7 +52,7 @@ def model_icon(app_label, object_name):
 
 
 def navigation(request=None):
-    sections = [MY_PROFILE_SECTION]
+    sections = [DASHBOARD_SECTION, MY_PROFILE_SECTION]
     for app in admin.site.get_app_list(request):
         if app["app_label"] in EXCLUDED_APPS:
             continue

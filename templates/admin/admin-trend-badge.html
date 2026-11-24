@@ -1,0 +1,7 @@
+{# params: trend, suffix (optional) #}
+{% if trend.label != "No change" %}
+<span class="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold {% if trend.tone == 'positive' %}bg-success/10 text-success{% elif trend.tone == 'negative' %}bg-error/10 text-error{% elif trend.tone == 'warning' %}bg-warning/10 text-warning{% else %}bg-background-secondary text-muted{% endif %}">
+    {% if trend.arrow %}{% if trend.tone == 'positive' %}<span aria-hidden="true">↑</span>{% elif trend.tone == 'negative' %}<span aria-hidden="true">↓</span>{% endif %}{% endif %}
+    {{ trend.label }}{% if suffix %} <span class="font-bold opacity-80">{{ suffix }}</span>{% endif %}
+</span>
+{% endif %}
