@@ -35,7 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#modal-product-size").textContent = size || "Not specified";
         const favForm = document.querySelector("[data-modal-favorite-form]");
         const cartForm = document.querySelector("[data-modal-cart-form]");
-        if (favForm) favForm.action = `/favorites/toggle/${id}/`;
+        if (favForm) {
+            favForm.action = `/favorites/toggle/${id}/`;
+            favForm.dataset.bouquetId = id;
+            favForm.dataset.bouquetName = name;
+        }
         if (cartForm) cartForm.action = `/orders/cart/add/${id}/`;
 
         const favoriteButton = $("#modal-favorite-button");

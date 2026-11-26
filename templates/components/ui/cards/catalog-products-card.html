@@ -47,14 +47,16 @@
             </div>
         {% endif %}
 
-        <form method="post" action="{% url 'favorites:toggle' bouquet.id %}" class="absolute right-3 top-3 z-10">
+        <form method="post" action="{% url 'favorites:toggle' bouquet.id %}" class="absolute right-3 top-3 z-10" data-favorite-form data-bouquet-id="{{ bouquet.id }}" data-bouquet-name="{{ bouquet.name }}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.get_full_path }}">
             <button
                 type="submit"
+                data-favorite-button
                 aria-label="{% if bouquet.id in favorite_ids %}Remove {{ bouquet.name }} from favorites{% else %}Add {{ bouquet.name }} to favorites{% endif %}"
                 title="{% if bouquet.id in favorite_ids %}Remove from favorites{% else %}Add to favorites{% endif %}"
-                class="flex size-8 items-center justify-center rounded-full bg-soft-white shadow transition hover:scale-105 {% if bouquet.id in favorite_ids %}text-red-500{% else %}text-primary{% endif %}"
+                class="flex size-8 items-center justify-center rounded-full bg-soft-white text-primary shadow transition hover:scale-105"
+                style="{% if bouquet.id in favorite_ids %}color: rgba(221, 88, 88, 1);{% endif %}"
             >
                 {% if bouquet.id in favorite_ids %}
                     {% include "components/ui/icons/heart_icon.html" with heart_filled=True %}
@@ -123,31 +125,34 @@
             {% endfor %}
         </div>
 
-        <div class="mt-auto flex flex-col gap-2 pt-3 sm:flex-row sm:gap-3 sm:pt-4">
-            <button
-                type="button"
-                data-open-product-modal
-                class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium"
-            >
-                {% include "components/ui/icons/view_icon.html" %}
-                View
-            </button>
-
-            <form method="post" action="{% url 'orders:add_to_cart' bouquet.id %}" class="w-full">
-                {% csrf_token %}
+        <div class="mt-auto flex flex-col gap-2 pt-3 sm:gap-3 sm:pt-4">
+            <div class="flex flex-col gap-2 sm:flex-row sm:gap-3">
                 <button
-                    type="submit"
-                    {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
-                    class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white disabled:opacity-50"
+                    type="button"
+                    data-open-product-modal
+                    class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-xs font-medium"
                 >
-                    {% include "components/ui/icons/cart_icon.html" %}
-                    {% if bouquet.available and bouquet.quantity > 0 %}
-                        Add to Cart
-                    {% else %}
-                        Out of Stock
-                    {% endif %}
+                    {% include "components/ui/icons/view_icon.html" %}
+                    View
                 </button>
-            </form>
+
+                <form method="post" action="{% url 'orders:add_to_cart' bouquet.id %}" class="w-full">
+                    {% csrf_token %}
+                    <button
+                        type="submit"
+                        {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
+                        class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white disabled:opacity-50"
+                    >
+                        {% include "components/ui/icons/cart_icon.html" %}
+                        {% if bouquet.available and bouquet.quantity > 0 %}
+                            Add to Cart
+                        {% else %}
+                            Out of Stock
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+
         </div>
 
     </div>

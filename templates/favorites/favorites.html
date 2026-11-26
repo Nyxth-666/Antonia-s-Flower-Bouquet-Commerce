@@ -1,54 +1,30 @@
 {% extends "base.html" %}
-{% block content %}
-<section class="mx-auto w-full max-w-[1240px] mt-28 mb-28">
-  <h1 class="text-5xl font-bold">My Favorites</h1>
-  <p class="mt-2 text-sm">{{ favorites|length }} saved bouquet{{ favorites|length|pluralize }}</p>
+{% load static %}
 
-  {% if not favorites %}
-    <div class="mt-10 rounded-card border border-primary bg-soft-white p-12 text-center">
+{% block content %}
+<section class="mb-16 mt-10 lg:mb-28 lg:mt-28">
+  <div class="mx-auto w-full max-w-[1240px] px-4 lg:px-0">
+    <h1 class="text-3xl font-bold md:text-5xl">My Favorites</h1>
+    <p class="mt-2 text-sm" data-favorites-count>{{ favorites|length }} saved bouquet{{ favorites|length|pluralize }}</p>
+
+    <div data-favorites-empty class="mt-10 rounded-card border border-primary bg-soft-white p-12 text-center{% if favorites %} hidden{% endif %}">
       <p class="text-xl font-semibold">No favorites yet</p>
       <a href="{% url 'catalog:catalog' %}" class="mt-6 inline-block rounded-button bg-primary px-6 py-3 text-sm font-medium text-soft-white">
         Browse Flowers
       </a>
     </div>
-  {% else %}
-  <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    {% for fav in favorites %}
-    <article class="flex flex-col overflow-hidden rounded-card border border-primary/30 bg-soft-white">
-      <div class="h-56 w-full bg-primary/10">
-        {% if fav.bouquet.image %}
-          <img src="{{ fav.bouquet.image.url }}" alt="{{ fav.bouquet.name }}" class="h-full w-full object-cover">
-        {% endif %}
-      </div>
 
-      <div class="flex flex-1 flex-col gap-3 p-4">
-        <p class="text-lg font-semibold">{{ fav.bouquet.name }}</p>
-        <p class="text-sm">₱{{ fav.bouquet.price }}</p>
-
-        <div class="mt-auto flex flex-col gap-2">
-          <form method="post" action="{% url 'orders:add_to_cart' fav.bouquet.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{% url 'favorites:favorites' %}">
-            <button type="submit"
-                    {% if not fav.bouquet.available or fav.bouquet.quantity == 0 %}disabled{% endif %}
-                    class="w-full rounded-button bg-primary p-2 text-sm font-medium text-soft-white disabled:opacity-40">
-              {% if fav.bouquet.available and fav.bouquet.quantity > 0 %}Add to Cart{% else %}Out of Stock{% endif %}
-            </button>
-          </form>
-
-          <form method="post" action="{% url 'favorites:toggle' fav.bouquet.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{% url 'favorites:favorites' %}">
-            <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-sm font-medium text-red-500" aria-label="Remove {{ fav.bouquet.name }} from favorites">
-              {% include "components/ui/icons/heart_icon.html" with heart_filled=True %}
-              Remove
-            </button>
-          </form>
+    <div data-favorites-grid class="mt-6 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 md:mt-12{% if not favorites %} hidden{% endif %}">
+      {% for fav in favorites %}
+        <div data-favorite-card data-bouquet-id="{{ fav.bouquet.id }}" class="h-full">
+          {% include "components/ui/cards/catalog-products-card.html" with bouquet=fav.bouquet favorite_ids=favorite_ids %}
         </div>
+      {% endfor %}
       </div>
-    </article>
-    {% endfor %}
+
+    {% include "components/ui/modals/allproducts-modal.html" %}
   </div>
-  {% endif %}
 </section>
+
+<script src="{% static 'js/product-modal.js' %}" defer></script>
 {% endblock %}

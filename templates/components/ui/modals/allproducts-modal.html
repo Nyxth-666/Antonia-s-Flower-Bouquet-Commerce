@@ -73,7 +73,7 @@
             </div>
 
             <div class="mt-auto flex flex-wrap gap-2 pt-4">
-                <form method="post" data-modal-favorite-form action="" class="flex flex-1">
+                <form method="post" data-modal-favorite-form data-favorite-form action="" class="flex flex-1">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.get_full_path }}">
                     <button
