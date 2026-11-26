@@ -7,8 +7,15 @@ from apps.core.data.footer import FOOTER_LINKS
 from apps.catalog.models import FlowerType
 from apps.catalog.models import ArrangementType
 from apps.catalog.models import Occasion
+from apps.favorites.models import Favorite
 
 def navbar_data(request):
+    favorite_ids = set()
+    if request.user.is_authenticated:
+        favorite_ids = set(
+            Favorite.objects.filter(user=request.user).values_list("bouquet_id", flat=True)
+        )
+
     return {
         "navbar_links": NAVBAR_LINKS,
         "navbar_icons": NAVBAR_ICONS,
@@ -18,4 +25,5 @@ def navbar_data(request):
         "flower_types": FlowerType.objects.filter(is_active=True),
         "arrangement_types": ArrangementType.objects.filter(is_active=True),
         "occasions": Occasion.objects.filter(is_active=True),
+        "favorite_ids": favorite_ids,
     }

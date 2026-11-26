@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             rating,
             ratingCount,
             available,
+            favorite,
         } = product.dataset;
 
         $("#modal-product-name").textContent = name;
@@ -36,6 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const cartForm = document.querySelector("[data-modal-cart-form]");
         if (favForm) favForm.action = `/favorites/toggle/${id}/`;
         if (cartForm) cartForm.action = `/orders/cart/add/${id}/`;
+
+        const favoriteButton = $("#modal-favorite-button");
+        const isFavorite = favorite === "true";
+        favoriteButton.textContent = isFavorite ? "Remove from Favorites" : "Favorite";
+        favoriteButton.className = isFavorite
+            ? "flex-1 rounded-button border border-primary px-4 py-3 text-sm font-medium text-primary transition hover:bg-primary hover:text-soft-white"
+            : "flex-1 rounded-button bg-primary px-4 py-3 text-sm font-medium text-soft-white transition hover:opacity-90";
 
         const imageElement = $("#modal-product-image");
 

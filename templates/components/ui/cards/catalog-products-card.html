@@ -14,6 +14,7 @@
         data-rating="{{ bouquet.rating }}"
         data-rating-count="{{ bouquet.rating_count }}"
         data-available="{% if bouquet.available and bouquet.quantity > 0 %}true{% else %}false{% endif %}"
+        data-favorite="{% if bouquet.id in favorite_ids %}true{% else %}false{% endif %}"
     >
         <div data-product-colors>
             {% for color in bouquet.color.all %}
@@ -51,10 +52,15 @@
             <input type="hidden" name="next" value="{{ request.get_full_path }}">
             <button
                 type="submit"
-                aria-label="Add {{ bouquet.name }} to favorites"
-                class="flex size-8 items-center justify-center rounded-full bg-soft-white text-primary shadow"
+                aria-label="{% if bouquet.id in favorite_ids %}Remove {{ bouquet.name }} from favorites{% else %}Add {{ bouquet.name }} to favorites{% endif %}"
+                title="{% if bouquet.id in favorite_ids %}Remove from favorites{% else %}Add to favorites{% endif %}"
+                class="flex size-8 items-center justify-center rounded-full bg-soft-white shadow transition hover:scale-105 {% if bouquet.id in favorite_ids %}text-red-500{% else %}text-primary{% endif %}"
             >
-                {% include "components/ui/icons/heart_icon.html" %}
+                {% if bouquet.id in favorite_ids %}
+                    {% include "components/ui/icons/heart_icon.html" with heart_filled=True %}
+                {% else %}
+                    {% include "components/ui/icons/heart_icon.html" %}
+                {% endif %}
             </button>
         </form>
 

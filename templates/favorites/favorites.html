@@ -39,7 +39,8 @@
           <form method="post" action="{% url 'favorites:toggle' fav.bouquet.id %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{% url 'favorites:favorites' %}">
-            <button type="submit" class="w-full rounded-button border border-primary p-2 text-sm font-medium">
+            <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-button border border-primary p-2 text-sm font-medium text-red-500" aria-label="Remove {{ fav.bouquet.name }} from favorites">
+              {% include "components/ui/icons/heart_icon.html" with heart_filled=True %}
               Remove
             </button>
           </form>
