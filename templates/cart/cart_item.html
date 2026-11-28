@@ -1,0 +1,41 @@
+<div class="cart-columns border-b border-border py-2" data-cart-row>
+    <div class="flex min-w-0 items-center gap-2">
+        <div class="cart-product-image flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-background-secondary">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name|default:'Custom bouquet' }}" class="h-full w-full object-cover">
+            {% else %}
+                <span aria-hidden="true" class="text-lg">💐</span>
+            {% endif %}
+        </div>
+        <div class="min-w-0">
+            <p class="truncate font-serif text-xs font-bold text-foreground">
+                {{ product.name|default:"Custom Bouquet" }}
+            </p>
+            <form method="post" action="{% url 'orders:remove_item' kind item.id %}" data-cart-remove-form>
+                {% csrf_token %}
+                <button type="submit" class="text-[9px] text-error hover:underline">Remove</button>
+            </form>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'orders:update_item' kind item.id %}" class="flex items-center justify-center gap-1" data-cart-update-form>
+        {% csrf_token %}
+        <button type="submit" name="quantity" value="{{ item.quantity|add:'-1' }}"
+                aria-label="Decrease {{ product.name|default:'custom bouquet' }} quantity"
+                data-cart-decrease
+                {% if item.quantity <= 1 %}disabled{% endif %}
+                class="flex size-5 items-center justify-center rounded bg-background-secondary text-[10px] text-foreground transition hover:bg-border disabled:cursor-not-allowed disabled:opacity-40">
+            &minus;
+        </button>
+        <span data-cart-quantity aria-live="polite" class="min-w-5 text-center text-[10px] text-foreground">{{ item.quantity }}</span>
+        <button type="submit" name="quantity" value="{{ item.quantity|add:'1' }}"
+                aria-label="Increase {{ product.name|default:'custom bouquet' }} quantity"
+                data-cart-increase
+                class="flex size-5 items-center justify-center rounded bg-background-secondary text-[10px] text-foreground transition hover:bg-border">
+            +
+        </button>
+    </form>
+
+    <span class="text-center text-[10px] text-muted">₱{{ item.price|floatformat:2 }}</span>
+    <span class="text-right text-[10px] text-foreground">₱<span data-cart-line-total>{{ item.subtotal|floatformat:2 }}</span></span>
+</div>

@@ -136,18 +136,19 @@
                     View
                 </button>
 
-                <form method="post" action="{% url 'orders:add_to_cart' bouquet.id %}" class="w-full">
+                <form method="post" action="{% url 'orders:add_to_cart' bouquet.id %}" class="w-full" data-cart-form>
                     {% csrf_token %}
                     <button
                         type="submit"
+                        data-cart-submit
                         {% if not bouquet.available or bouquet.quantity == 0 %}disabled{% endif %}
                         class="flex w-full items-center justify-center gap-2 rounded-button bg-primary p-2 text-xs font-medium text-soft-white disabled:opacity-50"
                     >
                         {% include "components/ui/icons/cart_icon.html" %}
                         {% if bouquet.available and bouquet.quantity > 0 %}
-                            Add to Cart
+                            <span data-cart-label>Add to Cart</span>
                         {% else %}
-                            Out of Stock
+                            <span data-cart-label>Out of Stock</span>
                         {% endif %}
                     </button>
                 </form>
